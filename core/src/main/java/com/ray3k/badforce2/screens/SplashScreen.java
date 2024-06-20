@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -19,8 +18,8 @@ public class SplashScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        viewport = new FitViewport(GAME_WIDTH, GAME_HEIGHT);
-        stage = new Stage(viewport);
+        viewport = new FitViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(stage);
 
         var root = new Table();
@@ -29,7 +28,7 @@ public class SplashScreen extends ScreenAdapter {
         stage.addActor(root);
 
         onClick(root, () -> {
-            
+            core.setScreen(new LogoScreen());
         });
 
         var label = new Label("CLICK TO PLAY", skin);
