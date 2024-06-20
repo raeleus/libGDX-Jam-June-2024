@@ -2,7 +2,6 @@ package com.ray3k.badforce2.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.AnimationState.AnimationStateAdapter;
 import com.esotericsoftware.spine.AnimationState.TrackEntry;
 import com.esotericsoftware.spine.AnimationStateData;
@@ -19,7 +17,7 @@ import com.ray3k.badforce2.SpineImage;
 
 import static com.ray3k.badforce2.Core.*;
 
-public class LogoScreen extends ScreenAdapter {
+public class Ray3KScreen extends ScreenAdapter {
     private Stage stage;
     private FillViewport viewport;
 
@@ -36,7 +34,7 @@ public class LogoScreen extends ScreenAdapter {
 
         onClick(root, this::nextScreen);
 
-        var skeletonData = skeletonJson.readSkeletonData(Gdx.files.internal("spine/libgdx.json"));
+        var skeletonData = skeletonJson.readSkeletonData(Gdx.files.internal("spine/ray3k.json"));
         var animationData = new AnimationStateData(skeletonData);
 
         var image = new SpineImage(skeletonRenderer, skeletonData, animationData);

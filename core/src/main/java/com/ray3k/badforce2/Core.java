@@ -2,6 +2,7 @@ package com.ray3k.badforce2;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -52,5 +53,16 @@ public class Core extends Game {
                 runnable.run();
             }
         });
+    }
+
+    public static void onRightClick(Actor actor, Runnable runnable) {
+        var clickListener = new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                runnable.run();
+            }
+        };
+        clickListener.setButton(Buttons.RIGHT);
+        actor.addListener(clickListener);
     }
 }

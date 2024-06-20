@@ -27,9 +27,8 @@ public class SplashScreen extends ScreenAdapter {
         root.setTouchable(Touchable.enabled);
         stage.addActor(root);
 
-        onClick(root, () -> {
-            core.setScreen(new LogoScreen());
-        });
+        onClick(root, () -> core.setScreen(new LibGDXScreen()));
+        onRightClick(root, () -> core.setScreen(new Ray3KScreen()));
 
         var label = new Label("CLICK TO PLAY", skin);
         root.add(label);
