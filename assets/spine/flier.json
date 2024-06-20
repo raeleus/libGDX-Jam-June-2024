@@ -1,0 +1,179 @@
+{
+"skeleton": {
+	"hash": "AIdXGFjkA88",
+	"spine": "4.2.29",
+	"x": -54.84,
+	"y": -27.41,
+	"width": 144.15,
+	"height": 101.84,
+	"images": "",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{
+		"name": "flier-body-1",
+		"parent": "root",
+		"length": 23.52,
+		"rotation": 0.72,
+		"x": 9.32,
+		"y": 28.47,
+		"scaleX": -1
+	},
+	{ "name": "flier-body-2", "parent": "flier-body-1", "length": 28.24, "rotation": -36.11, "x": 20.58, "y": 0.33 },
+	{ "name": "flier-body-3", "parent": "flier-body-2", "length": 21.37, "rotation": -46, "x": 26.19, "y": 0.36 },
+	{ "name": "flier-body-4", "parent": "flier-body-3", "length": 15.57, "rotation": -49.31, "x": 16.5, "y": -1.27 },
+	{ "name": "flier-stinger", "parent": "flier-body-4", "length": 25.16, "rotation": -30.74, "x": 13.49, "y": -0.1 },
+	{ "name": "flier-wing", "parent": "flier-body-1", "length": 62.33, "rotation": 29.24, "x": 2.44, "y": 6.73 },
+	{ "name": "flier-head", "parent": "flier-body-1", "length": 59.74, "rotation": -150.49, "x": -16.48, "y": -1.26 }
+],
+"slots": [
+	{ "name": "flier-stinger", "bone": "flier-stinger", "dark": "000000", "attachment": "game/flier-stinger" },
+	{ "name": "flier-body-4", "bone": "flier-body-4", "dark": "000000", "attachment": "game/flier-body-4" },
+	{ "name": "flier-body-3", "bone": "flier-body-3", "dark": "000000", "attachment": "game/flier-body-3" },
+	{ "name": "flier-body-2", "bone": "flier-body-2", "dark": "000000", "attachment": "game/flier-body-2" },
+	{ "name": "flier-body-1", "bone": "flier-body-1", "dark": "000000", "attachment": "game/flier-body-1" },
+	{ "name": "flier-head", "bone": "flier-head", "dark": "000000", "attachment": "game/flier-head" },
+	{ "name": "flier-wing", "bone": "flier-wing", "dark": "000000", "attachment": "game/flier-wing" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"flier-body-1": {
+				"game/flier-body-1": { "x": -1.47, "y": -0.28, "rotation": -0.72, "width": 43, "height": 27 }
+			},
+			"flier-body-2": {
+				"game/flier-body-2": { "x": 5.64, "y": 1.59, "rotation": -1.79, "width": 46, "height": 21 }
+			},
+			"flier-body-3": {
+				"game/flier-body-3": { "x": 5.78, "y": 1.1, "rotation": 7.91, "width": 23, "height": 18 }
+			},
+			"flier-body-4": {
+				"game/flier-body-4": { "x": 5.6, "y": 0.48, "rotation": 10.89, "width": 21, "height": 12 }
+			},
+			"flier-head": {
+				"game/flier-head": { "x": 27.33, "y": -0.92, "rotation": 177.46, "width": 65, "height": 45 }
+			},
+			"flier-stinger": {
+				"game/flier-stinger": { "x": 10.32, "y": 0.33, "rotation": 6.71, "width": 35, "height": 8 }
+			},
+			"flier-wing": {
+				"game/flier-wing": { "x": 27.94, "y": -0.78, "rotation": 0.81, "width": 73, "height": 20 }
+			}
+		}
+	}
+],
+"animations": {
+	"die": {
+		"bones": {
+			"flier-wing": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": -33.36 }
+				]
+			},
+			"flier-body-2": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 33.2 }
+				]
+			},
+			"flier-stinger": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 29.86 }
+				]
+			},
+			"flier-body-4": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 45.3 }
+				]
+			},
+			"flier-body-3": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 53 }
+				]
+			},
+			"flier-body-1": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 182.48 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.1, "y": 40.19 },
+					{ "time": 0.3333, "y": -21.15 }
+				]
+			},
+			"flier-head": {
+				"rotate": [
+					{},
+					{ "time": 0.0667, "value": 49.13 },
+					{ "time": 0.1667, "value": -93.43 },
+					{ "time": 0.3333, "value": -25.79 }
+				]
+			}
+		}
+	},
+	"fly": {
+		"bones": {
+			"flier-wing": {
+				"rotate": [
+					{ "value": -50.2 },
+					{ "time": 0.0333, "value": 22.98 },
+					{ "time": 0.0667, "value": -50.2 }
+				]
+			}
+		}
+	},
+	"hurt": {
+		"slots": {
+			"flier-body-1": {
+				"rgba2": [
+					{ "light": "ff0000ff", "dark": "ff0000" },
+					{ "time": 0.2, "light": "ffffffff", "dark": "000000" }
+				]
+			},
+			"flier-body-2": {
+				"rgba2": [
+					{ "light": "ff0000ff", "dark": "ff0000" },
+					{ "time": 0.2, "light": "ffffffff", "dark": "000000" }
+				]
+			},
+			"flier-body-3": {
+				"rgba2": [
+					{ "light": "ff0000ff", "dark": "ff0000" },
+					{ "time": 0.2, "light": "ffffffff", "dark": "000000" }
+				]
+			},
+			"flier-body-4": {
+				"rgba2": [
+					{ "light": "ff0000ff", "dark": "ff0000" },
+					{ "time": 0.2, "light": "ffffffff", "dark": "000000" }
+				]
+			},
+			"flier-head": {
+				"rgba2": [
+					{ "light": "ff0000ff", "dark": "ff0000" },
+					{ "time": 0.2, "light": "ffffffff", "dark": "000000" }
+				]
+			},
+			"flier-stinger": {
+				"rgba2": [
+					{ "light": "ff0000ff", "dark": "ff0000" },
+					{ "time": 0.2, "light": "ffffffff", "dark": "000000" }
+				]
+			},
+			"flier-wing": {
+				"rgba2": [
+					{ "light": "ff0000ff", "dark": "ff0000" },
+					{ "time": 0.2, "light": "ffffffff", "dark": "000000" }
+				]
+			}
+		}
+	}
+}
+}

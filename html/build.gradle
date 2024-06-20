@@ -146,6 +146,14 @@ task distZip(type: Zip, dependsOn: dist){
   archiveBaseName.set("${appName}-dist")
   //// The result will be in html/build/ with a name containing "-dist".
   destinationDirectory.set(file("build"))
+
+  doLast {
+    exec {
+      ignoreExitValue true
+      executable 'explorer.exe'
+      args '".\\build\\"'
+    }
+  }
 }
 
 tasks.compileGwt.dependsOn(addSource)

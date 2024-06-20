@@ -1,0 +1,603 @@
+{
+"skeleton": { "hash": "UOW+zBWilxM", "spine": "4.2.29", "width": 1024, "height": 713.69, "images": "", "audio": "" },
+"bones": [
+	{ "name": "root" },
+	{ "name": "libgdx-brutality-b", "parent": "root", "length": 39.08, "x": 296.74, "y": 173.56 },
+	{ "name": "libgdx-brutality-r", "parent": "root", "length": 35.53, "x": 352.4, "y": 175.92 },
+	{ "name": "libgdx-brutality-u", "parent": "root", "length": 35.61, "rotation": 3.81, "x": 405.69, "y": 173.56 },
+	{ "name": "libgdx-brutality-t", "parent": "root", "length": 35.55, "rotation": -1.91, "x": 460.16, "y": 172.37 },
+	{ "name": "libgdx-brutality-a", "parent": "root", "length": 30.79, "x": 514.64, "y": 168.82 },
+	{ "name": "libgdx-brutality-l", "parent": "root", "length": 28.42, "x": 564.37, "y": 170 },
+	{ "name": "libgdx-brutality-i", "parent": "root", "length": 30.81, "rotation": -2.2, "x": 614.11, "y": 167.63 },
+	{ "name": "libgdx-brutality-t_1", "parent": "root", "length": 36.71, "x": 661.48, "y": 167.63 },
+	{ "name": "libgdx-brutality-y", "parent": "root", "length": 34.34, "x": 724.24, "y": 167.63 },
+	{ "name": "libgdx-l", "parent": "root", "length": 10.86, "rotation": 4.76, "x": 369.08, "y": 285.82 },
+	{ "name": "libgdx-x", "parent": "root", "length": 36.7, "rotation": -0.99, "x": 625.34, "y": 287.72 },
+	{ "name": "libgdx-l2", "parent": "libgdx-l", "length": 10.4, "rotation": -4.58, "x": -0.59, "y": 5.83 },
+	{ "name": "libgdx-l2b", "parent": "libgdx-l2", "length": 10.4, "x": 10.4 },
+	{ "name": "libgdx-l2c", "parent": "libgdx-l2b", "length": 10.4, "x": 10.4 },
+	{ "name": "libgdx-l2d", "parent": "libgdx-l2c", "length": 10.4, "x": 10.4 },
+	{ "name": "libgdx-l2e", "parent": "libgdx-l2d", "length": 10.4, "x": 10.4 },
+	{ "name": "libgdx-l2f", "parent": "libgdx-l2e", "length": 10.4, "x": 10.4 },
+	{ "name": "libgdx-l2g", "parent": "libgdx-l2f", "length": 10.4, "x": 10.4 },
+	{ "name": "libgdx-l2h", "parent": "libgdx-l2g", "length": 10.4, "x": 10.4 },
+	{ "name": "libgdx-l2i", "parent": "libgdx-l2h", "length": 10.4, "x": 10.4 },
+	{ "name": "libgdx-l2j", "parent": "libgdx-l2i", "length": 10.4, "x": 10.4, "icon": "ik" },
+	{ "name": "libgdx-l3", "parent": "libgdx-l", "length": 9.93, "rotation": -4.06, "x": -0.73, "y": 4.87 },
+	{ "name": "libgdx-l3b", "parent": "libgdx-l3", "length": 9.93, "x": 9.93 },
+	{ "name": "libgdx-l3c", "parent": "libgdx-l3b", "length": 9.93, "x": 9.93 },
+	{ "name": "libgdx-l3d", "parent": "libgdx-l3c", "length": 9.93, "x": 9.93 },
+	{ "name": "libgdx-l3e", "parent": "libgdx-l3d", "length": 9.93, "x": 9.93 },
+	{ "name": "libgdx-l3f", "parent": "libgdx-l3e", "length": 9.93, "x": 9.93 },
+	{ "name": "libgdx-l3g", "parent": "libgdx-l3f", "length": 9.93, "x": 9.93 },
+	{ "name": "libgdx-l3h", "parent": "libgdx-l3g", "length": 9.93, "x": 9.93 },
+	{ "name": "libgdx-l3i", "parent": "libgdx-l3h", "length": 9.93, "x": 9.93 },
+	{ "name": "libgdx-l3j", "parent": "libgdx-l3i", "length": 9.93, "x": 9.93 },
+	{ "name": "libgdx-l4", "parent": "libgdx-l", "length": 49.38, "rotation": -4.76, "x": 4.63, "y": 14.9 },
+	{ "name": "libgdx-l5", "parent": "libgdx-l4", "length": 49.9, "rotation": 0.4, "x": 49.2, "y": 0.87 },
+	{
+		"name": "target",
+		"parent": "libgdx-l",
+		"rotation": -4.76,
+		"x": 58.39,
+		"y": 1.47,
+		"color": "ff3f00ff",
+		"icon": "ik"
+	},
+	{ "name": "libgdx-l6", "parent": "libgdx-l", "length": 49.99, "rotation": -3.95, "x": -2.95, "y": -6.93 },
+	{ "name": "libgdx-l7", "parent": "libgdx-l6", "length": 57.43, "rotation": -0.46, "x": 49.99 },
+	{
+		"name": "target2",
+		"parent": "libgdx-l",
+		"rotation": -4.76,
+		"x": 53.53,
+		"y": -52.74,
+		"color": "ff3f00ff",
+		"icon": "ik"
+	},
+	{ "name": "libgdx-spikes", "parent": "root", "length": 447.86, "rotation": -0.21, "x": 503.83, "y": 563.65 }
+],
+"slots": [
+	{ "name": "white", "bone": "root", "attachment": "white" },
+	{ "name": "libgdx-arm2", "bone": "libgdx-l", "attachment": "libgdx/libgdx-arm2" },
+	{ "name": "libgdx-l", "bone": "libgdx-l", "attachment": "libgdx/libgdx-l" },
+	{ "name": "libgdx-i", "bone": "root", "attachment": "libgdx/libgdx-i" },
+	{ "name": "libgdx-g", "bone": "root", "attachment": "libgdx/libgdx-g" },
+	{ "name": "libgdx-d", "bone": "root", "attachment": "libgdx/libgdx-d" },
+	{ "name": "libgdx-b", "bone": "root", "attachment": "libgdx/libgdx-b" },
+	{ "name": "libgdx-spikes", "bone": "libgdx-spikes", "attachment": "libgdx/libgdx-spikes" },
+	{ "name": "libgdx-x", "bone": "libgdx-x", "attachment": "libgdx/libgdx-x" },
+	{ "name": "libgdx-wins", "bone": "root", "attachment": "libgdx/libgdx-wins" },
+	{ "name": "libgdx-brutality-b", "bone": "libgdx-brutality-b", "attachment": "libgdx/libgdx-brutality-b" },
+	{ "name": "libgdx-brutality-r", "bone": "libgdx-brutality-r", "attachment": "libgdx/libgdx-brutality-r" },
+	{ "name": "libgdx-brutality-u", "bone": "libgdx-brutality-u", "attachment": "libgdx/libgdx-brutality-u" },
+	{ "name": "libgdx-brutality-t", "bone": "libgdx-brutality-t", "attachment": "libgdx/libgdx-brutality-t" },
+	{ "name": "libgdx-brutality-a", "bone": "libgdx-brutality-a", "attachment": "libgdx/libgdx-brutality-a" },
+	{ "name": "libgdx-brutality-l", "bone": "libgdx-brutality-l", "attachment": "libgdx/libgdx-brutality-l" },
+	{ "name": "libgdx-brutality-i", "bone": "libgdx-brutality-i", "attachment": "libgdx/libgdx-brutality-i" },
+	{ "name": "libgdx-brutality-t_1", "bone": "libgdx-brutality-t_1", "attachment": "libgdx/libgdx-brutality-t_1" },
+	{ "name": "libgdx-brutality-y", "bone": "libgdx-brutality-y", "attachment": "libgdx/libgdx-brutality-y" },
+	{ "name": "libgdx-arm1", "bone": "libgdx-l", "attachment": "libgdx/libgdx-arm1" },
+	{ "name": "libgdx-l2", "bone": "libgdx-l", "attachment": "libgdx-l2" },
+	{ "name": "libgdx-l3", "bone": "libgdx-l", "attachment": "libgdx-l3" }
+],
+"ik": [
+	{
+		"name": "target",
+		"bones": [ "libgdx-l4", "libgdx-l5" ],
+		"target": "target"
+	},
+	{
+		"name": "target2",
+		"order": 1,
+		"bones": [ "libgdx-l6", "libgdx-l7" ],
+		"target": "target2"
+	}
+],
+"path": [
+	{
+		"name": "libgdx-l2",
+		"order": 2,
+		"bones": [ "libgdx-l2", "libgdx-l2b", "libgdx-l2c", "libgdx-l2d", "libgdx-l2e", "libgdx-l2f", "libgdx-l2g", "libgdx-l2h", "libgdx-l2i", "libgdx-l2j" ],
+		"target": "libgdx-l2"
+	},
+	{
+		"name": "libgdx-l3",
+		"order": 3,
+		"bones": [ "libgdx-l3", "libgdx-l3b", "libgdx-l3c", "libgdx-l3d", "libgdx-l3e", "libgdx-l3f", "libgdx-l3g", "libgdx-l3h", "libgdx-l3i", "libgdx-l3j" ],
+		"target": "libgdx-l3"
+	}
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"libgdx-arm1": {
+				"libgdx/libgdx-arm1": {
+					"type": "mesh",
+					"uvs": [ 0.77976, 0, 0.88789, 0, 0.92128, 0.05481, 0.9335, 0.16981, 1, 0.2755, 1, 0.38625, 0.98382, 0.74757, 0.96314, 0.9504, 0.93536, 1, 0.8189, 1, 0.76071, 0.95285, 0.68372, 0.78798, 0.62847, 0.78778, 0.62246, 0.65982, 0.53796, 0.65983, 0.45345, 0.65983, 0.36248, 0.65984, 0.29936, 0.65985, 0.22059, 0.65414, 0.14182, 0.64843, 0.07595, 0.64366, 0.03736, 0.64086, 0, 0.63816, 0, 0.49268, 0.01928, 0.45517, 0.0686, 0.44606, 0.13233, 0.43428, 0.19607, 0.4225, 0.29611, 0.4153, 0.35738, 0.41089, 0.44857, 0.40432, 0.53234, 0.39829, 0.61611, 0.39226, 0.6522, 0.28021, 0.66863, 0.27132, 0.73684, 0.05042, 0.7761, 0 ],
+					"triangles": [ 3, 4, 5, 6, 3, 5, 10, 11, 34, 34, 11, 13, 3, 9, 10, 0, 10, 35, 10, 34, 35, 3, 0, 1, 0, 35, 36, 0, 3, 10, 2, 3, 1, 3, 6, 9, 6, 8, 9, 7, 8, 6, 34, 13, 32, 14, 32, 13, 11, 12, 13, 34, 32, 33, 14, 31, 32, 15, 31, 14, 15, 30, 31, 16, 30, 15, 16, 29, 30, 17, 29, 16, 17, 28, 29, 18, 28, 17, 18, 27, 28, 19, 27, 18, 19, 26, 27, 20, 26, 19, 21, 22, 23, 21, 24, 25, 21, 23, 24, 20, 25, 26, 21, 25, 20 ],
+					"vertices": [ 2, 16, 70.65, 23.46, 0, 21, 18.35, 23.92, 1, 2, 16, 86.85, 22.87, 0, 21, 34.56, 23.52, 1, 2, 16, 91.77, 20.11, 0, 21, 39.5, 20.82, 1, 2, 16, 93.4, 14.64, 0, 21, 41.2, 15.37, 1, 2, 16, 103.18, 9.31, 0, 21, 51.05, 10.16, 1, 1, 21, 50.92, 4.95, 1, 2, 15, 110.34, -12.62, 0, 21, 48.07, -11.96, 1, 2, 15, 106.91, -22.04, 0, 21, 44.73, -21.42, 1, 2, 15, 102.66, -24.22, 0, 21, 40.51, -23.64, 1, 2, 15, 85.2, -23.6, 0, 21, 23.04, -23.21, 1, 3, 15, 76.56, -21.08, 0, 20, 24.77, -20.84, 0.00274, 21, 14.37, -20.78, 0.99726, 3, 15, 65.29, -12.92, 0, 20, 13.44, -12.77, 0.27481, 21, 3.02, -12.74, 0.72519, 3, 15, 57.01, -12.62, 0, 20, 5.16, -12.53, 0.68085, 21, -5.26, -12.53, 0.31915, 3, 19, 14.78, -6.53, 0.03779, 20, 4.42, -6.49, 0.85593, 21, -6.01, -6.49, 0.10628, 4, 16, 33.26, -6.19, 0, 18, 12.47, -6.15, 0.21444, 19, 2.11, -6.13, 0.7853, 20, -8.25, -6.14, 2.6E-4, 5, 15, 30.99, -5.68, 0, 16, 20.59, -5.72, 2.0E-5, 17, 10.2, -5.72, 0.49673, 18, -0.2, -5.71, 0.50325, 21, -31.36, -5.86, 0, 3, 16, 6.95, -5.21, 0.91628, 17, -3.44, -5.22, 0.08372, 21, -45, -5.52, 0, 3, 15, 7.89, -4.86, 0.84491, 16, -2.51, -4.87, 0.15509, 21, -54.46, -5.29, 0, 4, 13, 16.94, -4.12, 0.00271, 14, 6.5, -4.17, 0.96233, 15, -3.91, -4.17, 0.03496, 21, -66.27, -4.73, 0, 2, 13, 5.14, -3.51, 1, 21, -78.07, -4.16, 0, 2, 12, 5.69, -3, 1, 21, -87.95, -3.69, 0, 1, 12, -0.09, -2.73, 1, 1, 12, -5.69, -2.46, 1, 2, 12, -5.52, 4.37, 1, 21, -99.16, 3.68, 0, 2, 12, -2.58, 6.06, 1, 21, -96.22, 5.37, 0, 2, 12, 4.82, 6.31, 0.93102, 13, -5.57, 6.31, 0.06898, 3, 12, 14.39, 6.62, 0.06183, 13, 4, 6.59, 0.92505, 14, -6.39, 6.59, 0.01312, 3, 13, 13.58, 6.86, 0.16032, 14, 3.18, 6.83, 0.82977, 15, -7.2, 6.84, 0.00991, 3, 14, 18.19, 6.68, 0.00913, 15, 7.81, 6.64, 0.79646, 16, -2.57, 6.64, 0.19442, 3, 15, 17, 6.53, 0.01318, 16, 6.62, 6.51, 0.87138, 17, -3.77, 6.51, 0.11544, 4, 15, 30.68, 6.35, 0, 17, 9.91, 6.31, 0.55833, 18, -0.51, 6.32, 0.44167, 21, -31.79, 6.16, 0, 4, 15, 43.25, 6.19, 0, 18, 12.06, 6.16, 0.27933, 19, 1.65, 6.18, 0.72067, 21, -19.22, 6.13, 0, 3, 19, 14.22, 6.07, 0.0555, 20, 3.82, 6.1, 0.86989, 21, -6.65, 6.1, 0.0746, 2, 20, 9.38, 11.22, 0.44235, 21, -1.11, 11.23, 0.55765, 2, 20, 11.86, 11.56, 0.29381, 21, 1.36, 11.59, 0.70619, 3, 16, 64.13, 21.33, 0, 20, 22.37, 21.66, 0.00346, 21, 11.85, 21.71, 0.99654, 2, 16, 70.1, 23.49, 0, 21, 17.8, 23.94, 1 ],
+					"hull": 37,
+					"edges": [ 0, 72, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 22, 24, 24, 26, 44, 46, 46, 48, 64, 66, 66, 68, 68, 70, 70, 72, 42, 44, 48, 50, 40, 42, 50, 52, 52, 54, 38, 40, 34, 36, 36, 38, 54, 56, 56, 58, 32, 34, 58, 60, 30, 32, 60, 62, 62, 64, 26, 28, 28, 30 ],
+					"width": 150,
+					"height": 47
+				}
+			},
+			"libgdx-arm2": {
+				"libgdx/libgdx-arm2": {
+					"type": "mesh",
+					"uvs": [ 0.80882, 0, 0.87134, 0, 0.91715, 0.06975, 0.93873, 0.26384, 0.96601, 0.28544, 0.99235, 0.33814, 1, 0.40714, 1, 0.46995, 0.98647, 0.69427, 0.95464, 0.93327, 0.93205, 1, 0.78173, 1, 0.60633, 0.69755, 0.50314, 0.69331, 0.39996, 0.68906, 0.32101, 0.68581, 0.23738, 0.68237, 0.19683, 0.6807, 0.15627, 0.67903, 0.10856, 0.67707, 0.06085, 0.67511, 0.01343, 0.67316, 0, 0.63304, 0, 0.54886, 0.02045, 0.48944, 0.05168, 0.4895, 0.09356, 0.46908, 0.1505, 0.4691, 0.20744, 0.46912, 0.23583, 0.4484, 0.31858, 0.44847, 0.40444, 0.44854, 0.49579, 0.44862, 0.58715, 0.4487, 0.66104, 0.29285, 0.72922, 0.1045, 0.77779, 0.02276 ],
+					"triangles": [ 20, 26, 19, 21, 25, 20, 20, 25, 26, 21, 24, 25, 24, 21, 23, 21, 22, 23, 19, 27, 18, 17, 18, 27, 19, 26, 27, 17, 28, 16, 28, 29, 16, 28, 17, 27, 16, 29, 30, 16, 30, 15, 14, 15, 30, 14, 31, 32, 31, 14, 30, 13, 14, 32, 13, 32, 33, 13, 33, 12, 12, 33, 34, 10, 11, 9, 9, 11, 8, 3, 35, 2, 0, 2, 36, 0, 1, 2, 12, 34, 11, 34, 35, 11, 35, 3, 11, 36, 2, 35, 7, 8, 3, 3, 8, 11, 6, 7, 4, 4, 7, 3, 4, 5, 6 ],
+					"vertices": [ 1, 31, 25.14, 27.74, 1, 1, 31, 34.33, 27.64, 1, 1, 31, 41.03, 24.15, 1, 1, 31, 44.1, 14.61, 1, 1, 31, 48.1, 13.51, 1, 1, 31, 51.94, 10.89, 1, 1, 31, 53.03, 7.49, 1, 1, 31, 53, 4.42, 1, 1, 31, 50.89, -6.55, 1, 1, 31, 46.09, -18.21, 1, 1, 31, 42.73, -21.45, 1, 1, 31, 20.64, -21.21, 1, 3, 31, -4.99, -6.11, 0.11418, 30, 4.96, -6.11, 0.85604, 29, 14.89, -6.11, 0.02978, 2, 29, -0.27, -5.74, 0.50797, 28, 9.66, -5.74, 0.49203, 3, 28, -5.5, -5.37, 0.00697, 27, 4.43, -5.37, 0.94992, 26, 14.36, -5.37, 0.04311, 2, 26, 2.76, -5.09, 0.89421, 25, 12.7, -5.09, 0.10579, 2, 25, 0.41, -4.79, 0.57877, 24, 10.34, -4.79, 0.42123, 3, 25, -5.55, -4.64, 0.00833, 24, 4.38, -4.64, 0.9714, 23, 14.31, -4.64, 0.02027, 2, 24, -1.58, -4.5, 0.24504, 23, 8.35, -4.5, 0.75496, 2, 23, 1.34, -4.32, 0.71005, 22, 11.24, -4.32, 0.28995, 1, 22, 4.23, -4.15, 1, 1, 22, -2.74, -3.98, 1, 1, 22, -4.69, -1.99, 1, 1, 22, -4.65, 2.13, 1, 1, 22, -1.61, 5.01, 1, 2, 23, -6.93, 4.96, 0.00137, 22, 2.98, 4.96, 0.99863, 2, 23, -0.76, 5.89, 0.35459, 22, 9.15, 5.89, 0.64541, 2, 24, -2.32, 5.8, 0.19109, 23, 7.61, 5.8, 0.80891, 3, 25, -3.88, 5.71, 0.11072, 24, 6.05, 5.71, 0.87169, 23, 15.98, 5.71, 0.01759, 2, 25, 0.3, 6.68, 0.61289, 24, 10.24, 6.68, 0.38711, 3, 27, -7.41, 6.55, 0.00621, 26, 2.53, 6.55, 0.79606, 25, 12.46, 6.54, 0.19773, 3, 28, -4.72, 6.41, 0.05115, 27, 5.22, 6.41, 0.90005, 26, 15.15, 6.41, 0.0488, 3, 29, -1.22, 6.26, 0.36742, 28, 8.71, 6.26, 0.62902, 27, 18.64, 6.26, 0.00356, 3, 31, -7.68, 6.11, 0.04346, 30, 2.27, 6.11, 0.76571, 29, 12.2, 6.11, 0.19083, 2, 31, 3.27, 13.63, 0.8445, 30, 13.21, 13.63, 0.1555, 2, 31, 13.39, 22.75, 0.99808, 30, 23.33, 22.75, 0.00192, 1, 31, 20.57, 26.68, 1 ],
+					"hull": 37,
+					"edges": [ 0, 72, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 22, 24, 42, 44, 44, 46, 46, 48, 48, 50, 50, 52, 56, 58, 66, 68, 68, 70, 70, 72, 40, 42, 30, 32, 58, 60, 28, 30, 60, 62, 62, 64, 64, 66, 24, 26, 26, 28, 50, 40, 36, 38, 38, 40, 52, 38, 52, 54, 54, 56, 36, 54, 32, 34, 34, 36, 56, 34, 58, 32, 60, 30, 62, 28, 64, 26, 66, 24 ],
+					"width": 147,
+					"height": 49
+				}
+			},
+			"libgdx-b": {
+				"libgdx/libgdx-b": { "x": 426.38, "y": 287.51, "width": 39, "height": 51 }
+			},
+			"libgdx-brutality-a": {
+				"libgdx/libgdx-brutality-a": { "x": -0.26, "y": 5.98, "width": 59, "height": 103 }
+			},
+			"libgdx-brutality-b": {
+				"libgdx/libgdx-brutality-b": { "x": 3.2, "y": 0.08, "width": 50, "height": 107 }
+			},
+			"libgdx-brutality-i": {
+				"libgdx/libgdx-brutality-i": { "x": 2.04, "y": 6.08, "rotation": 2.2, "width": 20, "height": 104 }
+			},
+			"libgdx-brutality-l": {
+				"libgdx/libgdx-brutality-l": { "x": 10.28, "y": 3.63, "width": 47, "height": 106 }
+			},
+			"libgdx-brutality-r": {
+				"libgdx/libgdx-brutality-r": { "x": 4.34, "y": -2.29, "width": 49, "height": 103 }
+			},
+			"libgdx-brutality-t": {
+				"libgdx/libgdx-brutality-t": { "x": 2.01, "y": 1.33, "rotation": 1.91, "width": 52, "height": 108 }
+			},
+			"libgdx-brutality-t_1": {
+				"libgdx/libgdx-brutality-t_1": { "x": 1.27, "y": 6, "width": 50, "height": 105 }
+			},
+			"libgdx-brutality-u": {
+				"libgdx/libgdx-brutality-u": { "x": 4.29, "y": -1.37, "rotation": -3.81, "width": 47, "height": 107 }
+			},
+			"libgdx-brutality-y": {
+				"libgdx/libgdx-brutality-y": { "x": 2.26, "y": 7.16, "width": 62, "height": 104 }
+			},
+			"libgdx-d": {
+				"libgdx/libgdx-d": { "x": 553.75, "y": 288.36, "width": 64, "height": 51 }
+			},
+			"libgdx-g": {
+				"libgdx/libgdx-g": { "x": 484.31, "y": 288.36, "width": 64, "height": 51 }
+			},
+			"libgdx-i": {
+				"libgdx/libgdx-i": { "x": 391.45, "y": 288.79, "width": 15, "height": 51 }
+			},
+			"libgdx-l": {
+				"libgdx/libgdx-l": { "x": 0.47, "y": 1.79, "rotation": -4.76, "width": 15, "height": 51 }
+			},
+			"libgdx-l2": {
+				"libgdx-l2": {
+					"type": "path",
+					"lengths": [ 82.6, 186.67 ],
+					"vertexCount": 6,
+					"vertices": [ 1, 35, -32.32, -1.73, 1, 1, 35, 2.07, -1.49, 1, 2, 35, 36.46, -1.24, 0.48571, 36, -13.53, -1.24, 0.51429, 2, 35, 58.78, -0.39, 0.5, 36, 8.79, -0.39, 0.5, 1, 36, 43.18, -0.15, 1, 1, 35, 127.56, 0.1, 1 ]
+				}
+			},
+			"libgdx-l3": {
+				"libgdx-l3": {
+					"type": "path",
+					"lengths": [ 84.57, 190.84 ],
+					"vertexCount": 6,
+					"vertices": [ 1, 32, -29.16, -1.14, 1, 1, 32, -0.17, -0.52, 1, 2, 32, 28.83, 0.1, 0.49714, 33, -20.39, -0.19, 0.50286, 2, 32, 67.49, 0.93, 0.50857, 33, 18.28, -0.45, 0.49143, 1, 33, 47.29, -0.65, 1, 1, 32, 125.48, 2.18, 1 ]
+				}
+			},
+			"libgdx-spikes": {
+				"libgdx/libgdx-spikes": { "x": 19.82, "y": -14.39, "rotation": 0.21, "width": 923, "height": 329 }
+			},
+			"libgdx-wins": {
+				"libgdx/libgdx-wins": { "x": 512, "y": 80.9, "width": 131, "height": 24 }
+			},
+			"libgdx-x": {
+				"libgdx/libgdx-x": { "x": -0.45, "y": -0.21, "rotation": 0.99, "width": 78, "height": 51 }
+			},
+			"white": {
+				"white": { "x": 512, "y": 288, "scaleX": 1024, "scaleY": 576, "width": 1, "height": 1 }
+			}
+		}
+	}
+],
+"events": {
+	"sfx/libgdx-die": { "audio": "sfx/libgdx-die.mp3" },
+	"sfx/libgdx-hurt": { "audio": "sfx/libgdx-hurt.mp3" },
+	"sfx/libgdx-punch": { "audio": "sfx/libgdx-punch.mp3" },
+	"sfx/libgdx intro": { "audio": "sfx/libgdx intro.mp3" },
+	"sfx/libgdx round1": { "audio": "sfx/libgdx round1.mp3" },
+	"sfx/libgdx wins": { "audio": "sfx/libgdx wins.mp3" }
+},
+"animations": {
+	"animation": {
+		"slots": {
+			"libgdx-arm1": {
+				"rgba": [
+					{ "time": 2.4667, "color": "ffffff00" },
+					{ "time": 4.2667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{},
+					{ "time": 2.4667, "name": "libgdx/libgdx-arm1" }
+				]
+			},
+			"libgdx-arm2": {
+				"rgba": [
+					{ "time": 2.4667, "color": "ffffff00" },
+					{ "time": 4.2667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{},
+					{ "time": 2.4667, "name": "libgdx/libgdx-arm2" }
+				]
+			},
+			"libgdx-b": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.3, "color": "ffffff00" },
+					{ "time": 0.4, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.8333, "color": "ffffffff" },
+					{ "time": 2.2333, "color": "ffffff00" }
+				]
+			},
+			"libgdx-brutality-a": {
+				"attachment": [
+					{},
+					{ "time": 10, "name": "libgdx/libgdx-brutality-a" }
+				]
+			},
+			"libgdx-brutality-b": {
+				"attachment": [
+					{},
+					{ "time": 9.6, "name": "libgdx/libgdx-brutality-b" }
+				]
+			},
+			"libgdx-brutality-i": {
+				"attachment": [
+					{},
+					{ "time": 10.2, "name": "libgdx/libgdx-brutality-i" }
+				]
+			},
+			"libgdx-brutality-l": {
+				"attachment": [
+					{},
+					{ "time": 10.1, "name": "libgdx/libgdx-brutality-l" }
+				]
+			},
+			"libgdx-brutality-r": {
+				"attachment": [
+					{},
+					{ "time": 9.7, "name": "libgdx/libgdx-brutality-r" }
+				]
+			},
+			"libgdx-brutality-t": {
+				"attachment": [
+					{},
+					{ "time": 9.9, "name": "libgdx/libgdx-brutality-t" }
+				]
+			},
+			"libgdx-brutality-t_1": {
+				"attachment": [
+					{},
+					{ "time": 10.3, "name": "libgdx/libgdx-brutality-t_1" }
+				]
+			},
+			"libgdx-brutality-u": {
+				"attachment": [
+					{},
+					{ "time": 9.8333, "name": "libgdx/libgdx-brutality-u" }
+				]
+			},
+			"libgdx-brutality-y": {
+				"attachment": [
+					{},
+					{ "time": 10.4, "name": "libgdx/libgdx-brutality-y" }
+				]
+			},
+			"libgdx-d": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.5333, "color": "ffffff00" },
+					{ "time": 0.6667, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.8333, "color": "ffffffff" },
+					{ "time": 2.2333, "color": "ffffff00" }
+				]
+			},
+			"libgdx-g": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.4, "color": "ffffff00" },
+					{ "time": 0.5333, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.8333, "color": "ffffffff" },
+					{ "time": 2.2333, "color": "ffffff00" }
+				]
+			},
+			"libgdx-i": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.1333, "color": "ffffff00" },
+					{ "time": 0.3, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.8333, "color": "ffffffff" },
+					{ "time": 2.2333, "color": "ffffff00" }
+				]
+			},
+			"libgdx-l": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1333, "color": "ffffffff" }
+				]
+			},
+			"libgdx-wins": {
+				"attachment": [
+					{},
+					{ "time": 7.9333, "name": "libgdx/libgdx-wins" }
+				]
+			},
+			"libgdx-x": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" },
+					{ "time": 0.7667, "color": "ffffffff" }
+				]
+			}
+		},
+		"bones": {
+			"libgdx-brutality-a": {
+				"translate": [
+					{
+						"time": 10,
+						"curve": [ 10.131, 0, 10.269, 0, 10.107, 4.21, 10.251, 49.02 ]
+					},
+					{
+						"time": 10.4,
+						"y": 42.34,
+						"curve": [ 10.531, 0, 10.636, 0, 10.507, 37.57, 10.617, -4.27 ]
+					},
+					{ "time": 10.7667, "y": -5.65 }
+				]
+			},
+			"libgdx-brutality-b": {
+				"translate": [
+					{
+						"time": 9.6,
+						"curve": [ 9.731, 0, 9.869, 0, 9.707, 4.21, 9.851, 49.02 ]
+					},
+					{
+						"time": 10,
+						"y": 42.34,
+						"curve": [ 10.131, 0, 10.269, 0, 10.107, 37.57, 10.25, -4.27 ]
+					},
+					{ "time": 10.4, "y": -5.65 }
+				]
+			},
+			"libgdx-brutality-i": {
+				"translate": [
+					{
+						"time": 10.2,
+						"curve": [ 10.331, 0, 10.436, 0, 10.307, 4.21, 10.418, 49.02 ]
+					},
+					{
+						"time": 10.5667,
+						"y": 42.34,
+						"curve": [ 10.697, 0, 10.836, 0, 10.673, 37.57, 10.817, -4.27 ]
+					},
+					{ "time": 10.9667, "y": -5.65 }
+				]
+			},
+			"libgdx-brutality-l": {
+				"translate": [
+					{
+						"time": 10.1,
+						"curve": [ 10.231, 0, 10.336, 0, 10.207, 4.21, 10.318, 49.02 ]
+					},
+					{
+						"time": 10.4667,
+						"y": 42.34,
+						"curve": [ 10.597, 0, 10.736, 0, 10.573, 37.57, 10.717, -4.27 ]
+					},
+					{ "time": 10.8667, "y": -5.65 }
+				]
+			},
+			"libgdx-brutality-r": {
+				"translate": [
+					{
+						"time": 9.7,
+						"curve": [ 9.831, 0, 9.969, 0, 9.807, 4.21, 9.951, 49.02 ]
+					},
+					{
+						"time": 10.1,
+						"y": 42.34,
+						"curve": [ 10.231, 0, 10.336, 0, 10.207, 37.57, 10.317, -4.27 ]
+					},
+					{ "time": 10.4667, "y": -5.65 }
+				]
+			},
+			"libgdx-brutality-t": {
+				"translate": [
+					{
+						"time": 9.9,
+						"curve": [ 10.031, 0, 10.169, 0, 10.007, 4.21, 10.151, 49.02 ]
+					},
+					{
+						"time": 10.3,
+						"y": 42.34,
+						"curve": [ 10.431, 0, 10.536, 0, 10.407, 37.57, 10.517, -4.27 ]
+					},
+					{ "time": 10.6667, "y": -5.65 }
+				]
+			},
+			"libgdx-brutality-t_1": {
+				"translate": [
+					{
+						"time": 10.3,
+						"curve": [ 10.431, 0, 10.536, 0, 10.407, 4.21, 10.518, 49.02 ]
+					},
+					{
+						"time": 10.6667,
+						"y": 42.34,
+						"curve": [ 10.797, 0, 10.936, 0, 10.773, 37.57, 10.917, -4.27 ]
+					},
+					{ "time": 11.0667, "y": -5.65 }
+				]
+			},
+			"libgdx-brutality-u": {
+				"translate": [
+					{
+						"time": 9.8,
+						"curve": [ 9.931, 0, 10.069, 0, 9.907, 4.21, 10.051, 49.02 ]
+					},
+					{
+						"time": 10.2,
+						"y": 42.34,
+						"curve": [ 10.331, 0, 10.436, 0, 10.307, 37.57, 10.417, -4.27 ]
+					},
+					{ "time": 10.5667, "y": -5.65 }
+				]
+			},
+			"libgdx-brutality-y": {
+				"translate": [
+					{
+						"time": 10.4,
+						"curve": [ 10.531, 0, 10.636, 0, 10.507, 4.21, 10.618, 49.02 ]
+					},
+					{
+						"time": 10.7667,
+						"y": 42.34,
+						"curve": [ 10.897, 0, 11.036, 0, 10.873, 37.57, 11.017, -4.27 ]
+					},
+					{ "time": 11.1667, "y": -5.65 }
+				]
+			},
+			"libgdx-spikes": {
+				"translate": [
+					{ "y": 216.6, "curve": "stepped" },
+					{ "time": 6.7667, "y": 216.6 },
+					{ "time": 6.9333, "y": 37.52 }
+				]
+			},
+			"libgdx-l": {
+				"rotate": [
+					{ "time": 6.5 },
+					{ "time": 6.6333, "value": -62.9 },
+					{ "time": 6.7667 }
+				],
+				"translate": [
+					{ "time": 4.2667 },
+					{ "time": 4.3667, "x": 155.31, "curve": "stepped" },
+					{ "time": 6.5, "x": 155.31 },
+					{ "time": 6.6333, "x": 161.04, "y": -142.6 },
+					{ "time": 6.7667, "x": 217.59, "y": -25.41 },
+					{ "time": 6.9333, "x": 217.59, "y": -424.08 }
+				]
+			},
+			"libgdx-x": {
+				"translate": [
+					{ "time": 4.5 },
+					{ "time": 4.6333, "x": 12.7 },
+					{ "time": 4.8, "x": -2.05 },
+					{ "time": 4.9, "x": 18.03 },
+					{ "time": 5.0333, "x": 2.87 },
+					{ "time": 5.1667, "x": 24.18 },
+					{ "time": 5.3333, "x": 9.42 },
+					{ "time": 5.4333, "x": 27.46 },
+					{ "time": 5.5667, "x": 10.65 },
+					{ "time": 5.7, "x": 34.42 },
+					{ "time": 5.8667, "x": 10.24 },
+					{ "time": 5.9667, "x": 34.83 },
+					{ "time": 6.1, "x": 17.21 },
+					{ "time": 6.2333, "x": 40.16 },
+					{ "time": 6.4, "x": 18.44 },
+					{ "time": 6.5, "x": 44.26 },
+					{ "time": 6.6333, "x": 29.09, "curve": "stepped" },
+					{ "time": 6.7, "x": 29.09 },
+					{ "time": 6.8, "x": 29.09, "y": 74.17 },
+					{ "time": 6.9333, "x": 9.91, "y": 191.27 }
+				]
+			},
+			"target": {
+				"translate": [
+					{ "time": 4.3667 },
+					{ "time": 4.5, "x": -60.37, "y": -33.62 },
+					{ "time": 4.6333, "x": 73, "y": -12.25 },
+					{ "time": 4.8, "x": -56.05, "y": -21.23 },
+					{ "time": 4.9, "x": 71.63, "y": -3.91 },
+					{ "time": 5.0333, "x": -58.02, "y": -15.31 },
+					{ "time": 5.1667, "x": 62.14, "y": -4.36 },
+					{ "time": 5.3333, "x": -54.38, "y": -25.9 },
+					{ "time": 5.4333, "x": 59.76, "y": -3.33 },
+					{ "time": 5.5667, "x": -52.51, "y": -13.31 },
+					{ "time": 5.7, "x": 55.57, "y": 5.65 },
+					{ "time": 5.8667, "x": -60.47, "y": -5.24 },
+					{ "time": 5.9667, "x": 70.34, "y": 0.31 },
+					{ "time": 6.1, "x": -51.69, "y": -18.31 },
+					{ "time": 6.2333, "x": 59.38, "y": -2.89 },
+					{ "time": 6.4, "x": -59.38, "y": -16.85 },
+					{ "time": 6.5, "x": 53.16, "y": -3.61 },
+					{ "time": 6.6333, "x": -67.72, "y": -28.08 }
+				]
+			},
+			"target2": {
+				"translate": [
+					{ "time": 4.3667, "x": -52.44, "y": 12.18 },
+					{ "time": 4.5, "x": 54.55, "y": 37.81 },
+					{ "time": 4.6333, "x": -31.04, "y": 17.39 },
+					{ "time": 4.8, "x": 64.01, "y": 37.84 },
+					{ "time": 4.9, "x": -38.69, "y": 19.26 },
+					{ "time": 5.0333, "x": 58.84, "y": 34.98 },
+					{ "time": 5.1667, "x": -28.72, "y": 20.49 },
+					{ "time": 5.3333, "x": 59.38, "y": 36.58 },
+					{ "time": 5.4333, "x": -31.61, "y": 15.38 },
+					{ "time": 5.5667, "x": 60.78, "y": 43.46 },
+					{ "time": 5.7, "x": -46.72, "y": 11.71 },
+					{ "time": 5.8667, "x": 54.58, "y": 43.15 },
+					{ "time": 5.9667, "x": -41.35, "y": 12.08 },
+					{ "time": 6.1, "x": 53.26, "y": 42.03 },
+					{ "time": 6.2333, "x": -35.29, "y": 15.69 },
+					{ "time": 6.4, "x": 53.39, "y": 43.66 },
+					{ "time": 6.5, "x": -68.98, "y": 20.96 },
+					{ "time": 6.6333, "x": 4.32, "y": 111.08 }
+				]
+			}
+		},
+		"events": [
+			{ "time": 0.0667, "name": "sfx/libgdx intro" },
+			{ "time": 2.2333, "name": "sfx/libgdx round1" },
+			{ "time": 4.5, "name": "sfx/libgdx-hurt" },
+			{ "time": 4.5, "name": "sfx/libgdx-punch" },
+			{ "time": 4.6, "name": "sfx/libgdx-punch" },
+			{ "time": 4.8, "name": "sfx/libgdx-hurt" },
+			{ "time": 4.8, "name": "sfx/libgdx-punch" },
+			{ "time": 4.9, "name": "sfx/libgdx-punch" },
+			{ "time": 5.0333, "name": "sfx/libgdx-hurt" },
+			{ "time": 5.0333, "name": "sfx/libgdx-punch" },
+			{ "time": 5.1667, "name": "sfx/libgdx-punch" },
+			{ "time": 5.3333, "name": "sfx/libgdx-hurt" },
+			{ "time": 5.3333, "name": "sfx/libgdx-punch" },
+			{ "time": 5.4333, "name": "sfx/libgdx-punch" },
+			{ "time": 5.5667, "name": "sfx/libgdx-hurt" },
+			{ "time": 5.5667, "name": "sfx/libgdx-punch" },
+			{ "time": 5.7, "name": "sfx/libgdx-punch" },
+			{ "time": 5.8667, "name": "sfx/libgdx-hurt" },
+			{ "time": 5.8667, "name": "sfx/libgdx-punch" },
+			{ "time": 5.9667, "name": "sfx/libgdx-punch" },
+			{ "time": 6.1, "name": "sfx/libgdx-hurt" },
+			{ "time": 6.1, "name": "sfx/libgdx-punch" },
+			{ "time": 6.2333, "name": "sfx/libgdx-punch" },
+			{ "time": 6.4, "name": "sfx/libgdx-punch" },
+			{ "time": 6.5, "name": "sfx/libgdx-punch" },
+			{ "time": 6.6667, "name": "sfx/libgdx-die" },
+			{ "time": 6.7333, "name": "sfx/libgdx-punch" },
+			{ "time": 7.8, "name": "sfx/libgdx wins" }
+		]
+	}
+}
+}
