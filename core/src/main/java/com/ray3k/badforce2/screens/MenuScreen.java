@@ -6,7 +6,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.esotericsoftware.spine.AnimationState.AnimationStateAdapter;
@@ -17,7 +21,7 @@ import com.ray3k.badforce2.SpineImage;
 
 import static com.ray3k.badforce2.Core.*;
 
-public class Ray3KScreen extends ScreenAdapter {
+public class MenuScreen extends ScreenAdapter {
     private Stage stage;
     private FillViewport viewport;
 
@@ -32,34 +36,15 @@ public class Ray3KScreen extends ScreenAdapter {
         root.setTouchable(Touchable.enabled);
         stage.addActor(root);
 
-        onClick(root, this::nextScreen);
+        root.defaults().space(30);
+        var image = new Image(skin, "title");
+        image.setScaling(Scaling.fit);
+        root.add(image);
 
-        var skeletonData = skeletonJson.readSkeletonData(Gdx.files.internal("spine/ray3k.json"));
-        var animationData = new AnimationStateData(skeletonData);
-
-        var image = new SpineImage(skeletonRenderer, skeletonData, animationData);
-        image.setCrop(0, 0, 1024, 576);
-        root.add(image).grow();
-
-        var skeleton = image.getSkeleton();
-        var animation = image.getAnimationState();
-
-        animation.setAnimation(0, "animation", false);
-        animation.addListener(new AnimationStateAdapter() {
-            @Override
-            public void event(TrackEntry entry, Event event) {
-                var path = event.getData().getAudioPath();
-                if (path != null) {
-                    var sound = Gdx.audio.newSound(Gdx.files.internal(path));
-                    sound.play();
-                }
-            }
-
-            @Override
-            public void complete(TrackEntry entry) {
-                stage.addAction(Actions.delay(2f, Actions.run(() -> nextScreen())));
-            }
-        });
+        root.row();
+        var button = new ImageButton(skin);
+        root.add(button);
+        onChange(button, this::nextScreen);
     }
 
     @Override
@@ -80,6 +65,6 @@ public class Ray3KScreen extends ScreenAdapter {
     }
 
     private void nextScreen() {
-        core.setScreen(new MenuScreen());
+        core.setScreen(new SplashScreen());
     }
 }
