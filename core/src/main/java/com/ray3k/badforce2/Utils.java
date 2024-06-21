@@ -11,6 +11,7 @@ import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonBounds;
 import com.ray3k.badforce2.behaviours.SpineBehaviour;
+import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.UnBox;
 
@@ -44,6 +45,10 @@ public class Utils {
         };
         clickListener.setButton(Buttons.RIGHT);
         actor.addListener(clickListener);
+    }
+
+    public static Body getBody(Behaviour behaviour) {
+        return getBody(behaviour.getGameObject());
     }
 
     public static Body getBody(GameObject gameObject) {
