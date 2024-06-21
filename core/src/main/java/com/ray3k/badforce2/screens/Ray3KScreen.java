@@ -14,6 +14,7 @@ import com.esotericsoftware.spine.AnimationState.TrackEntry;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.Event;
 import com.ray3k.badforce2.SpineImage;
+import com.ray3k.badforce2.Utils;
 
 import static com.ray3k.badforce2.Core.*;
 
@@ -32,7 +33,7 @@ public class Ray3KScreen extends ScreenAdapter {
         root.setTouchable(Touchable.enabled);
         stage.addActor(root);
 
-        onClick(root, this::nextScreen);
+        Utils.onClick(root, this::nextScreen);
 
         var skeletonData = skeletonJson.readSkeletonData(Gdx.files.internal("spine/ray3k.json"));
         var animationData = new AnimationStateData(skeletonData);

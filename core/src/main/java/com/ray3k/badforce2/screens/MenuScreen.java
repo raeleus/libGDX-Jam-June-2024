@@ -5,19 +5,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.esotericsoftware.spine.AnimationState.AnimationStateAdapter;
-import com.esotericsoftware.spine.AnimationState.TrackEntry;
-import com.esotericsoftware.spine.AnimationStateData;
-import com.esotericsoftware.spine.Event;
-import com.ray3k.badforce2.SpineImage;
+import com.ray3k.badforce2.Utils;
 
 import static com.ray3k.badforce2.Core.*;
 
@@ -44,7 +38,7 @@ public class MenuScreen extends ScreenAdapter {
         root.row();
         var button = new ImageButton(skin);
         root.add(button);
-        onChange(button, this::nextScreen);
+        Utils.onChange(button, this::nextScreen);
     }
 
     @Override
@@ -65,6 +59,6 @@ public class MenuScreen extends ScreenAdapter {
     }
 
     private void nextScreen() {
-        core.setScreen(new SplashScreen());
+        core.setScreen(new GameScreen());
     }
 }

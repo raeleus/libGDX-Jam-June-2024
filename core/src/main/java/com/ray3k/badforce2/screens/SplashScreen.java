@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.ray3k.badforce2.Utils;
 
 import static com.ray3k.badforce2.Core.*;
 
@@ -27,8 +28,8 @@ public class SplashScreen extends ScreenAdapter {
         root.setTouchable(Touchable.enabled);
         stage.addActor(root);
 
-        onClick(root, () -> core.setScreen(new LibGDXScreen()));
-        onRightClick(root, () -> core.setScreen(new Ray3KScreen()));
+        Utils.onClick(root, () -> core.setScreen(new LibGDXScreen()));
+        Utils.onRightClick(root, () -> core.setScreen(new GameScreen()));
 
         var label = new Label("CLICK TO PLAY", skin);
         root.add(label);
