@@ -1,5 +1,6 @@
 package com.ray3k.badforce2.behaviours.slope;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectSet;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import dev.lyze.gdxUnBox2d.Behaviour;
@@ -32,6 +34,8 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     public float deltaX;
     public float deltaY;
     public float gravityY;
+    public long timestamp;
+    public long lastTimestamp;
 
     /**
      * The radius of the circle foot fixture that will contact the ground.
@@ -182,7 +186,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     public float lateralStopDeceleration = 2f;
     /**
      * How close the character has to be to a cliff edge to trigger the eventCliffEdge method.
-     * @see SlopeCharacterBehaviour#eventCliffEdge(float, boolean)
+     * @see SlopeCharacterBehaviour#eventCliffEdge(boolean)
      */
     public float walkCliffEdgeDistance = .2f;
 
@@ -839,21 +843,26 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         torsoFixture.getFilterData().maskBits = CATEGORY_BOUNDS;
 
         gravityY = gravity;
+        timestamp = TimeUtils.millis();
+        lastTimestamp = timestamp;
     }
 
     @Override
     public void fixedUpdate() {
         var body = getBody(this);
         float delta = getUnBox().getOptions().getMaxFixedFrameTime();
+
+//        lastTimestamp = timestamp;
+//        timestamp = TimeUtils.millis();
+//        float delta = (timestamp - lastTimestamp) / 100f;
         checkIfGrounded();
 
-        checkIfOnCliff(delta);
+        checkIfOnCliff();
 
         inputLeft = false;
         inputRight = false;
         var lastInputJump = inputJump;
         inputJump = false;
-        inputJumpJustPressed -= delta;
         inputWallClimbDown = false;
         inputWallClimbUp = false;
         inputPassThroughFloor = false;
@@ -868,6 +877,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         coyoteTimer -= delta;
         wallJumpTimer -= delta;
         midairJumpTimer -= delta;
+        inputJumpJustPressed -= delta;
         handleControls();
         if (inputJump && !lastInputJump) inputJumpJustPressed = jumpTriggerDelay;
         if (inputSwing && !lastInputSwing) inputSwingJustPressed = true;
@@ -886,7 +896,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             swingJointAngle = 0;
         }
 
-        handleMovement(delta);
+        handleMovement();
 
         deltaY += gravityY * getUnBox().getOptions().getMaxFixedFrameTime();
         body.setLinearVelocity(deltaX, deltaY);
@@ -991,7 +1001,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         }
     }
 
-    private void checkIfOnCliff(float delta) {
+    private void checkIfOnCliff() {
         var body = getBody(this);
         for (var fixture : touchedGroundFixtures) {
             var boundsData = (BoundsData) fixture.getUserData();
@@ -1013,18 +1023,18 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             var nextAngle = ((BoundsData) boundsData.nextFixture.getUserData()).angle;
             if (rayCastedGroundFixture != null) {
                 if (closeToLeftPoint && !isEqual360(previousAngle, 90, maxSlideAngle)) {
-                    eventCliffEdge(delta, false);
+                    eventCliffEdge(false);
                     break;
                 } else if (closeToRightPoint && !isEqual360(nextAngle, 90, maxSlideAngle)) {
-                    eventCliffEdge(delta, true);
+                    eventCliffEdge(true);
                     break;
                 }
             } else {
                 if (body.getPosition().x < temp1.x && !isEqual360(previousAngle, 90, maxSlideAngle)) {
-                    eventCliffEdge(delta, false);
+                    eventCliffEdge(false);
                     break;
                 } else if (body.getPosition().x > temp2.x && !isEqual360(nextAngle, 90, maxSlideAngle)) {
-                    eventCliffEdge(delta, true);
+                    eventCliffEdge(true);
                     break;
                 }
             }
@@ -1150,63 +1160,56 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * This event is called for every frame the character is grounded and left or right input is received. This is not
      * called when the character is walkReversing.
-     * @param delta
      * @param lateralSpeed
      * @param groundAngle
-     * @see SlopeCharacterBehaviour#eventWalkReversing(float, float, float)
+     * @see SlopeCharacterBehaviour#eventWalkReversing(float, float)
      */
-    public abstract void eventWalking(float delta, float lateralSpeed, float groundAngle);
+    public abstract void eventWalking(float lateralSpeed, float groundAngle);
 
     /**
      * This event is called for every frame the character is grounded and has walking momentum, but is not applying left or
      * right input.
-     * @param delta
      * @param lateralSpeed
      * @param groundAngle
      */
-    public abstract void eventWalkStopping(float delta, float lateralSpeed, float groundAngle);
+    public abstract void eventWalkStopping(float lateralSpeed, float groundAngle);
 
     /**
      * This event is called once the character has come to a halt while grounded.
-     * @param delta
      */
-    public abstract void eventWalkStop(float delta);
+    public abstract void eventWalkStop();
 
     /**
      * This event is called every frame that the character is grounded and is calling an input that makes them move in the
      * opposite direction of their momentum. This overrides the walking event.
-     * @param delta
      * @param lateralSpeed
      * @param groundAngle
-     * @see SlopeCharacterBehaviour#eventWalking(float, float, float)
+     * @see SlopeCharacterBehaviour#eventWalking(float, float)
      */
-    public abstract void eventWalkReversing(float delta, float lateralSpeed, float groundAngle);
+    public abstract void eventWalkReversing(float lateralSpeed, float groundAngle);
 
     /**
      * This event is called every frame when the character is calling an input that makes them walk up a slope that
      * would typically make them slide down. Only called if allowWalkUpSlides is true.
-     * @param delta
      * @param lateralSpeed
      * @param groundAngle
      * @see SlopeCharacterBehaviour#allowWalkUpSlides
      */
-    public abstract void eventWalkingSlide(float delta, float lateralSpeed, float groundAngle);
+    public abstract void eventWalkingSlide(float lateralSpeed, float groundAngle);
 
     /**
      * This event is called every frame when the character is pushing against a wall while walking.
-     * @param delta
      * @param wallAngle
      */
-    public abstract void eventWalkPushingWall(float delta, float wallAngle);
+    public abstract void eventWalkPushingWall(float wallAngle);
 
     /**
      * This event is called every frame when the character is standing close to an edge. This is determined by the
      * walkCliffEdgeDistance from the character's (x,y) position.
-     * @param delta
      * @param right
      * @see SlopeCharacterBehaviour#walkCliffEdgeDistance
      */
-    public abstract void eventCliffEdge(float delta, boolean right);
+    public abstract void eventCliffEdge(boolean right);
 
     /**
      * This event is called when a new ground fixture is touched while walking or falling and touching the ground.
@@ -1219,248 +1222,215 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
     /**
      * This event is called every frame while the character is sliding down a slope as defined by maxWalkAngle/maxSlideAngle.
-     * @param delta
      * @param lateralSpeed
      * @param groundAngle
      * @param slidingAngle
      * @see SlopeCharacterBehaviour#maxWalkAngle
      * @see SlopeCharacterBehaviour#maxSlideAngle
      */
-    public abstract void eventSlideSlope(float delta, float lateralSpeed, float groundAngle, float slidingAngle);
+    public abstract void eventSlideSlope(float lateralSpeed, float groundAngle, float slidingAngle);
 
     /**
      * This event is called every frame while the character is pushing against a wall while sliding.
-     * @param delta
      * @param wallAngle
      */
-    public abstract void eventSlidePushingWall(float delta, float wallAngle);
+    public abstract void eventSlidePushingWall(float wallAngle);
 
     /**
      * This event is called once when the character initiates a jump.
-     * @param delta
      */
-    public abstract void eventJump(float delta);
+    public abstract void eventJump();
 
     /**
      * This event is called once when the character releases the jump input. It is not called if the character continues to
      * hold the input past the apex of the jump.
-     * @param delta
-     * @see SlopeCharacterBehaviour#eventJumpApex(float)
+     * @see SlopeCharacterBehaviour#eventJumpApex()
      */
-    public abstract void eventJumpReleased(float delta);
+    public abstract void eventJumpReleased();
 
     /**
      * This event is called when the character moves while falling
      * @param lateralSpeed
-     * @param delta
      */
-    public abstract void eventFallMoving(float delta, float lateralSpeed);
+    public abstract void eventFallMoving(float lateralSpeed);
 
     /**
      * This event is called once when the character reaches the apex of their jump.
-     * @param delta
      */
-    public abstract void eventJumpApex(float delta);
+    public abstract void eventJumpApex();
 
     /**
      * This event is called once when the character initiates a jump while sliding on a slope as defined by maxWalkAngle/maxSlideAngle.
-     * @param delta
      * @see SlopeCharacterBehaviour#maxWalkAngle
      * @see SlopeCharacterBehaviour#maxSlideAngle
      * @see SlopeCharacterBehaviour#allowJumpingWhileSliding
      */
-    public abstract void eventJumpFromSlide(float delta);
+    public abstract void eventJumpFromSlide();
 
     /**
      * This event is called once when the character initiates a midair jump.
-     * @param delta
      * @see SlopeCharacterBehaviour#midairJumps
      */
-    public abstract void eventJumpMidair(float delta);
+    public abstract void eventJumpMidair();
 
     /**
      * This event is called once when the chracter is jumping and hits a ceiling.
-     * @param delta
      * @param ceilingAngle
      * @see SlopeCharacterBehaviour#maxCeilingAngle
      */
-    public abstract void eventHitHead(float delta, float ceilingAngle);
+    public abstract void eventHitHead(float ceilingAngle);
 
     /**
      * This event is called every frame while the character is falliing in the air.
-     * @param delta
      */
-    public abstract void eventFalling(float delta);
+    public abstract void eventFalling();
 
     /**
      * This event is called every frame while the character is falling and touching a wall.
-     * @param delta
      * @param wallAngle
      **/
-    public abstract void eventFallingTouchingWall(float delta, float wallAngle);
+    public abstract void eventFallingTouchingWall(float wallAngle);
 
     /**
      * This event is called once when the character has landed from a fall.
-     * @param delta
      * @param groundAngle
      **/
-    public abstract void eventLand(float delta, float groundAngle);
+    public abstract void eventLand(float groundAngle);
 
     /**
      * This event is called once when the character has first clinged to a wall.
-     * @param delta
      * @param wallAngle
      **/
-    public abstract void eventWallCling(float delta, float wallAngle);
+    public abstract void eventWallCling(float wallAngle);
 
     /**
      * This event is called once when the character has released from a wall.
-     * @param delta
      */
-    public abstract void eventReleaseWallCling(float delta);
+    public abstract void eventReleaseWallCling();
 
     /**
      * This event is called every frame when the character is sliding down a wall.
-     * @param delta
      * @param wallAngle
      **/
-    public abstract void eventWallSliding(float delta, float wallAngle);
+    public abstract void eventWallSliding(float wallAngle);
 
     /**
      * This event is called every frame when the character is climbing up or down a wall.
-     * @param delta
      * @param wallAngle
      **/
-    public abstract void eventWallClimbing(float delta, float wallAngle);
+    public abstract void eventWallClimbing(float wallAngle);
 
     /**
      * This event is called once when the character has climbed to the top of a wall and is propelled upwards.
-     * @param delta
      **/
-    public abstract void eventWallClimbReachedTop(float delta);
+    public abstract void eventWallClimbReachedTop();
 
     /**
      * This event is called once when the character is clinging to a wall and initiates a jump.
-     * @param delta
      * @param wallAngle
      **/
-    public abstract void eventWallJump(float delta, float wallAngle);
+    public abstract void eventWallJump(float wallAngle);
 
     /**
      * This event is called once when the character grabs a ledge.
-     * @param delta
      * @param wallAngle
      */
-    public abstract void eventGrabLedge(float delta, float wallAngle);
+    public abstract void eventGrabLedge(float wallAngle);
 
     /**
      * This event is called once when the character releases from a ledge;
-     * @param delta
      */
-    public abstract void eventReleaseGrabLedge(float delta);
+    public abstract void eventReleaseGrabLedge();
 
     /**
      * This event is called once when the character is clinging to a wall and initiates a jump.
-     * @param delta
      * @param wallAngle
      */
-    public abstract void eventLedgeJump(float delta, float wallAngle);
+    public abstract void eventLedgeJump(float wallAngle);
 
     /**
      * This event is called every frame when the character is pushing against a wall while moving horizontally when
      * clinging to a ceiling.
-     * @param delta
      * @param wallContactAngle
      */
-    public abstract void eventCeilingClingPushingWall(float delta, float wallContactAngle);
+    public abstract void eventCeilingClingPushingWall(float wallContactAngle);
 
     /**
      * This event is called once the character has come to a halt while clinging to a ceiling.
-     * @param delta
      */
-    public abstract void eventCeilingClingStop(float delta);
+    public abstract void eventCeilingClingStop();
 
     /**
      * This event is called for every frame the character is clinging to a ceiling and has horizontal momentum, but is
      * not applying left or right input.
-     * @param previousSwingDelta
      * @param lateralSpeed
      * @param ceilingAngle
      */
-    public abstract void eventCeilingClingStopping(float previousSwingDelta, float lateralSpeed, float ceilingAngle);
+    public abstract void eventCeilingClingStopping(float lateralSpeed, float ceilingAngle);
 
     /**
      * This event is called for every frame the character is clinging to a ceiling and left or right input is received.
      * This is not called when the character is moveReversing.
-     * @param delta
      * @param lateralSpeed
      * @param ceilingAngle
-     * @see SlopeCharacterBehaviour#eventCeilingClingMovingReversing(float, float, float)
+     * @see SlopeCharacterBehaviour#eventCeilingClingMovingReversing(float, float)
      */
-    public abstract void eventCeilingClingMoving(float delta, float lateralSpeed, float ceilingAngle);
+    public abstract void eventCeilingClingMoving(float lateralSpeed, float ceilingAngle);
 
     /**
      * This event is called every frame that the character is clinging to a ceiling and is calling an input that makes
      * them move in the opposite direction of their momentum. This overrides the moving event.
-     * @param delta
      * @param lateralSpeed
      * @param groundAngle
-     * @see SlopeCharacterBehaviour#eventCeilingClingMoving(float, float, float)
+     * @see SlopeCharacterBehaviour#eventCeilingClingMoving(float, float)
      */
-    public abstract void eventCeilingClingMovingReversing(float delta, float lateralSpeed, float groundAngle);
+    public abstract void eventCeilingClingMovingReversing(float lateralSpeed, float groundAngle);
 
     /**
      * This event is called once when the character releases from clinging to the ceiling.
-     * @param delta
      */
-    public abstract void eventCeilingClingReleased(float delta);
+    public abstract void eventCeilingClingReleased();
     /**
      * This event is called every frame when the character is pushing against a wall while in magnet mode.
-     * @param delta
      * @param wallContactAngle
      */
-    public abstract void eventMagnetPushingWall(float delta, float wallContactAngle);
+    public abstract void eventMagnetPushingWall(float wallContactAngle);
 
     /**
      * This event is called once the character has come to a halt while in magnet mode.
-     * @param delta
      */
-    public abstract void eventMagnetStop(float delta);
+    public abstract void eventMagnetStop();
 
     /**
      * This event is called for every frame the character is in magnet mode and has horizontal momentum, but is
      * not applying left or right input.
-     * @param previousSwingDelta
      * @param lateralSpeed
      * @param ceilingAngle
      */
-    public abstract void eventMagnetStopping(float previousSwingDelta, float lateralSpeed, float ceilingAngle);
+    public abstract void eventMagnetStopping(float lateralSpeed, float ceilingAngle);
 
     /**
      * This event is called for every frame the character is in magnet mode and left or right input is received.
      * This is not called when the character is moveReversing.
-     * @param delta
      * @param lateralSpeed
      * @param ceilingAngle
-     * @see SlopeCharacterBehaviour#eventCeilingClingMovingReversing(float, float, float)
+     * @see SlopeCharacterBehaviour#eventCeilingClingMovingReversing(float, float)
      */
-    public abstract void eventMagnetMoving(float delta, float lateralSpeed, float ceilingAngle);
+    public abstract void eventMagnetMoving(float lateralSpeed, float ceilingAngle);
 
     /**
      * This event is called every frame that the character is in magnet mode and is calling an input that makes
      * them move in the opposite direction of their momentum. This overrides the moving event.
-     * @param delta
      * @param lateralSpeed
      * @param groundAngle
-     * @see SlopeCharacterBehaviour#eventCeilingClingMoving(float, float, float)
+     * @see SlopeCharacterBehaviour#eventCeilingClingMoving(float, float)
      */
-    public abstract void eventMagnetMovingReversing(float delta, float lateralSpeed, float groundAngle);
+    public abstract void eventMagnetMovingReversing(float lateralSpeed, float groundAngle);
 
     /**
      * This event is called once when the character deactivates magnet mode.
-     * @param delta
      */
-    public abstract void eventMagnetReleased(float delta);
+    public abstract void eventMagnetReleased();
     /**
      * This event is called once when the character begins to pass through the bottom side of a passThrough bounds.
      * @param fixture
@@ -1473,50 +1443,44 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
     /**
      * This event is called once when the character initiates a swing while in the air.
-     * @param delta
      * @param swingAngle
      * @param lateralSpeed
      **/
-    public abstract void eventSwing(float delta, float swingAngle, float lateralSpeed);
+    public abstract void eventSwing(float swingAngle, float lateralSpeed);
 
     /**
      * This event is called every frame while the character is swinging.
-     * @param delta
      * @param swingAngle
      * @param lateralSpeed
      **/
-    public abstract void eventSwinging(float delta, float swingAngle, float lateralSpeed);
+    public abstract void eventSwinging(float swingAngle, float lateralSpeed);
 
     /**
      * This event is called once when the character releases the input for a swing.
-     * @param delta
      * @param swingAngle
      * @param lateralSpeed
      * @param automaticRelease
      **/
-    public abstract void eventSwingReleased(float delta, float swingAngle, float lateralSpeed, boolean automaticRelease);
+    public abstract void eventSwingReleased(float swingAngle, float lateralSpeed, boolean automaticRelease);
 
     /**
      * This event is called once when the swing is cancelled from the character colliding with a wall.
-     * @param delta
      * @param swingAngle
      * @param lateralSpeed
      **/
-    public abstract void eventSwingCrashWall(float delta, float swingAngle, float lateralSpeed);
+    public abstract void eventSwingCrashWall(float swingAngle, float lateralSpeed);
 
     /**
      * This event is called once when the swing is cancelled from the character colliding with the ground.
-     * @param delta
      * @param swingAngle
      * @param lateralSpeed
      **/
-    public abstract void eventSwingCrashGround(float delta, float swingAngle, float lateralSpeed);
+    public abstract void eventSwingCrashGround(float swingAngle, float lateralSpeed);
 
     /**
      * Handles the movement of the character after collision detection has been applied.
-     * @param delta
      */
-    private void handleMovement(float delta) {
+    private void handleMovement() {
         var body = getBody(this);
         //determine if the character is clinging to a wall.
         var lastClingingToWall = clingingToWall;
@@ -1545,7 +1509,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             }
         }
 
-        if (lastClingingToWall && !clingingToWall) eventReleaseWallCling(delta);
+        if (lastClingingToWall && !clingingToWall) eventReleaseWallCling();
 
         //determine if the character is grabbing a ledge.
         var lastGrabbingLedge = grabbingLedge;
@@ -1595,10 +1559,10 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             }
         }
 
-        if (lastGrabbingLedge && !grabbingLedge) eventReleaseGrabLedge(delta);
+        if (lastGrabbingLedge && !grabbingLedge) eventReleaseGrabLedge();
         if (grounded && lastClingingToWall) {
             lateralSpeed = 0;
-            eventReleaseWallCling(delta);
+            eventReleaseWallCling();
         }
 
         //check if the character is clinging to a ceiling fixture.
@@ -1662,12 +1626,12 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         if (previousSwinging && swinging && allowSwingTerminationAtApex && swingAnchorOrigin != null && !MathUtils.isZero(previousSwingDelta)) {
             if (Math.signum(swingDelta) != Math.signum(previousSwingDelta)) {
                 swinging = false;
-                eventSwingReleased(delta, swingAngle, lateralSpeed, true);
+                eventSwingReleased(swingAngle, lateralSpeed, true);
             }
         } else if (previousSwinging && !swinging) {
-            if (touchingWall) eventSwingCrashWall(delta, swingAngle, lateralSpeed);
-            else if (!falling) eventSwingCrashGround(delta, swingAngle, lateralSpeed);
-            else eventSwingReleased(delta, swingAngle, lateralSpeed, false);
+            if (touchingWall) eventSwingCrashWall(swingAngle, lateralSpeed);
+            else if (!falling) eventSwingCrashGround(swingAngle, lateralSpeed);
+            else eventSwingReleased(swingAngle, lateralSpeed, false);
         }
 
         //Walking
@@ -1687,9 +1651,9 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                 var goRight = inputRight ? 1f : -1f;
                 accelerating = Math.signum(lateralSpeed) == goRight;
                 var acceleration = accelerating ? lateralAcceleration : lateralDeceleration;
-                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, goRight * lateralMaxSpeed, goRight * acceleration * delta, maintainExtraLateralMomentum);
+                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, goRight * lateralMaxSpeed, goRight * acceleration, maintainExtraLateralMomentum);
             } else {
-                lateralSpeed = Utils.throttledDeceleration(lateralSpeed, lateralMaxSpeed, lateralStopMinDeceleration * delta, lateralStopDeceleration * delta);
+                lateralSpeed = Utils.throttledDeceleration(lateralSpeed, lateralMaxSpeed, lateralStopMinDeceleration, lateralStopDeceleration);
                 stopping = true;
             }
 
@@ -1703,15 +1667,15 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
             addMotion(lateralSpeed, contactAngle - 90f);
 
-            if (justLanded) eventLand(delta, groundAngle);
+            if (justLanded) eventLand(groundAngle);
 
-            if (pushingWall) eventWalkPushingWall(delta, wallContactAngle);
+            if (pushingWall) eventWalkPushingWall(wallContactAngle);
             else if (stopping) {
-                if (MathUtils.isZero(lateralSpeed)) eventWalkStop(delta);
-                else eventWalkStopping(delta, lateralSpeed, groundAngle);
+                if (MathUtils.isZero(lateralSpeed)) eventWalkStop();
+                else eventWalkStopping(lateralSpeed, groundAngle);
             } else {
-                if (accelerating) eventWalking(delta, lateralSpeed, groundAngle);
-                else eventWalkReversing(delta, lateralSpeed, groundAngle);
+                if (accelerating) eventWalking(lateralSpeed, groundAngle);
+                else eventWalkReversing(lateralSpeed, groundAngle);
             }
         }
         //Sliding
@@ -1733,23 +1697,23 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             var walking = false;
             var pushingWall = false;
 
-            if (justLanded) eventLand(delta, groundAngle);
+            if (justLanded) eventLand(groundAngle);
 
             if (allowWalkUpSlides && (inputRight || inputLeft)) {
                 slideDown = false;
                 var goRight = inputRight ? 1f : -1f;
                 var acceleration = Math.signum(lateralSpeed) == goRight ? lateralAcceleration : lateralDeceleration;
-                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, goRight * lateralMaxSpeed, goRight * acceleration * delta, maintainExtraLateralMomentum);
+                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, goRight * lateralMaxSpeed, goRight * acceleration, maintainExtraLateralMomentum);
                 walking = true;
             }
 
             if (slideDown) {
                 if (isEqual360(contactAngle, 0, 90)) {
                     lateralSpeed = Utils.throttledAcceleration(lateralSpeed, lateralSlideMaxSpeed,
-                        lateralSlideAcceleration * delta, maintainExtraLateralMomentum);
+                        lateralSlideAcceleration, maintainExtraLateralMomentum);
                 } else {
                     lateralSpeed = Utils.throttledAcceleration(lateralSpeed, -lateralSlideMaxSpeed,
-                        -lateralSlideAcceleration * delta, maintainExtraLateralMomentum);
+                        -lateralSlideAcceleration, maintainExtraLateralMomentum);
                 }
             }
 
@@ -1763,9 +1727,9 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
             addMotion(lateralSpeed, contactAngle - 90f);
 
-            if (pushingWall) eventSlidePushingWall(delta, wallContactAngle);
-            else if (walking) eventWalkingSlide(delta, lateralSpeed, groundAngle);
-            else eventSlideSlope(delta, lateralSpeed, groundAngle, contactAngle - 90f);
+            if (pushingWall) eventSlidePushingWall(wallContactAngle);
+            else if (walking) eventWalkingSlide(lateralSpeed, groundAngle);
+            else eventSlideSlope(lateralSpeed, groundAngle, contactAngle - 90f);
         }
         //Grabbing a ledge
         else if (grabbingLedge && !magneting) {
@@ -1775,14 +1739,14 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             temp1.set(0, ledgeGrabYadjustment / getUnBox().getOptions().getMaxFixedFrameTime());
             body.setLinearVelocity(temp1);
             gravityY = 0;
-            if (!lastGrabbingLedge) eventGrabLedge(delta, wallContactAngle);
+            if (!lastGrabbingLedge) eventGrabLedge(wallContactAngle);
         }
         //Clinging to a wall
         else if (clingingToWall && !magneting) {
             movementMode = WALL_CLINGING;
             gravityY = 0;
             if (!lastClingingToWall) {
-                eventWallCling(delta, wallFixtureAngle);
+                eventWallCling(wallFixtureAngle);
                 lateralSpeed = deltaY;
                 jumping = false;
             }
@@ -1791,13 +1755,13 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             var climbing = 0;
             if (allowClimbWalls && (inputWallClimbUp || inputWallClimbDown)) {
                 climbing = inputWallClimbUp ? 1 : -1;
-                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, climbing * wallClimbMaxSpeed, climbing * wallClimbAcceleration * delta, false);
+                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, climbing * wallClimbMaxSpeed, climbing * wallClimbAcceleration, false);
             } else {
                 if (allowClimbWalls) lateralSpeed = Utils.throttledDeceleration(lateralSpeed, wallClimbMaxSpeed, wallClimbMinDeceleration, wallClimbDeceleration);
                 else {
                     if (lateralSpeed > 0)
-                        lateralSpeed = approach(lateralSpeed, 0, wallSlideUpDeceleration * delta);
-                    else lateralSpeed += -Math.abs(wallSlideDownAcceleration) * delta;
+                        lateralSpeed = approach(lateralSpeed, 0, wallSlideUpDeceleration);
+                    else lateralSpeed += -Math.abs(wallSlideDownAcceleration);
                 }
 
                 var maxSpeed = Math.abs(wallSlideMaxSpeed);
@@ -1807,9 +1771,9 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             addMotion(lateralSpeed, wallContactAngle + (wallToRight ? -90 : 90));
 
             if (climbing != 0) {
-                eventWallClimbing(delta, wallFixtureAngle);
+                eventWallClimbing(wallFixtureAngle);
             } else {
-                eventWallSliding(delta, wallFixtureAngle);
+                eventWallSliding(wallFixtureAngle);
             }
         }
         //Clinging to a ceiling
@@ -1829,9 +1793,9 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                 var goRight = inputRight ? 1f : -1f;
                 accelerating = Math.signum(lateralSpeed) == goRight;
                 var acceleration = accelerating ? ceilingClingLateralAcceleration : ceilingClingLateralDeceleration;
-                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, goRight * ceilingClingLateralMaxSpeed, goRight * acceleration * delta, maintainExtraLateralMomentum);
+                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, goRight * ceilingClingLateralMaxSpeed, goRight * acceleration, maintainExtraLateralMomentum);
             } else {
-                lateralSpeed = Utils.throttledDeceleration(lateralSpeed, ceilingClingLateralMaxSpeed, ceilingClingLateralStopMinDeceleration * delta, ceilingClingLateralStopDeceleration * delta);
+                lateralSpeed = Utils.throttledDeceleration(lateralSpeed, ceilingClingLateralMaxSpeed, ceilingClingLateralStopMinDeceleration , ceilingClingLateralStopDeceleration);
                 stopping = true;
             }
 
@@ -1845,15 +1809,15 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
             addMotion(lateralSpeed, ceilingAngle + 90f);
 
-            if (justLanded) eventLand(delta, ceilingAngle);
+            if (justLanded) eventLand(ceilingAngle);
 
-            if (pushingWall) eventCeilingClingPushingWall(delta, wallContactAngle);
+            if (pushingWall) eventCeilingClingPushingWall(wallContactAngle);
             else if (stopping) {
-                if (MathUtils.isZero(lateralSpeed)) eventCeilingClingStop(delta);
-                else eventCeilingClingStopping(delta, lateralSpeed, ceilingAngle);
+                if (MathUtils.isZero(lateralSpeed)) eventCeilingClingStop();
+                else eventCeilingClingStopping(lateralSpeed, ceilingAngle);
             } else {
-                if (accelerating) eventCeilingClingMoving(delta, lateralSpeed, ceilingAngle);
-                else eventCeilingClingMovingReversing(delta, lateralSpeed, ceilingAngle);
+                if (accelerating) eventCeilingClingMoving(lateralSpeed, ceilingAngle);
+                else eventCeilingClingMovingReversing(lateralSpeed, ceilingAngle);
             }
         } else if (magneting) {
             movementMode = MAGNETING;
@@ -1876,7 +1840,8 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                 }
 
                 if (magnetFixture == null && touchedTorsoMagnetFixtures.size == 0) {
-                    magnetNoContactTimer -= delta;
+                    //todo:fix this one
+//                    magnetNoContactTimer -= delta;
                     if (magnetNoContactTimer <= 0) {
                         magneting = false;
                         magnetGoRight = 0;
@@ -1901,24 +1866,24 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                     accelerating = Math.signum(lateralSpeed) == magnetGoRight;
                     var acceleration = accelerating ? magnetLateralAcceleration : magnetLateralDeceleration;
                     lateralSpeed = Utils.throttledAcceleration(lateralSpeed, magnetGoRight * magnetLateralMaxSpeed,
-                        magnetGoRight * acceleration * delta, maintainExtraLateralMomentum);
+                        magnetGoRight * acceleration, maintainExtraLateralMomentum);
                 } else {
                     magnetGoRight = 0;
                     lateralSpeed = Utils.throttledDeceleration(lateralSpeed, magnetLateralMaxSpeed,
-                        magnetLateralStopMinDeceleration * delta, magnetLateralStopDeceleration * delta);
+                        magnetLateralStopMinDeceleration, magnetLateralStopDeceleration);
                     stopping = true;
                 }
 
                 addMotion(lateralSpeed, magnetWallAngle + 90f);
 
-                if (justLanded) eventLand(delta, magnetWallAngle);
+                if (justLanded) eventLand(magnetWallAngle);
 
                 if (stopping) {
-                    if (MathUtils.isZero(lateralSpeed)) eventMagnetStop(delta);
-                    else eventMagnetStopping(delta, lateralSpeed, ceilingAngle);
+                    if (MathUtils.isZero(lateralSpeed)) eventMagnetStop();
+                    else eventMagnetStopping(lateralSpeed, ceilingAngle);
                 } else {
-                    if (accelerating) eventMagnetMoving(delta, lateralSpeed, magnetWallAngle);
-                    else eventMagnetMovingReversing(delta, lateralSpeed, magnetWallAngle);
+                    if (accelerating) eventMagnetMoving(lateralSpeed, magnetWallAngle);
+                    else eventMagnetMovingReversing(lateralSpeed, magnetWallAngle);
                 }
 
                 if (inputJump) {
@@ -1930,7 +1895,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                     coyoteTimer = 0;
                     inputJumpJustPressed = 0;
                     movingPlatformFixtures.clear();
-                    eventJump(delta);
+                    eventJump();
                     setMotion(magnetJumpSpeed, magnetWallAngle);
                 }
             } else {
@@ -1995,19 +1960,18 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                 else body.setLinearVelocity(body.getLinearVelocity().x + temp1.x, body.getLinearVelocity().y + temp1.y);
             }
 
-            body.applyLinearImpulse(0, swingGravity * delta, anchorCharacterX, anchorCharacterY, true);
-            body.setLinearVelocity(body.getLinearVelocity().x * (1 - swingFriction * delta), body.getLinearVelocity().y * (1 - swingFriction * delta));
-
+            body.applyLinearImpulse(0, swingGravity , anchorCharacterX, anchorCharacterY, true);
+            body.setLinearVelocity(body.getLinearVelocity().x * (1 - swingFriction), body.getLinearVelocity().y * (1 - swingFriction));
 
             if (inputRight || inputLeft) {
                 lateralSpeed = body.getLinearVelocity().x;
                 var goRight = inputRight ? 1f : -1f;
-                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, goRight * lateralSwingMaxSpeed, goRight * lateralSwingAcceleration * delta, maintainExtraLateralMomentum);
+                lateralSpeed = Utils.throttledAcceleration(lateralSpeed, goRight * lateralSwingMaxSpeed, goRight * lateralSwingAcceleration, maintainExtraLateralMomentum);
                 body.setLinearVelocity(lateralSpeed, body.getLinearVelocity().y);
             }
 
-            if (justSwinged) eventSwing(delta, swingAngle, lateralSpeed);
-            eventSwinging(delta, swingAngle,  lateralSpeed);
+            if (justSwinged) eventSwing(swingAngle, lateralSpeed);
+            eventSwinging(swingAngle,  lateralSpeed);
         }
         //Falling in the air (or jumping up)
         else {
@@ -2020,14 +1984,14 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                 var goRight = inputRight ? 1f : -1f;
                 var acceleration = Math.signum(deltaX) == goRight ? lateralAirAcceleration : lateralAirDeceleration;
                 if (wallJumping) acceleration = lateralAirWallJumpingAcceleration;
-                deltaX = Utils.throttledAcceleration(deltaX, goRight * lateralAirMaxSpeed, goRight * acceleration * delta, maintainExtraLateralMomentum);
+                deltaX = Utils.throttledAcceleration(deltaX, goRight * lateralAirMaxSpeed, goRight * acceleration, maintainExtraLateralMomentum);
             } else {
-                deltaX = Utils.throttledDeceleration(deltaX, lateralAirMaxSpeed, lateralAirStopMinDeceleration * delta, lateralAirStopDeceleration * delta);
+                deltaX = Utils.throttledDeceleration(deltaX, lateralAirMaxSpeed, lateralAirStopMinDeceleration, lateralAirStopDeceleration);
             }
             lateralSpeed = deltaX;
 
             if (inputRight || inputLeft) {
-                eventFallMoving(delta, lateralSpeed);
+                eventFallMoving(lateralSpeed);
             }
 
             if (touchingWall && !hitHead) {
@@ -2037,26 +2001,26 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
             if (hitHead) {
                 if (deltaY > 0) deltaY = 0;
-                eventHitHead(delta, ceilingAngle);
+                eventHitHead(ceilingAngle);
             }
 
             if (jumping && deltaY > 0 && !inputJump) {
                 jumping = false;
                 wallJumping = false;
                 deltaY *= jumpReleaseDampening;
-                eventJumpReleased(delta);
+                eventJumpReleased();
             }
 
             if (jumping && !hitJumpApex && deltaY <= 0) {
                 hitJumpApex = true;
-                eventJumpApex(delta);
+                eventJumpApex();
             }
 
             var term = Math.abs(terminalVelocity);
             if (deltaY < -term) deltaY = -term;
 
-            if (touchingWall) eventFallingTouchingWall(delta, wallContactAngle);
-            else eventFalling(delta);
+            if (touchingWall) eventFallingTouchingWall(wallContactAngle);
+            else eventFalling();
         }
 
         //destroy the swing anchor bodies which also causes the joint to be destroyed.
@@ -2087,7 +2051,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             coyoteTimer = 0;
             deltaY = wallClimbLedgeJumpSpeed;
             movingPlatformFixtures.clear();
-            eventWallClimbReachedTop(delta);
+            eventWallClimbReachedTop();
         }
 
         //if grabbing a ledge and the character presses input to climb up
@@ -2098,7 +2062,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             coyoteTimer = 0;
             deltaY = ledgeGrabJumpSpeed;
             movingPlatformFixtures.clear();
-            eventWallClimbReachedTop(delta);
+            eventWallClimbReachedTop();
         }
 
         //if no longer clinging to the ceiling
@@ -2109,7 +2073,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             coyoteTimer = 0;
             deltaY = 0;
             movingPlatformFixtures.clear();
-            eventCeilingClingReleased(delta);
+            eventCeilingClingReleased();
         }
 
         //if initiating a wall jump
@@ -2124,7 +2088,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             inputJumpJustPressed = 0;
             movingPlatformFixtures.clear();
             setMotion(wallJumpSpeed, wallToRight ? 180 - wallJumpAngle : wallJumpAngle);
-            eventWallJump(delta, wallContactAngle);
+            eventWallJump(wallContactAngle);
         }
 
         //if initiating a ledge jump
@@ -2139,7 +2103,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             inputJumpJustPressed = 0;
             movingPlatformFixtures.clear();
             setMotion(wallJumpSpeed, wallToRight ? 180 - wallJumpAngle : wallJumpAngle);
-            eventLedgeJump(delta, wallContactAngle);
+            eventLedgeJump(wallContactAngle);
         }
 
         //if initiating a jump
@@ -2156,10 +2120,10 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             if (canMidairJump) {
                 midairJumpCounter++;
                 midairJumpTimer = midairJumpDelay;
-                eventJumpMidair(delta);
+                eventJumpMidair();
             } else {
-                if (allowJumpingWhileSliding && !canWalkOnSlope) eventJumpFromSlide(delta);
-                else eventJump(delta);
+                if (allowJumpingWhileSliding && !canWalkOnSlope) eventJumpFromSlide();
+                else eventJump();
             }
         }
 
