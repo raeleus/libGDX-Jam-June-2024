@@ -1,8 +1,10 @@
 package com.ray3k.badforce2;
 
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -11,6 +13,7 @@ import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonBounds;
 import com.ray3k.badforce2.behaviours.SpineBehaviour;
+import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.UnBox;
 
@@ -44,6 +47,10 @@ public class Utils {
         };
         clickListener.setButton(Buttons.RIGHT);
         actor.addListener(clickListener);
+    }
+
+    public static Body getBody(Behaviour behaviour) {
+        return getBody(behaviour.getGameObject());
     }
 
     public static Body getBody(GameObject gameObject) {
@@ -133,5 +140,27 @@ public class Utils {
         vector2.set(x2, y2);
         vector2.sub(x1, y1);
         return vector2.angleDeg();
+    }
+
+    public static boolean isEqual360(float a, float b, float tolerance) {
+        return MathUtils.isZero((a - b + 180 + 360) % 360 - 180, tolerance);
+    }
+
+    public static boolean isEqual360(float a, float b) {
+        return isEqual360(a, b, MathUtils.FLOAT_ROUNDING_ERROR);
+    }
+
+    public static float throttledAcceleration(float speed, float maxSpeed, float acceleration, boolean maintainExtraMomentum) {
+        acceleration *= (1 - speed / maxSpeed);
+        if (maintainExtraMomentum && Math.signum(acceleration) != Math.signum(maxSpeed)) {
+            acceleration = 0;
+        }
+        return speed + acceleration;
+    }
+
+    public static float throttledDeceleration(float speed, float maxSpeed, float minDeceleration, float deceleration) {
+        deceleration *= (1 - Math.abs(speed) / maxSpeed);
+        if (deceleration < minDeceleration) deceleration = minDeceleration;
+        return Utils.approach(speed, 0, deceleration);
     }
 }

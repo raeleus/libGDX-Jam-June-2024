@@ -20,7 +20,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.esotericsoftware.spine.AnimationStateData;
+import com.ray3k.badforce2.behaviours.PlayerBehaviour;
 import com.ray3k.badforce2.behaviours.SpineBehaviour;
+import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.UnBox;
@@ -50,19 +52,21 @@ public class GameScreen extends ScreenAdapter {
         root.setTouchable(Touchable.enabled);
         stage.addActor(root);
 
-        unBox = new UnBox(new World(new Vector2(0, -10f), true));
+        unBox = new UnBox(new World(new Vector2(), true));
         debugRenderer = new Box2DDebugRenderer();
 
         var player = new GameObject(unBox);
         var bodyDef = new BodyDef();
         bodyDef.type = BodyType.DynamicBody;
+        bodyDef.fixedRotation = true;
         new Box2dBehaviour(bodyDef, player);
+        new PlayerBehaviour(player);
 
-        var position = new Vector2(.1f, 1.2f);
-        new CreateBoxFixtureBehaviour(.5f, .75f, position, player);
-
-        position = new Vector2(.1f, .45f);
-        new CreateCircleFixtureBehaviour(position, .5f, player);
+//        var position = new Vector2(.1f, 1.2f);
+//        new CreateBoxFixtureBehaviour(.5f, .75f, position, player);
+//
+//        position = new Vector2(.1f, .45f);
+//        new CreateCircleFixtureBehaviour(position, .5f, player);
 
         var spine = new SpineBehaviour(player, "spine/player.json");
         spine.skeleton.setScale(1/PPM, 1/PPM);
@@ -74,7 +78,7 @@ public class GameScreen extends ScreenAdapter {
         bodyDef.type = BodyType.StaticBody;
         new Box2dBehaviour(bodyDef, ground);
 
-        position = new Vector2(0f, -5f);
+        var position = new Vector2(0f, -5f);
         new CreateBoxFixtureBehaviour(8f, .5f, position, ground);
     }
 
