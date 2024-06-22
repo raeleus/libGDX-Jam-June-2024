@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.ray3k.badforce2.behaviours.PlayerBehaviour;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.UnBox;
@@ -54,18 +53,8 @@ public class GameScreen extends ScreenAdapter {
         var player = new GameObject(unBox);
         var bodyDef = new BodyDef();
         bodyDef.type = BodyType.DynamicBody;
-//        bodyDef.linearVelocity.set(.25f, .25f);
         new Box2dBehaviour(bodyDef, player);
         new CreateBoxFixtureBehaviour(1, 1, player);
-        new PlayerBehaviour(player);
-
-        var block = new GameObject(unBox);
-        bodyDef = new BodyDef();
-        bodyDef.type = BodyType.DynamicBody;
-        bodyDef.position.set(3, 2);
-//        bodyDef.linearVelocity.set(.25f, .25f);
-        new Box2dBehaviour(bodyDef, block);
-        new CreateBoxFixtureBehaviour(1, 1, block);
     }
 
     @Override

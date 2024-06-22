@@ -2,9 +2,9 @@
 eclipse.project.name = appName + '-core'
 
 dependencies {
-  implementation "org.aya-prover.gdx-box2d:box2d:$box2dVersion"
+  api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
   api "com.esotericsoftware.spine:spine-libgdx:$spineRuntimeVersion"
-  api "lyze.dev:gdx-UnBox2D:$unbox2dVersion"
+  api "com.github.lyze237:gdx-UnBox2D:$unbox2dVersion"
   api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 }

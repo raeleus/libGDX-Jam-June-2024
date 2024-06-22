@@ -13,7 +13,6 @@ import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateFixtureBehaviour;
  */
 public class CreateEdgeShapeFixtureBehaviour extends CreateFixtureBehaviour {
     private final Array<EdgeShape> edges;
-    private static final Vector2 v0 = new Vector2(), v1 = new Vector2(), v2 = new Vector2(), v3 = new Vector2();
 
     public CreateEdgeShapeFixtureBehaviour(float[] vertices, GameObject gameObject, boolean oneSided) {
         this(vertices, Vector2.Zero, gameObject, oneSided);
@@ -30,19 +29,17 @@ public class CreateEdgeShapeFixtureBehaviour extends CreateFixtureBehaviour {
         for (int i = 0; i <= vertices.length - 2; i += 2) {
             if (!oneSided) {
                 var v2Index = i == vertices.length - 2 ? 0 : i + 2;
-                v1.set(vertices[i], vertices[i + 1]);
-                v2.set(vertices[v2Index], vertices[v2Index + 1]);
+                edge.set(vertices[i], vertices[i + 1], vertices[v2Index], vertices[v2Index + 1]);
 
                 if (vertices.length == 4) continue;
 
                 var v0Index = i == 0 ? vertices.length - 2 : i - 2;
-                v0.set(vertices[v0Index], vertices[v0Index + 1]);
+                edge.setVertex0(vertices[v0Index], vertices[v0Index + 1]);
 
                 var v3Index = v2Index + 2;
                 if (v3Index >= vertices.length) v3Index -= vertices.length;
-                v3.set(vertices[v3Index], vertices[v3Index + 1]);
+                edge.setVertex3(vertices[v3Index], vertices[v3Index + 1]);
 
-                edge.setOneSided(v0, v1, v2, v3);
             }
         }
     }
