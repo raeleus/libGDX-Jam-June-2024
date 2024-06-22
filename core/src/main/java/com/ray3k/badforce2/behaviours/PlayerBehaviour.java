@@ -34,7 +34,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     }
 
     @Override
-    public void eventCeilingClingMoving(float lateralSpeed, float ceilingAngle) {
+    public void eventCeilingClingMoving(float delta, float lateralSpeed, float ceilingAngle) {
 
     }
 
@@ -43,7 +43,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     }
 
     @Override
-    public void eventWalking(float lateralSpeed, float groundAngle) {
+    public void eventWalking(float delta, float lateralSpeed, float groundAngle) {
         updateFacingDirection(lateralSpeed);
 
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land")) return;
@@ -51,33 +51,33 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     }
 
     @Override
-    public void eventWalkStopping(float lateralSpeed, float groundAngle) {
+    public void eventWalkStopping(float delta, float lateralSpeed, float groundAngle) {
         updateFacingDirection(lateralSpeed);
     }
 
     @Override
-    public void eventWalkStop() {
+    public void eventWalkStop(float delta) {
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land")) return;
         setAnimation(0, "standing", true, this);
     }
 
     @Override
-    public void eventWalkReversing(float lateralSpeed, float groundAngle) {
+    public void eventWalkReversing(float delta, float lateralSpeed, float groundAngle) {
 
     }
 
     @Override
-    public void eventWalkingSlide(float lateralSpeed, float groundAngle) {
+    public void eventWalkingSlide(float delta, float lateralSpeed, float groundAngle) {
 
     }
 
     @Override
-    public void eventWalkPushingWall(float wallAngle) {
+    public void eventWalkPushingWall(float delta, float wallAngle) {
         setAnimation(0, "walling", true, this);
     }
 
     @Override
-    public void eventCliffEdge(boolean right) {
+    public void eventCliffEdge(float delta, boolean right) {
 
     }
 
@@ -88,164 +88,164 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     }
 
     @Override
-    public void eventSlideSlope(float lateralSpeed, float groundAngle, float slidingAngle) {
+    public void eventSlideSlope(float delta, float lateralSpeed, float groundAngle, float slidingAngle) {
 
     }
 
     @Override
-    public void eventSlidePushingWall(float wallAngle) {
+    public void eventSlidePushingWall(float delta, float wallAngle) {
 
     }
 
     @Override
-    public void eventJump() {
+    public void eventJump(float delta) {
         setAnimation(0, "jump", false, this);
         addAnimation(0, "jumping", true, 0, this);
     }
 
     @Override
-    public void eventJumpReleased() {
+    public void eventJumpReleased(float delta) {
         setAnimation(0, "falling", true, this);
     }
 
     @Override
-    public void eventJumpApex() {
+    public void eventJumpApex(float delta) {
         setAnimation(0, "falling", true, this);
     }
 
     @Override
-    public void eventFallMoving(float lateralSpeed) {
+    public void eventFallMoving(float delta, float lateralSpeed) {
         updateFacingDirection(lateralSpeed);
     }
 
     @Override
-    public void eventJumpFromSlide() {
+    public void eventJumpFromSlide(float delta) {
 
     }
 
     @Override
-    public void eventJumpMidair() {
+    public void eventJumpMidair(float delta) {
 
     }
 
     @Override
-    public void eventHitHead(float ceilingAngle) {
+    public void eventHitHead(float delta, float ceilingAngle) {
 
     }
 
     @Override
-    public void eventFalling() {
+    public void eventFalling(float delta) {
 
     }
 
     @Override
-    public void eventFallingTouchingWall(float wallAngle) {
+    public void eventFallingTouchingWall(float delta, float wallAngle) {
 
     }
 
     @Override
-    public void eventLand(float groundAngle) {
+    public void eventLand(float delta, float groundAngle) {
         setAnimation(0, "land", false, this);
         addAnimation(0, "standing", true, 0, this);
     }
 
     @Override
-    public void eventWallCling(float wallAngle) {
+    public void eventWallCling(float delta, float wallAngle) {
 
     }
 
     @Override
-    public void eventReleaseWallCling() {
+    public void eventReleaseWallCling(float delta) {
 
     }
 
     @Override
-    public void eventWallSliding(float wallAngle) {
+    public void eventWallSliding(float delta, float wallAngle) {
 
     }
 
     @Override
-    public void eventWallClimbing(float wallAngle) {
+    public void eventWallClimbing(float delta, float wallAngle) {
 
     }
 
     @Override
-    public void eventWallClimbReachedTop() {
+    public void eventWallClimbReachedTop(float delta) {
 
     }
 
     @Override
-    public void eventWallJump(float wallAngle) {
+    public void eventWallJump(float delta, float wallAngle) {
 
     }
 
     @Override
-    public void eventGrabLedge(float wallAngle) {
+    public void eventGrabLedge(float delta, float wallAngle) {
 
     }
 
     @Override
-    public void eventReleaseGrabLedge() {
+    public void eventReleaseGrabLedge(float delta) {
 
     }
 
     @Override
-    public void eventLedgeJump(float wallAngle) {
+    public void eventLedgeJump(float delta, float wallAngle) {
 
     }
 
     @Override
-    public void eventCeilingClingPushingWall(float wallContactAngle) {
+    public void eventCeilingClingPushingWall(float delta, float wallContactAngle) {
 
     }
 
     @Override
-    public void eventCeilingClingStop() {
+    public void eventCeilingClingStop(float delta) {
 
     }
 
     @Override
-    public void eventCeilingClingStopping(float lateralSpeed, float ceilingAngle) {
+    public void eventCeilingClingStopping(float previousSwingDelta, float lateralSpeed, float ceilingAngle) {
 
     }
 
     @Override
-    public void eventCeilingClingMovingReversing(float lateralSpeed, float groundAngle) {
+    public void eventCeilingClingMovingReversing(float delta, float lateralSpeed, float groundAngle) {
 
     }
 
     @Override
-    public void eventCeilingClingReleased() {
+    public void eventCeilingClingReleased(float delta) {
 
     }
 
     @Override
-    public void eventMagnetPushingWall(float wallContactAngle) {
+    public void eventMagnetPushingWall(float delta, float wallContactAngle) {
 
     }
 
     @Override
-    public void eventMagnetStop() {
+    public void eventMagnetStop(float delta) {
 
     }
 
     @Override
-    public void eventMagnetStopping(float lateralSpeed, float ceilingAngle) {
+    public void eventMagnetStopping(float previousSwingDelta, float lateralSpeed, float ceilingAngle) {
 
     }
 
     @Override
-    public void eventMagnetMoving(float lateralSpeed, float ceilingAngle) {
+    public void eventMagnetMoving(float delta, float lateralSpeed, float ceilingAngle) {
 
     }
 
     @Override
-    public void eventMagnetMovingReversing(float lateralSpeed, float groundAngle) {
+    public void eventMagnetMovingReversing(float delta, float lateralSpeed, float groundAngle) {
 
     }
 
     @Override
-    public void eventMagnetReleased() {
+    public void eventMagnetReleased(float delta) {
 
     }
 
@@ -256,27 +256,27 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     }
 
     @Override
-    public void eventSwing(float swingAngle, float lateralSpeed) {
+    public void eventSwing(float delta, float swingAngle, float lateralSpeed) {
 
     }
 
     @Override
-    public void eventSwinging(float swingAngle, float lateralSpeed) {
+    public void eventSwinging(float delta, float swingAngle, float lateralSpeed) {
 
     }
 
     @Override
-    public void eventSwingReleased(float swingAngle, float lateralSpeed, boolean automaticRelease) {
+    public void eventSwingReleased(float delta, float swingAngle, float lateralSpeed, boolean automaticRelease) {
 
     }
 
     @Override
-    public void eventSwingCrashWall(float swingAngle, float lateralSpeed) {
+    public void eventSwingCrashWall(float delta, float swingAngle, float lateralSpeed) {
 
     }
 
     @Override
-    public void eventSwingCrashGround(float swingAngle, float lateralSpeed) {
+    public void eventSwingCrashGround(float delta, float swingAngle, float lateralSpeed) {
 
     }
 }
