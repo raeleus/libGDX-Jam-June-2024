@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "v8dS+fkAR1o",
+	"hash": "nA6KzZQnvzo",
 	"spine": "4.2.31",
 	"x": -47.53,
 	"y": 4.37,
@@ -696,6 +696,55 @@
 			"target": [
 				{}
 			]
+		}
+	},
+	"clinging-to-wall": {
+		"bones": {
+			"arm-front": {
+				"rotate": [
+					{ "value": -41.57 }
+				]
+			},
+			"forearm-front": {
+				"rotate": [
+					{ "value": -24.22 }
+				]
+			},
+			"arm-back": {
+				"rotate": [
+					{ "value": 107.7 }
+				]
+			},
+			"forearm-back": {
+				"rotate": [
+					{ "value": -57.66 }
+				]
+			},
+			"foreleg-front": {
+				"rotate": [
+					{ "value": -94.75 }
+				]
+			},
+			"leg-front": {
+				"rotate": [
+					{ "value": 78.63 }
+				]
+			},
+			"foreleg-back": {
+				"rotate": [
+					{ "value": -58.42 }
+				]
+			},
+			"leg-back": {
+				"rotate": [
+					{ "value": 47.22 }
+				]
+			},
+			"head": {
+				"scale": [
+					{ "x": -1 }
+				]
+			}
 		}
 	},
 	"falling": {
@@ -1427,6 +1476,100 @@
 				"rotate": [
 					{ "value": -5.29 },
 					{ "time": 0.3333 }
+				]
+			}
+		}
+	},
+	"midair-jump": {
+		"bones": {
+			"hip": {
+				"rotate": [
+					{},
+					{ "time": 0.4, "value": -364.8 }
+				],
+				"translate": [
+					{ "x": -3.24, "y": 6.01 }
+				]
+			},
+			"foreleg-front": {
+				"rotate": [
+					{ "value": -0.96 },
+					{ "time": 0.1333, "value": -137.4 },
+					{ "time": 0.4, "value": -40.36 }
+				]
+			},
+			"leg-front": {
+				"rotate": [
+					{ "value": 2.12 },
+					{ "time": 0.1333, "value": 6.65 },
+					{ "time": 0.4, "value": 27.71 }
+				]
+			},
+			"foreleg-back": {
+				"rotate": [
+					{ "value": -0.8 },
+					{ "time": 0.1333, "value": -115.51 },
+					{ "time": 0.4, "value": -81.92 }
+				]
+			},
+			"leg-back": {
+				"rotate": [
+					{ "value": -3.27 },
+					{ "time": 0.4, "value": 60.88 }
+				]
+			},
+			"foot-front": {
+				"rotate": [
+					{ "value": -55.07 },
+					{ "time": 0.4, "value": -11.33 }
+				]
+			},
+			"foot-back": {
+				"rotate": [
+					{ "value": -60.42 },
+					{ "time": 0.4, "value": -28.06 }
+				]
+			},
+			"arm-back": {
+				"rotate": [
+					{ "value": 11.15 },
+					{ "time": 0.1333, "value": 42.34 },
+					{ "time": 0.4, "value": 25.75 }
+				]
+			},
+			"forearm-back": {
+				"rotate": [
+					{ "value": -96.46 },
+					{ "time": 0.1333, "value": 19.49 },
+					{ "time": 0.4, "value": -8.2 }
+				]
+			},
+			"body": {
+				"rotate": [
+					{ "value": -3.53 },
+					{ "time": 0.1333, "value": -95.13 },
+					{ "time": 0.4, "value": -12.62 }
+				]
+			},
+			"head": {
+				"rotate": [
+					{ "value": 32.86 },
+					{ "time": 0.1333, "value": -19.21 },
+					{ "time": 0.4, "value": -17.32 }
+				]
+			},
+			"arm-front": {
+				"rotate": [
+					{ "value": 1.2 },
+					{ "time": 0.1333, "value": 49.92 },
+					{ "time": 0.4, "value": 52.4 }
+				]
+			},
+			"forearm-front": {
+				"rotate": [
+					{ "value": -91.62 },
+					{ "time": 0.1333, "value": -1.62 },
+					{ "time": 0.4, "value": -5.29 }
 				]
 			}
 		}

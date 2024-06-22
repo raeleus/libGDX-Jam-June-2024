@@ -3,7 +3,6 @@ package com.ray3k.badforce2.behaviours;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.esotericsoftware.spine.Skeleton.Physics;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
@@ -17,12 +16,18 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         super(0, .25f, .3f, 1.45f, gameObject);
         showDebug = true;
         setRenderOrder(DEBUG_RENDER_ORDER);
+        allowClingToWalls = true;
+        allowWallJump = true;
+        midairJumps = 1;
     }
 
     @Override
     public void handleControls() {
         if (Gdx.input.isKeyPressed(Keys.A)) moveLeft();
         else if (Gdx.input.isKeyPressed(Keys.D)) moveRight();
+
+        if (Gdx.input.isKeyPressed(Keys.A)) moveWallClingLeft();
+        else if (Gdx.input.isKeyPressed(Keys.D)) moveWallClingRight();
 
         if (Gdx.input.isKeyPressed(Keys.W)) moveJump();
     }
@@ -114,17 +119,20 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventJump(float delta) {
+        rotateRootBone(0);
         setAnimation(0, "jump", false, this);
         addAnimation(0, "jumping", true, 0, this);
     }
 
     @Override
     public void eventJumpReleased(float delta) {
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("midair-jump")) return;
         setAnimation(0, "falling", true, this);
     }
 
     @Override
     public void eventJumpApex(float delta) {
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("midair-jump")) return;
         setAnimation(0, "falling", true, this);
     }
 
@@ -140,7 +148,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventJumpMidair(float delta) {
-
+        setAnimation(0, "midair-jump", false, this);
+        addAnimation(0, "falling", true, 0, this);
     }
 
     @Override
@@ -167,12 +176,13 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventWallCling(float delta, float wallAngle) {
-
+        setAnimation(0, "clinging-to-wall", true, this);
     }
 
     @Override
     public void eventReleaseWallCling(float delta) {
-
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("midair-jump")) return;
+        setAnimation(0, "falling", true, this);
     }
 
     @Override
@@ -192,7 +202,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventWallJump(float delta, float wallAngle) {
-
+        setAnimation(0, "midair-jump", false, this);
+        addAnimation(0, "falling", true, 0, this);
     }
 
     @Override

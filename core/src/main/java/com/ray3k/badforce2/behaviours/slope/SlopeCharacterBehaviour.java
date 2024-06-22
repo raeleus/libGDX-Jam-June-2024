@@ -325,7 +325,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The speed of the wall jump.
      */
-    public float wallJumpSpeed = 12;
+    public float wallJumpSpeed = 20f;
     /**
      * The length of time when the character's acceleration is penalized from the wall jump. Acceleration returns to
      * normal afterwards.
@@ -371,7 +371,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The initial velocity of upwards movement when the character presses the jump input while in the air.
      */
-    public float midairJumpSpeed = 15;
+    public float midairJumpSpeed = 20f;
     /**
      * The delay between multiple midair jumps.
      */
