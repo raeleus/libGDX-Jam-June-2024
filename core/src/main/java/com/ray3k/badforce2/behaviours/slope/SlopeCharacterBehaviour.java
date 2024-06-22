@@ -73,7 +73,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The distance of the ray that begins at the bottom of the foot fixture and points downward to detect the ground. This must be sufficiently long enough in order to detect steep slopes.
      */
-    public float footRayDistance = .9f;
+    public float footRayDistance = 1.5f;
     /**
      * The distance of the ray that begins at the x and y coordinate of the character and points in the opposite direction of the magnetAngle
      * @see SlopeCharacterBehaviour#magnetWallAngle
@@ -189,12 +189,12 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The maximum speed that the character has when sliding down a slope.
      */
-    public float lateralSlideMaxSpeed = 10;
+    public float lateralSlideMaxSpeed = 10f;
     /**
      * The maximum accleration that the character has while sliding. The actual acceleration is diminished on a curve
      * as the character approaches lateralMaxSpeed.
      */
-    public float lateralSlideAcceleration = 40;
+    public float lateralSlideAcceleration = 1;
 
     /**
      * The maximum speed for left and right movement that the character is allowed to move in the air.
@@ -354,11 +354,11 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The signed gravity applied to the character while the character is in the air.
      */
-    public float gravity = -10;
+    public float gravity = -4;
     /**
      * The initial velocity of upwards movement when the character presses the jump input.
      */
-    public float jumpSpeed = 15;
+    public float jumpSpeed = 25f;
     /**
      * The maximum downward velocity when the character is in the air.
      */
@@ -2235,14 +2235,14 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         var fixture = getBody(this) == contact.getFixtureA().getBody() ? contact.getFixtureA() : contact.getFixtureB();
         var otherFixture = getBody(other) == contact.getFixtureA().getBody() ? contact.getFixtureA() : contact.getFixtureB();
 
-        if (other instanceof BoundsBehaviour) {
+        var bounds = other.getGameObject().getBehaviour(BoundsBehaviour.class);
+        if (bounds != null) {
             if (magneting && fixture == torsoFixture) {
                 contact.setEnabled(false);
                 touchedTorsoMagnetFixtures.add(otherFixture);
                 return;
             }
             var manifold = contact.getWorldManifold();
-            var bounds = (BoundsBehaviour) other;
             var boundsData = (BoundsData) otherFixture.getUserData();
             float normalAngle = manifold.getNormal().angleDeg();
             float fixtureAngle = boundsData.angle;
@@ -2306,12 +2306,12 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         var fixture = getBody(this) == contact.getFixtureA().getBody() ? contact.getFixtureA() : contact.getFixtureB();
         var otherFixture = getBody(other) == contact.getFixtureA().getBody() ? contact.getFixtureA() : contact.getFixtureB();
 
-        if (other instanceof BoundsBehaviour) {
+        var bounds = other.getGameObject().getBehaviour(BoundsBehaviour.class);
+        if (bounds != null) {
             if (magneting && fixture == torsoFixture) {
                 contact.setEnabled(false);
                 return false;
             }
-            var bounds = (BoundsBehaviour) other;
             var manifold = contact.getWorldManifold();
             float normalAngle = manifold.getNormal().angleDeg();
             var otherFixtureData = ((BoundsData) otherFixture.getUserData());
@@ -2373,9 +2373,8 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         var fixture = getBody(this) == contact.getFixtureA().getBody() ? contact.getFixtureA() : contact.getFixtureB();
         var otherFixture = getBody(other) == contact.getFixtureA().getBody() ? contact.getFixtureA() : contact.getFixtureB();
 
-        if (other instanceof BoundsBehaviour) {
-            var bounds = (BoundsBehaviour) other;
-
+        var bounds = other.getGameObject().getBehaviour(BoundsBehaviour.class);
+        if (bounds != null) {
             if (!checkContactEnabledPassThrough(bounds)) {
                 passThroughFixtures.removeValue(otherFixture, true);
             }
@@ -2397,9 +2396,8 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         var fixture = getBody(this) == contact.getFixtureA().getBody() ? contact.getFixtureA() : contact.getFixtureB();
         var otherFixture = getBody(other) == contact.getFixtureA().getBody() ? contact.getFixtureA() : contact.getFixtureB();
 
-        if (other instanceof BoundsBehaviour) {
-            var bounds = (BoundsBehaviour) other;
-
+        var bounds = other.getGameObject().getBehaviour(BoundsBehaviour.class);
+        if (bounds != null) {
             if (!checkContactEnabledPassThrough(bounds)) {
                 return false;
             }

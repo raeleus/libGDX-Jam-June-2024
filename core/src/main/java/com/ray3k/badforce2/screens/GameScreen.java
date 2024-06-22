@@ -79,7 +79,7 @@ public class GameScreen extends ScreenAdapter {
         bodyDef.position.set(0, -5f);
         new Box2dBehaviour(bodyDef, ground);
 
-        float[] points = new float[]{-5f, 1f, -5f, -1f, 5f, -1f, 5f, 1f, 3f, 1.5f, 2f, 1f};
+        float[] points = new float[]{-5f, 1f, -5f, -1f, 5f, -1f, 5f, 1f, 4f, 3f, 3f, 1.5f, 2f, 1f};
         new BoundsBehaviour(points, ground);
     }
 

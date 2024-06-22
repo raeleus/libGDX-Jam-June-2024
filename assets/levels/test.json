@@ -1,0 +1,53 @@
+{
+  "ogmoVersion": "3.4.0",
+  "width": 1024,
+  "height": 576,
+  "offsetX": 0,
+  "offsetY": 0,
+  "layers": [
+    {
+      "name": "entities",
+      "_eid": "06589198",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 128,
+      "gridCellsY": 72,
+      "entities": [
+        {"name": "player", "id": 1, "_eid": "06650666", "x": 488, "y": 312, "originX": 50, "originY": 200}
+      ]
+    },
+    {
+      "name": "platforms",
+      "_eid": "06580089",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 128,
+      "gridCellsY": 72,
+      "entities": [
+        {
+          "name": "platform",
+          "id": 1,
+          "_eid": "06641331",
+          "x": 184,
+          "y": 504,
+          "originX": 0,
+          "originY": 0,
+          "nodes": [
+            {"x": 184, "y": 376},
+            {"x": 120, "y": 376},
+            {"x": 120, "y": 544},
+            {"x": 960, "y": 544},
+            {"x": 960, "y": 272},
+            {"x": 904, "y": 424},
+            {"x": 808, "y": 480},
+            {"x": 616, "y": 504}
+          ]
+        }
+      ]
+    }
+  ]
+}
