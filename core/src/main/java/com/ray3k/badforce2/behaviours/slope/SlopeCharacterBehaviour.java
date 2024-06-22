@@ -2373,7 +2373,6 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                     wallContactAngle = normalAngle;
                     wallFixtureAngle = otherFixtureData.angle;
                 }
-                System.out.println("touchingWall = " + touchingWall);
             }
         }
         return false;

@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "gQYSRUxImjQ",
+	"hash": "v8dS+fkAR1o",
 	"spine": "4.2.31",
 	"x": -47.53,
 	"y": 4.37,
@@ -382,7 +382,7 @@
 		"skin": true,
 		"bone": "cape",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -393,7 +393,7 @@
 		"skin": true,
 		"bone": "cape2",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -404,7 +404,7 @@
 		"skin": true,
 		"bone": "cape3",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -415,7 +415,7 @@
 		"skin": true,
 		"bone": "cape4",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -426,7 +426,7 @@
 		"skin": true,
 		"bone": "cape5",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -437,7 +437,7 @@
 		"skin": true,
 		"bone": "cape6",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -448,7 +448,7 @@
 		"skin": true,
 		"bone": "cape7",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -459,7 +459,7 @@
 		"skin": true,
 		"bone": "cape8",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -470,7 +470,7 @@
 		"skin": true,
 		"bone": "cape9",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -481,7 +481,7 @@
 		"skin": true,
 		"bone": "cape10",
 		"rotate": 1,
-		"inertia": 0.2,
+		"inertia": 0.0913,
 		"strength": 37.5,
 		"damping": 0.85,
 		"gravity": 69.5
@@ -1166,6 +1166,97 @@
 			}
 		}
 	},
+	"jump-hit-head": {
+		"bones": {
+			"forearm-back": {
+				"rotate": [
+					{ "value": -96.46 },
+					{ "time": 0.1667, "value": 0.2 },
+					{ "time": 0.3333, "value": -8.2 }
+				]
+			},
+			"arm-back": {
+				"rotate": [
+					{ "value": 11.15 },
+					{ "time": 0.1667, "value": 11.9 },
+					{ "time": 0.3333, "value": 25.75 }
+				]
+			},
+			"hip": {
+				"translate": [
+					{ "x": -3.24, "y": 6.01 }
+				]
+			},
+			"leg-front": {
+				"rotate": [
+					{ "value": 2.12 },
+					{ "time": 0.1667, "value": 50.16 },
+					{ "time": 0.3333, "value": 27.71 }
+				]
+			},
+			"foreleg-front": {
+				"rotate": [
+					{ "value": -0.96 },
+					{ "time": 0.1667, "value": -95.77 },
+					{ "time": 0.3333, "value": -40.36 }
+				]
+			},
+			"foreleg-back": {
+				"rotate": [
+					{ "value": -0.8 },
+					{ "time": 0.1667, "value": -78.41 },
+					{ "time": 0.3333, "value": -81.92 }
+				]
+			},
+			"leg-back": {
+				"rotate": [
+					{ "value": -3.27 },
+					{ "time": 0.1667, "value": 27.51 },
+					{ "time": 0.3333, "value": 60.88 }
+				]
+			},
+			"body": {
+				"rotate": [
+					{ "value": -3.53 },
+					{ "time": 0.1667, "value": -50.64 },
+					{ "time": 0.3333, "value": -12.62 }
+				]
+			},
+			"foot-front": {
+				"rotate": [
+					{ "value": -55.07 },
+					{ "time": 0.3333, "value": -11.33 }
+				]
+			},
+			"foot-back": {
+				"rotate": [
+					{ "value": -60.42 },
+					{ "time": 0.3333, "value": -28.06 }
+				]
+			},
+			"head": {
+				"rotate": [
+					{ "value": 32.86 },
+					{ "time": 0.1667, "value": -8.83 },
+					{ "time": 0.3333, "value": -17.32 }
+				]
+			},
+			"arm-front": {
+				"rotate": [
+					{ "value": 1.2 },
+					{ "time": 0.1667, "value": 19.42 },
+					{ "time": 0.3333, "value": 52.4 }
+				]
+			},
+			"forearm-front": {
+				"rotate": [
+					{ "value": -91.62 },
+					{ "time": 0.1667, "value": 7.32 },
+					{ "time": 0.3333, "value": -5.29 }
+				]
+			}
+		}
+	},
 	"jumping": {
 		"bones": {
 			"forearm-back": {
@@ -1580,6 +1671,93 @@
 					{ "time": 0.6, "y": -28.49 },
 					{ "time": 0.7, "y": -8.41 },
 					{ "time": 0.8333, "y": 16.82 }
+				]
+			}
+		}
+	},
+	"sliding": {
+		"bones": {
+			"hip": {
+				"translate": [
+					{ "x": -11.02, "y": -70.57 }
+				]
+			},
+			"foreleg-front": {
+				"rotate": [
+					{ "value": -140.15 },
+					{ "time": 0.6667, "value": -135.48 },
+					{ "time": 1.3333, "value": -140.15 }
+				]
+			},
+			"leg-front": {
+				"rotate": [
+					{ "value": 91.03 }
+				]
+			},
+			"foreleg-back": {
+				"rotate": [
+					{ "value": 4.1 },
+					{ "time": 0.6667, "value": -8.38 },
+					{ "time": 1.3333, "value": 4.1 }
+				]
+			},
+			"leg-back": {
+				"rotate": [
+					{ "value": 70.75 },
+					{ "time": 0.6667, "value": 70.38 },
+					{ "time": 1.3333, "value": 70.75 }
+				]
+			},
+			"foot-front": {
+				"rotate": [
+					{ "value": 28.22 }
+				]
+			},
+			"foot-back": {
+				"rotate": [
+					{ "value": 1 }
+				]
+			},
+			"arm-back": {
+				"rotate": [
+					{ "value": 42.48 },
+					{ "time": 0.6667, "value": 52.31 },
+					{ "time": 1.3333, "value": 42.48 }
+				]
+			},
+			"forearm-back": {
+				"rotate": [
+					{ "value": 4.5 },
+					{ "time": 0.6667, "value": -23.63 },
+					{ "time": 1.3333, "value": 4.5 }
+				]
+			},
+			"body": {
+				"rotate": [
+					{ "value": -43 },
+					{ "time": 0.6667, "value": -38.58 },
+					{ "time": 1.3333, "value": -43 }
+				]
+			},
+			"head": {
+				"rotate": [
+					{ "value": 21.57 },
+					{ "time": 0.6667, "value": 10.59 },
+					{ "time": 1.3333, "value": 21.57 }
+				]
+			},
+			"arm-front": {
+				"rotate": [
+					{ "value": 47.4 },
+					{ "time": 0.6667, "value": 54.04 },
+					{ "time": 1.3333, "value": 47.4 }
+				]
+			},
+			"forearm-front": {
+				"rotate": [
+					{ "value": 0.28 },
+					{ "time": 0.6667, "value": 11.42 },
+					{ "time": 1.3333, "value": 0.28 }
 				]
 			}
 		}

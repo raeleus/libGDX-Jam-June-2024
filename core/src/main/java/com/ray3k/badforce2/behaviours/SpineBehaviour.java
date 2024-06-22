@@ -21,6 +21,7 @@ public class SpineBehaviour extends BehaviourAdapter {
     public Skeleton skeleton;
     public AnimationState animationState;
     public SkeletonBounds skeletonBounds;
+    public boolean useBodyRotation = true;
 
     public SpineBehaviour(GameObject gameObject, String skeletonDataPath) {
         super(gameObject);
@@ -63,10 +64,11 @@ public class SpineBehaviour extends BehaviourAdapter {
     @Override
     public void update(float delta) {
         skeleton.setPosition(getPosition(this).x, getPosition(this).y);
-        skeleton.getRootBone().setRotation(getBody(getGameObject()).getAngle() * MathUtils.radDeg);
+        if (useBodyRotation) skeleton.getRootBone().setRotation(getBody(getGameObject()).getAngle() * MathUtils.radDeg);
         animationState.update(delta);
-        skeleton.updateWorldTransform(Physics.update);
         animationState.apply(skeleton);
+        skeleton.update(delta);
+        skeleton.updateWorldTransform(Physics.update);
         skeletonBounds.update(skeleton, true);
     }
 

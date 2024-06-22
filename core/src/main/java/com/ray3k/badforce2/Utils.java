@@ -151,6 +151,11 @@ public class Utils {
         return start;
     }
 
+    public static float approach360(float start, float target, float increment) {
+        float delta = ((target - start + 360 + 180) % 360) - 180;
+        return (start + Math.signum(delta) * MathUtils.clamp(increment, 0.0f, Math.abs(delta)) + 360) % 360;
+    }
+
     /**
      * Determine if a polygon is wound clockwise. It may be concave or convex.
      * @param points

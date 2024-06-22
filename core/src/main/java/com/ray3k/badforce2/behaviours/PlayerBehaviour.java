@@ -3,6 +3,7 @@ package com.ray3k.badforce2.behaviours;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.esotericsoftware.spine.Skeleton.Physics;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
@@ -33,18 +34,28 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         gameCamera.position.set(getBody(this).getPosition().x, getBody(this).getPosition().y, 1f);
     }
 
+    private void updateFacingDirection(float lateralSpeed) {
+        getSkeleton(this).getRootBone().setScale((lateralSpeed < 0 ? -1f : 1f), 1f);
+    }
+
+    private void rotateRootBone(float angle) {
+        getSkeleton(this).getRootBone().setRotation(angle);
+    }
+
+    private void approachRotationRootBone(float angle, float increment) {
+        float rotation = getSkeleton(this).getRootBone().getRotation();
+        rotateRootBone(approach360(rotation, angle, increment));
+    }
+
     @Override
     public void eventCeilingClingMoving(float delta, float lateralSpeed, float ceilingAngle) {
 
     }
 
-    private void updateFacingDirection(float lateralSpeed) {
-        getSkeleton(this).getRootBone().setScale((lateralSpeed < 0 ? -1f : 1f), 1f);
-    }
-
     @Override
     public void eventWalking(float delta, float lateralSpeed, float groundAngle) {
         updateFacingDirection(lateralSpeed);
+        approachRotationRootBone(0, 360f * delta);
 
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land")) return;
         setAnimation(0, "running", true, this);
@@ -53,17 +64,19 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     @Override
     public void eventWalkStopping(float delta, float lateralSpeed, float groundAngle) {
         updateFacingDirection(lateralSpeed);
+        approachRotationRootBone(0, 360f * delta);
     }
 
     @Override
     public void eventWalkStop(float delta) {
+        approachRotationRootBone(0, 360f * delta);
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land")) return;
         setAnimation(0, "standing", true, this);
     }
 
     @Override
     public void eventWalkReversing(float delta, float lateralSpeed, float groundAngle) {
-
+        approachRotationRootBone(0, 360f * delta);
     }
 
     @Override
@@ -89,7 +102,9 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventSlideSlope(float delta, float lateralSpeed, float groundAngle, float slidingAngle) {
-
+        setAnimation(0, "sliding", true, this);
+        updateFacingDirection(lateralSpeed);
+        approachRotationRootBone(slidingAngle, 180f * delta);
     }
 
     @Override
@@ -130,7 +145,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventHitHead(float delta, float ceilingAngle) {
-
+        setAnimation(0, "jump-hit-head", false, this);
+        addAnimation(0, "falling", true, 0, this);
     }
 
     @Override
