@@ -159,27 +159,27 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The maximum speed that the character is allowed to walk.
      */
-    public float lateralMaxSpeed = 8;
+    public float lateralMaxSpeed = 16f;
     /**
      * The maximum acceleration that the character has while walking. The actual acceleration is diminished on a curve
      * as the character approaches lateralMaxSpeed.
      */
-    public float lateralAcceleration = .75f;
+    public float lateralAcceleration = 20f;
     /**
      * The maximum deceleration that the character has while walking. This is implemented when the character presses
      * input in the opposite direction of which they are moving. This value is on a curve and actual acceleration may be higher.
      */
-    public float lateralDeceleration = 1.5f;
+    public float lateralDeceleration = 30f;
     /**
      * The minimum deceleration that the character has when they stop walking. This is implemented when there is no left
      * or right input. This is used when the character is close to lateralMaxSpeed.
      */
-    public float lateralStopMinDeceleration = .5f;
+    public float lateralStopMinDeceleration = 9f;
     /**
      * The maximum deceleration that the character has when they stop walking. This is implemented when there is no left
      * or right input. The actual deceleration is on a curve where maximum deceleration is experienced when closer to 0.
      */
-    public float lateralStopDeceleration = 2f;
+    public float lateralStopDeceleration = 36f;
     /**
      * How close the character has to be to a cliff edge to trigger the eventCliffEdge method.
      * @see SlopeCharacterBehaviour#eventCliffEdge(float, boolean)
@@ -189,22 +189,22 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The maximum speed that the character has when sliding down a slope.
      */
-    public float lateralSlideMaxSpeed = 10f;
+    public float lateralSlideMaxSpeed = 30f;
     /**
      * The maximum accleration that the character has while sliding. The actual acceleration is diminished on a curve
      * as the character approaches lateralMaxSpeed.
      */
-    public float lateralSlideAcceleration = 1;
+    public float lateralSlideAcceleration = 50f;
 
     /**
      * The maximum speed for left and right movement that the character is allowed to move in the air.
      */
-    public float lateralAirMaxSpeed = 8;
+    public float lateralAirMaxSpeed = 12f;
     /**
      * The maximum acceleration for left and right movement that the character has while in the air. The actual acceleration is diminished on a curve
      * as the character approaches lateralMaxSpeed.
      */
-    public float lateralAirAcceleration = 25;
+    public float lateralAirAcceleration = 20f;
     /**
      * The maximum deceleration for left and right movement that the character has while in the air. This is implemented when the character presses
      * input in the opposite direction of which they are moving. This value is on a curve and actual acceleration may be higher.
@@ -354,11 +354,11 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The signed gravity applied to the character while the character is in the air.
      */
-    public float gravity = -2f;
+    public float gravity = -4f;
     /**
      * The initial velocity of upwards movement when the character presses the jump input.
      */
-    public float jumpSpeed = 20f;
+    public float jumpSpeed = 25f;
     /**
      * The maximum downward velocity when the character is in the air.
      */
@@ -843,8 +843,15 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
     @Override
     public void fixedUpdate() {
+    }
+
+    @Override
+    public void lateUpdate(float delta) {
+    }
+
+    @Override
+    public void update(float delta) {
         var body = getBody(this);
-        float delta = getUnBox().getOptions().getMaxFixedFrameTime();
         checkIfGrounded();
 
         checkIfOnCliff(delta);
@@ -912,16 +919,6 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         ceilingClingFixture = null;
         lastMagnetFixture = magnetFixture;
         magnetFixture = null;
-    }
-
-    @Override
-    public void lateUpdate(float delta) {
-
-    }
-
-    @Override
-    public void update(float delta) {
-
     }
 
     /**
