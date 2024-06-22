@@ -12,6 +12,7 @@ import com.esotericsoftware.spine.SkeletonRenderer;
 import com.esotericsoftware.spine.utils.TwoColorPolygonBatch;
 import com.ray3k.badforce2.screens.SplashScreen;
 import dev.lyze.gdxUnBox2d.UnBox;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Core extends Game {
@@ -24,6 +25,7 @@ public class Core extends Game {
     public static SkeletonRenderer skeletonRenderer;
     public static SkeletonJson skeletonJson;
     public static final float PPM = 100f;
+    public static ShapeDrawer shapeDrawer;
 
     @Override
     public void create() {
@@ -33,6 +35,7 @@ public class Core extends Game {
         batch = new TwoColorPolygonBatch(32767);
         skeletonRenderer = new SkeletonRenderer();
         skeletonJson = new SkeletonJson(textureAtlas);
+        shapeDrawer = new ShapeDrawer(batch, textureAtlas.findRegion("white"));
 
         setScreen(new SplashScreen());
     }

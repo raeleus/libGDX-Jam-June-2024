@@ -6,11 +6,13 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
+import com.ray3k.badforce2.screens.GameScreen;
 import dev.lyze.gdxUnBox2d.GameObject;
 
 public class PlayerBehaviour extends SlopeCharacterBehaviour {
     public PlayerBehaviour(GameObject gameObject) {
         super(.1f, .45f, .5f, 1.45f, gameObject);
+        showDebug = true;
     }
 
     @Override
@@ -19,6 +21,12 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         else if (Gdx.input.isKeyPressed(Keys.D)) moveRight();
 
         if (Gdx.input.isKeyPressed(Keys.W)) moveJump();
+    }
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+        GameScreen.debugLabel.setText(debugText);
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -22,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.ray3k.badforce2.behaviours.PlayerBehaviour;
 import com.ray3k.badforce2.behaviours.SpineBehaviour;
+import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
@@ -38,6 +40,7 @@ public class GameScreen extends ScreenAdapter {
     public static FillViewport uiViewport;
     public static UnBox unBox;
     private Box2DDebugRenderer debugRenderer;
+    public static Label debugLabel;
 
     @Override
     public void show() {
@@ -52,6 +55,9 @@ public class GameScreen extends ScreenAdapter {
         root.setTouchable(Touchable.enabled);
         stage.addActor(root);
 
+        debugLabel = new Label("", skin);
+        root.add(debugLabel).expand().top().left();
+
         unBox = new UnBox(new World(new Vector2(), true));
         debugRenderer = new Box2DDebugRenderer();
 
@@ -62,12 +68,6 @@ public class GameScreen extends ScreenAdapter {
         new Box2dBehaviour(bodyDef, player);
         new PlayerBehaviour(player);
 
-//        var position = new Vector2(.1f, 1.2f);
-//        new CreateBoxFixtureBehaviour(.5f, .75f, position, player);
-//
-//        position = new Vector2(.1f, .45f);
-//        new CreateCircleFixtureBehaviour(position, .5f, player);
-
         var spine = new SpineBehaviour(player, "spine/player.json");
         spine.skeleton.setScale(1/PPM, 1/PPM);
         spine.skeleton.setSkin("assault");
@@ -76,10 +76,11 @@ public class GameScreen extends ScreenAdapter {
         var ground = new GameObject(unBox);
         bodyDef = new BodyDef();
         bodyDef.type = BodyType.StaticBody;
+        bodyDef.position.set(0, -5f);
         new Box2dBehaviour(bodyDef, ground);
 
-        var position = new Vector2(0f, -5f);
-        new CreateBoxFixtureBehaviour(8f, .5f, position, ground);
+        float[] points = new float[]{-5f, 1f, -5f, -1f, 5f, -1f, 5f, 1f, 3f, 1.5f, 2f, 1f};
+        new BoundsBehaviour(points, ground);
     }
 
     @Override

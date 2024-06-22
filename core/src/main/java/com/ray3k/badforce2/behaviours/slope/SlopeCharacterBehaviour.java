@@ -1,5 +1,6 @@
 package com.ray3k.badforce2.behaviours.slope;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -15,6 +16,7 @@ import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 
+import static com.ray3k.badforce2.Core.shapeDrawer;
 import static com.ray3k.badforce2.Utils.*;
 import static com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour.MovementMode.*;
 import static com.ray3k.badforce2.behaviours.slope.SlopeValues.*;
@@ -71,12 +73,12 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The distance of the ray that begins at the bottom of the foot fixture and points downward to detect the ground. This must be sufficiently long enough in order to detect steep slopes.
      */
-    public float footRayDistance = 90;
+    public float footRayDistance = .9f;
     /**
      * The distance of the ray that begins at the x and y coordinate of the character and points in the opposite direction of the magnetAngle
      * @see SlopeCharacterBehaviour#magnetWallAngle
      */
-    public float magnetRayDistance = 90;
+    public float magnetRayDistance = .9f;
     /**
      * The velocity used to correct the position of the character above the ground when it's floating above a slope. This usually only occurs when going down hill.
      */
@@ -182,7 +184,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
      * How close the character has to be to a cliff edge to trigger the eventCliffEdge method.
      * @see SlopeCharacterBehaviour#eventCliffEdge(float, boolean)
      */
-    public float walkCliffEdgeDistance = 20;
+    public float walkCliffEdgeDistance = .2f;
 
     /**
      * The maximum speed that the character has when sliding down a slope.
@@ -262,11 +264,11 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The length of the ray used to check if the character is connected to a wall on the left or right.
      */
-    public float wallRayDistance = 20;
+    public float wallRayDistance = .2f;
     /**
      * The length of the ray used to check for the ceiling above the character when clinging to the ceiling.
      */
-    public float ceilingRayDistance = 90;
+    public float ceilingRayDistance = .9f;
     /**
      * The vertical offset of the ray used to check if the character is connected to a wall on the left or right. This is
      * measured from the offset of the foot fixture.
@@ -343,7 +345,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The maximum vertical distance that the character is allowed to be below the ledge in order for it to connect.
      */
-    public float ledgeGrabMaxDistance = 10f;
+    public float ledgeGrabMaxDistance = .1f;
     /**
      * The maximum angle of the upper ground edge that is connected to the ledge point which the character is allowed
      * to grab.
@@ -948,7 +950,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                             grounded = true;
                             rayCastedGroundFixture = fixture;
                             var bounds = (BoundsBehaviour) fixture.getBody().getUserData();
-                            if (bounds.kinematic) movingPlatformFixtures.add(fixture);
+                            if (getBody(bounds).getType() == BodyType.KinematicBody) movingPlatformFixtures.add(fixture);
                             return 0;
                         }
                     }
@@ -1527,7 +1529,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
                         //attach if touching a moving platform
                         var bounds = (BoundsBehaviour) fixture.getBody().getUserData();
-                        if (bounds.kinematic) movingPlatformFixtures.add(fixture);
+                        if (getBody(bounds).getType() == BodyType.KinematicBody) movingPlatformFixtures.add(fixture);
                         return 0;
                     }, rayX, rayY, rayX + (clingingToRight ? wallRayDistance : -wallRayDistance), rayY);
                 }
@@ -1575,7 +1577,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
                             //attach if touching a moving platform
                             var bounds = (BoundsBehaviour) fixture.getBody().getUserData();
-                            if (bounds.kinematic) movingPlatformFixtures.add(fixture);
+                            if (getBody(bounds).getType() == BodyType.KinematicBody) movingPlatformFixtures.add(fixture);
                             return 0;
                         }
                         return -1;
@@ -1605,7 +1607,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
                 //attach if touching a moving platform
                 var bounds = (BoundsBehaviour) fixture.getBody().getUserData();
-                if (bounds.kinematic) movingPlatformFixtures.add(fixture);
+                if (getBody(bounds).getType() == BodyType.KinematicBody) movingPlatformFixtures.add(fixture);
                 return 0;
             }, rayX, rayY, rayX, rayY + ceilingRayDistance);
         }
@@ -1631,7 +1633,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
                     //attach if touching a moving platform
                     var bounds = (BoundsBehaviour) fixture.getBody().getUserData();
-                    if (bounds.kinematic) movingPlatformFixtures.add(fixture);
+                    if (getBody(bounds).getType() == BodyType.KinematicBody) movingPlatformFixtures.add(fixture);
                     return 0;
                 }, temp1.x, temp1.y, temp2.x, temp2.y);
             }
@@ -2173,59 +2175,59 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
     @Override
     public void render(Batch batch) {
-//        if (showDebug) {
-//            if (!magneting) {
-//                //foot ray
-//                shapeDrawer.setColor(Color.GREEN);
-//                shapeDrawer.setDefaultLineWidth(5f);
-//                shapeDrawer.line(x + footRayOffsetX, y + footRayOffsetY, x + footOffsetX,
-//                    y + footOffsetY - footRayDistance);
-//            } else {
-//                //magnet ray
-//                temp1.set(x, y + footRadius);
-//                temp2.set(magnetRayDistance, 0);
-//                temp2.rotateDeg((magnetWallAngle + 180) % 360);
-//                temp2.add(temp1);
-//                shapeDrawer.setColor(Color.GREEN);
-//                shapeDrawer.setDefaultLineWidth(5f);
-//                shapeDrawer.line(temp1.x, temp1.y, temp2.x, temp2.y);
-//            }
-//
-//            //ceiling ray
-//            shapeDrawer.setColor(Color.GREEN);
-//            shapeDrawer.setDefaultLineWidth(5f);
-//            var rayX = x + footRayOffsetX;
-//            var rayY = y + footRayOffsetY + torsoHeight + footRadius;
-//            shapeDrawer.line(rayX, rayY, rayX, rayY + ceilingRayDistance);
-//
-//            //wall rays
-//            rayX = x + footRayOffsetX + footRadius;
-//            rayY = y + footRayOffsetY + wallClimbRayYoffset;
-//            shapeDrawer.line(rayX, rayY, rayX + wallRayDistance, rayY);
-//            rayX = x + footRayOffsetX - footRadius;
-//            shapeDrawer.line(rayX, rayY, rayX - wallRayDistance, rayY);
-//
-//            //ledge rays
-//            rayX = x + footRayOffsetX + footRadius;
-//            rayY = y + footRayOffsetY + ledgeGrabYoffset;
-//            shapeDrawer.line(rayX, rayY, rayX + wallRayDistance, rayY);
-//            rayX = x + footRayOffsetX - footRadius;
-//            shapeDrawer.line(rayX, rayY, rayX - wallRayDistance, rayY);
-//
-//            //contact angle
-//            shapeDrawer.setColor(Color.RED);
-//            shapeDrawer.setDefaultLineWidth(5f);
-//            temp1.set(20, 0);
-//            temp1.rotateDeg(contactAngle);
-//            shapeDrawer.line(x, y, x + temp1.x, y + temp1.y);
-//
-//            //ground angle
-//            shapeDrawer.setColor(Color.BLUE);
-//            shapeDrawer.setDefaultLineWidth(5f);
-//            temp1.set(20, 0);
-//            temp1.rotateDeg(groundAngle);
-//            shapeDrawer.line(x, y, x + temp1.x, y + temp1.y);
-//        }
+        if (showDebug) {
+            if (!magneting) {
+                //foot ray
+                shapeDrawer.setColor(Color.GREEN);
+                shapeDrawer.setDefaultLineWidth(.05f);
+                shapeDrawer.line(getBody(this).getPosition().x + footRayOffsetX, getBody(this).getPosition().y + footRayOffsetY, getBody(this).getPosition().x + footOffsetX,
+                    getBody(this).getPosition().y + footOffsetY - footRayDistance);
+            } else {
+                //magnet ray
+                temp1.set(getBody(this).getPosition().x, getBody(this).getPosition().y + footRadius);
+                temp2.set(magnetRayDistance, 0);
+                temp2.rotateDeg((magnetWallAngle + 180) % 360);
+                temp2.add(temp1);
+                shapeDrawer.setColor(Color.GREEN);
+                shapeDrawer.setDefaultLineWidth(5f);
+                shapeDrawer.line(temp1.x, temp1.y, temp2.x, temp2.y);
+            }
+
+            //ceiling ray
+            shapeDrawer.setColor(Color.GREEN);
+            shapeDrawer.setDefaultLineWidth(.05f);
+            var rayX = getBody(this).getPosition().x + footRayOffsetX;
+            var rayY = getBody(this).getPosition().y + footRayOffsetY + torsoHeight + footRadius;
+            shapeDrawer.line(rayX, rayY, rayX, rayY + ceilingRayDistance);
+
+            //wall rays
+            rayX = getBody(this).getPosition().x + footRayOffsetX + footRadius;
+            rayY = getBody(this).getPosition().y + footRayOffsetY + wallClimbRayYoffset;
+            shapeDrawer.line(rayX, rayY, rayX + wallRayDistance, rayY);
+            rayX = getBody(this).getPosition().x + footRayOffsetX - footRadius;
+            shapeDrawer.line(rayX, rayY, rayX - wallRayDistance, rayY);
+
+            //ledge rays
+            rayX = getBody(this).getPosition().x + footRayOffsetX + footRadius;
+            rayY = getBody(this).getPosition().y + footRayOffsetY + ledgeGrabYoffset;
+            shapeDrawer.line(rayX, rayY, rayX + wallRayDistance, rayY);
+            rayX = getBody(this).getPosition().x + footRayOffsetX - footRadius;
+            shapeDrawer.line(rayX, rayY, rayX - wallRayDistance, rayY);
+
+            //contact angle
+            shapeDrawer.setColor(Color.RED);
+            shapeDrawer.setDefaultLineWidth(.05f);
+            temp1.set(.2f, 0);
+            temp1.rotateDeg(contactAngle);
+            shapeDrawer.line(getBody(this).getPosition().x, getBody(this).getPosition().y, getBody(this).getPosition().x + temp1.x, getBody(this).getPosition().y + temp1.y);
+
+            //ground angle
+            shapeDrawer.setColor(Color.BLUE);
+            shapeDrawer.setDefaultLineWidth(.05f);
+            temp1.set(.2f, 0);
+            temp1.rotateDeg(groundAngle);
+            shapeDrawer.line(getBody(this).getPosition().x, getBody(this).getPosition().y, getBody(this).getPosition().x + temp1.x, getBody(this).getPosition().y + temp1.y);
+        }
     }
 
     @Override
@@ -2284,7 +2286,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             }
 
             //add the fixture to the list of moving platforms if the BoundsBehaviour is kinematic
-            if (bounds.kinematic) {
+            if (getBody(bounds).getType() == BodyType.KinematicBody) {
                 movingPlatformFixtures.add(otherFixture);
             }
         }

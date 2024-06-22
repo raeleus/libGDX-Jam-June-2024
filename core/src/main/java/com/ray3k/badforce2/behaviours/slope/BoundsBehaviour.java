@@ -3,35 +3,28 @@ package com.ray3k.badforce2.behaviours.slope;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.ray3k.badforce2.Utils;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
-import org.w3c.dom.Entity;
 
-import static com.ray3k.badforce2.Utils.*;
-import static com.ray3k.badforce2.behaviours.slope.SlopeValues.*;
+import static com.ray3k.badforce2.Utils.getBody;
+import static com.ray3k.badforce2.Utils.isClockwise;
+import static com.ray3k.badforce2.behaviours.slope.SlopeValues.CATEGORY_BOUNDS;
 
 public class BoundsBehaviour extends BehaviourAdapter {
     public float[] points;
     public int edgeCount;
     public boolean canPassThroughBottom;
-    public boolean kinematic;
     public boolean ceilingClingable;
-    public float x;
-    public float y;
+
     public float deltaX;
     public float deltaY;
 
-    public BoundsBehaviour(float x, float y, float[] points, boolean kinematic, GameObject gameObject) {
+    public BoundsBehaviour(float[] points, GameObject gameObject) {
         super(gameObject);
-        this.x = x;
-        this.y = y;
         this.points = points;
-        this.kinematic = kinematic;
     }
 
     public static Vector2 temp1 = new Vector2();
@@ -39,12 +32,6 @@ public class BoundsBehaviour extends BehaviourAdapter {
 
     @Override
     public void awake() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = kinematic ? BodyType.KinematicBody : BodyType.StaticBody;
-        bodyDef.position.set(x, y);
-        bodyDef.fixedRotation = true;
-
-        new Box2dBehaviour(bodyDef, getGameObject());
         var body = getBody(getGameObject());
         body.setUserData(this);
 
