@@ -15,6 +15,7 @@ import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import static com.ray3k.badforce2.Core.skeletonJson;
 import static com.ray3k.badforce2.Core.skeletonRenderer;
 import static com.ray3k.badforce2.Utils.getBody;
+import static com.ray3k.badforce2.Utils.getPosition;
 
 public class SpineBehaviour extends BehaviourAdapter {
     public Skeleton skeleton;
@@ -41,7 +42,7 @@ public class SpineBehaviour extends BehaviourAdapter {
 
     @Override
     public void awake() {
-        Vector2 position = getBody(getGameObject()).getPosition();
+        Vector2 position = getPosition(this);
         skeleton.setPosition(position.x, position.y);
         animationState.update(0);
         animationState.apply(skeleton);
@@ -56,12 +57,13 @@ public class SpineBehaviour extends BehaviourAdapter {
 
     @Override
     public void fixedUpdate() {
-        skeleton.setPosition(getBody(getGameObject()).getPosition().x, getBody(getGameObject()).getPosition().y);
-        skeleton.getRootBone().setRotation(getBody(getGameObject()).getAngle() * MathUtils.radDeg);
+
     }
 
     @Override
     public void update(float delta) {
+        skeleton.setPosition(getPosition(this).x, getPosition(this).y);
+        skeleton.getRootBone().setRotation(getBody(getGameObject()).getAngle() * MathUtils.radDeg);
         animationState.update(delta);
         skeleton.updateWorldTransform(Physics.update);
         animationState.apply(skeleton);

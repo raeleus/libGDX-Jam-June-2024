@@ -59,6 +59,22 @@ public class Utils {
         return behaviour.getBody();
     }
 
+    public static Vector2 getPosition(Behaviour behaviour) {
+        return getPosition(behaviour.getGameObject());
+    }
+
+    public static Vector2 getPosition(GameObject gameObject) {
+        return getBody(gameObject).getPosition();
+    }
+
+    public static Vector2 getLinearVelocity(Behaviour behaviour) {
+        return getLinearVelocity(behaviour.getGameObject());
+    }
+
+    public static Vector2 getLinearVelocity(GameObject gameObject) {
+        return getBody(gameObject).getLinearVelocity();
+    }
+
     public static Skeleton getSkeleton(GameObject gameObject) {
         var behaviour = gameObject.getBehaviour(SpineBehaviour.class);
         if (behaviour == null) return null;

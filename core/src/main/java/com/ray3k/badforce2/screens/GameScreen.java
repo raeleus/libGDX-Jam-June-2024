@@ -21,6 +21,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.esotericsoftware.spine.AnimationStateData;
+import com.ray3k.badforce2.Core;
+import com.ray3k.badforce2.LevelReader;
+import com.ray3k.badforce2.OgmoReader;
 import com.ray3k.badforce2.behaviours.PlayerBehaviour;
 import com.ray3k.badforce2.behaviours.SpineBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
@@ -41,6 +44,7 @@ public class GameScreen extends ScreenAdapter {
     public static UnBox unBox;
     private Box2DDebugRenderer debugRenderer;
     public static Label debugLabel;
+    public static final float DEBUG_RENDER_ORDER = 300f;
 
     @Override
     public void show() {
@@ -61,26 +65,9 @@ public class GameScreen extends ScreenAdapter {
         unBox = new UnBox(new World(new Vector2(), true));
         debugRenderer = new Box2DDebugRenderer();
 
-        var player = new GameObject(unBox);
-        var bodyDef = new BodyDef();
-        bodyDef.type = BodyType.DynamicBody;
-        bodyDef.fixedRotation = true;
-        new Box2dBehaviour(bodyDef, player);
-        new PlayerBehaviour(player);
-
-        var spine = new SpineBehaviour(player, "spine/player.json");
-        spine.skeleton.setScale(1/PPM, 1/PPM);
-        spine.skeleton.setSkin("assault");
-        spine.animationState.setAnimation(0, "standing", true);
-
-        var ground = new GameObject(unBox);
-        bodyDef = new BodyDef();
-        bodyDef.type = BodyType.StaticBody;
-        bodyDef.position.set(0, -5f);
-        new Box2dBehaviour(bodyDef, ground);
-
-        float[] points = new float[]{-5f, 1f, -5f, -1f, 5f, -1f, 5f, 1f, 4f, 3f, 3f, 1.5f, 2f, 1f};
-        new BoundsBehaviour(points, ground);
+        var ogmoReader = new OgmoReader();
+        ogmoReader.addListener(new LevelReader());
+        ogmoReader.readFile(Gdx.files.internal("levels/test.json"));
     }
 
     @Override
@@ -114,5 +101,13 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public static float p2m(float pixels) {
+        return pixels / PPM;
+    }
+
+    public static float m2p(float meters) {
+        return meters * PPM;
     }
 }

@@ -3,16 +3,21 @@ package com.ray3k.badforce2.behaviours;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
 import com.ray3k.badforce2.screens.GameScreen;
 import dev.lyze.gdxUnBox2d.GameObject;
 
+import static com.ray3k.badforce2.Utils.*;
+import static com.ray3k.badforce2.screens.GameScreen.*;
+
 public class PlayerBehaviour extends SlopeCharacterBehaviour {
     public PlayerBehaviour(GameObject gameObject) {
         super(.1f, .45f, .5f, 1.45f, gameObject);
         showDebug = true;
+        setRenderOrder(DEBUG_RENDER_ORDER);
     }
 
     @Override
@@ -26,7 +31,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     @Override
     public void update(float delta) {
         super.update(delta);
-        GameScreen.debugLabel.setText(debugText);
+        debugLabel.setText(debugText);
+        gameCamera.position.set(getBody(this).getPosition().x, getBody(this).getPosition().y, 1f);
     }
 
     @Override
