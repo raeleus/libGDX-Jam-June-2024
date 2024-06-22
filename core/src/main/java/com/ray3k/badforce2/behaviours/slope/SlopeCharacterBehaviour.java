@@ -73,7 +73,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The distance of the ray that begins at the bottom of the foot fixture and points downward to detect the ground. This must be sufficiently long enough in order to detect steep slopes.
      */
-    public float footRayDistance = 1.5f;
+    public float footRayDistance = 1.25f;
     /**
      * The distance of the ray that begins at the x and y coordinate of the character and points in the opposite direction of the magnetAngle
      * @see SlopeCharacterBehaviour#magnetWallAngle
@@ -164,22 +164,22 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
      * The maximum acceleration that the character has while walking. The actual acceleration is diminished on a curve
      * as the character approaches lateralMaxSpeed.
      */
-    public float lateralAcceleration = 25;
+    public float lateralAcceleration = .75f;
     /**
      * The maximum deceleration that the character has while walking. This is implemented when the character presses
      * input in the opposite direction of which they are moving. This value is on a curve and actual acceleration may be higher.
      */
-    public float lateralDeceleration = 35;
+    public float lateralDeceleration = 1.5f;
     /**
      * The minimum deceleration that the character has when they stop walking. This is implemented when there is no left
      * or right input. This is used when the character is close to lateralMaxSpeed.
      */
-    public float lateralStopMinDeceleration = 10;
+    public float lateralStopMinDeceleration = .5f;
     /**
      * The maximum deceleration that the character has when they stop walking. This is implemented when there is no left
      * or right input. The actual deceleration is on a curve where maximum deceleration is experienced when closer to 0.
      */
-    public float lateralStopDeceleration = 40;
+    public float lateralStopDeceleration = 2f;
     /**
      * How close the character has to be to a cliff edge to trigger the eventCliffEdge method.
      * @see SlopeCharacterBehaviour#eventCliffEdge(float, boolean)
@@ -354,15 +354,15 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The signed gravity applied to the character while the character is in the air.
      */
-    public float gravity = -4;
+    public float gravity = -2f;
     /**
      * The initial velocity of upwards movement when the character presses the jump input.
      */
-    public float jumpSpeed = 25f;
+    public float jumpSpeed = 20f;
     /**
      * The maximum downward velocity when the character is in the air.
      */
-    public float terminalVelocity = 30;
+    public float terminalVelocity = 20f;
     /**
      * The number of midair jumps the character is allowed to conduct. Set to 0 (default) for no mid-air jumps. Set to -1 for
      * unlimited midair jumps.
@@ -903,23 +903,24 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             "\nCoyote Timer: " + coyoteTimer +
             "\ndeltaX: " + deltaX +
             "\ndeltaY: " + deltaY;
+
+        justLanded = false;
     }
 
     @Override
     public void lateUpdate(float delta) {
-        touchingWall = false;
-        hitHead = false;
-        clearLastTouchedGroundFixtures = true;
-        justLanded = false;
-        rayCastedGroundFixture = null;
-        ceilingClingFixture = null;
-        lastMagnetFixture = magnetFixture;
-        magnetFixture = null;
+
     }
 
     @Override
     public void update(float delta) {
-
+        touchingWall = false;
+        hitHead = false;
+        clearLastTouchedGroundFixtures = true;
+        rayCastedGroundFixture = null;
+        ceilingClingFixture = null;
+        lastMagnetFixture = magnetFixture;
+        magnetFixture = null;
     }
 
     /**
@@ -1246,6 +1247,13 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
      * @see SlopeCharacterBehaviour#eventJumpApex(float)
      */
     public abstract void eventJumpReleased(float delta);
+
+    /**
+     * This event is called when the character moves while falling
+     * @param lateralSpeed
+     * @param delta
+     */
+    public abstract void eventFallMoving(float delta, float lateralSpeed);
 
     /**
      * This event is called once when the character reaches the apex of their jump.
@@ -2016,6 +2024,10 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                 deltaX = Utils.throttledDeceleration(deltaX, lateralAirMaxSpeed, lateralAirStopMinDeceleration * delta, lateralAirStopDeceleration * delta);
             }
             lateralSpeed = deltaX;
+
+            if (inputRight || inputLeft) {
+                eventFallMoving(delta, lateralSpeed);
+            }
 
             if (touchingWall && !hitHead) {
                 if (deltaX > 0 && isEqual360(wallContactAngle, 180, 90)) deltaX = 0;

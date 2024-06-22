@@ -33,6 +33,12 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 new PlayerBehaviour(player);
 
                 var spine = new SpineBehaviour(player, "spine/player.json");
+                spine.animationState.getData().setMix("jump", "falling", .25f);
+                spine.animationState.getData().setMix("jumping", "falling", .25f);
+                spine.animationState.getData().setMix("running", "standing", .1f);
+                spine.animationState.getData().setMix("land", "running", .25f);
+                spine.animationState.getData().setMix("standing", "running", .25f);
+                spine.animationState.getData().setMix("running", "walling", .25f);
                 spine.skeleton.setScale(p2m(1), p2m(1));
                 spine.skeleton.setSkin("assault");
                 spine.animationState.setAnimation(0, "standing", true);

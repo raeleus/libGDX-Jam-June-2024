@@ -4,7 +4,6 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -15,7 +14,6 @@ import com.esotericsoftware.spine.SkeletonBounds;
 import com.ray3k.badforce2.behaviours.SpineBehaviour;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
-import dev.lyze.gdxUnBox2d.UnBox;
 
 public class Utils {
     private static final Vector2 vector2 = new Vector2();
@@ -75,16 +73,48 @@ public class Utils {
         return getBody(gameObject).getLinearVelocity();
     }
 
+    public static Skeleton getSkeleton(Behaviour behaviour) {
+        return getSkeleton(behaviour.getGameObject());
+    }
+
     public static Skeleton getSkeleton(GameObject gameObject) {
         var behaviour = gameObject.getBehaviour(SpineBehaviour.class);
         if (behaviour == null) return null;
         return behaviour.skeleton;
     }
 
-    public static AnimationState getanimationState(GameObject gameObject) {
+    public static AnimationState getAnimationState(Behaviour behaviour) {
+        return getAnimationState(behaviour.getGameObject());
+    }
+
+    public static AnimationState getAnimationState(GameObject gameObject) {
         var behaviour = gameObject.getBehaviour(SpineBehaviour.class);
         if (behaviour == null) return null;
         return behaviour.animationState;
+    }
+
+    public static void setAnimation(int track, String name, boolean looping, Behaviour behaviour) {
+        setAnimation(track, name, looping, behaviour.getGameObject());
+    }
+
+    public static void setAnimation(int track, String name, boolean looping, GameObject gameObject) {
+        var skeleton = getSkeleton(gameObject);
+        var animationState = getAnimationState(gameObject);
+
+        var animation = skeleton.getData().findAnimation(name);
+        if (animationState.getCurrent(track).getAnimation() != animation) animationState.setAnimation(0, animation, looping);
+    }
+
+    public static void addAnimation(int track, String name, boolean looping, float delay, Behaviour behaviour) {
+        addAnimation(track, name, looping, delay, behaviour.getGameObject());
+    }
+
+    public static void addAnimation(int track, String name, boolean looping, float delay, GameObject gameObject) {
+        var skeleton = getSkeleton(gameObject);
+        var animationState = getAnimationState(gameObject);
+
+        var animation = skeleton.getData().findAnimation(name);
+        if (animationState.getCurrent(track).getAnimation() != animation) animationState.addAnimation(track, animation, looping, delay);
     }
 
     public static SkeletonBounds getSkeletonBounds(GameObject gameObject) {

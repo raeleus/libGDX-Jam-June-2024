@@ -3,11 +3,9 @@ package com.ray3k.badforce2.behaviours;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
-import com.ray3k.badforce2.screens.GameScreen;
 import dev.lyze.gdxUnBox2d.GameObject;
 
 import static com.ray3k.badforce2.Utils.*;
@@ -15,7 +13,7 @@ import static com.ray3k.badforce2.screens.GameScreen.*;
 
 public class PlayerBehaviour extends SlopeCharacterBehaviour {
     public PlayerBehaviour(GameObject gameObject) {
-        super(.1f, .45f, .5f, 1.45f, gameObject);
+        super(.1f, .25f, .3f, 1.45f, gameObject);
         showDebug = true;
         setRenderOrder(DEBUG_RENDER_ORDER);
     }
@@ -40,19 +38,27 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     }
 
+    private void updateFacingDirection(float lateralSpeed) {
+        getSkeleton(this).getRootBone().setScale((lateralSpeed < 0 ? -1f : 1f), 1f);
+    }
+
     @Override
     public void eventWalking(float delta, float lateralSpeed, float groundAngle) {
+        updateFacingDirection(lateralSpeed);
 
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land")) return;
+        setAnimation(0, "running", true, this);
     }
 
     @Override
     public void eventWalkStopping(float delta, float lateralSpeed, float groundAngle) {
-
+        updateFacingDirection(lateralSpeed);
     }
 
     @Override
     public void eventWalkStop(float delta) {
-
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land")) return;
+        setAnimation(0, "standing", true, this);
     }
 
     @Override
@@ -67,7 +73,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventWalkPushingWall(float delta, float wallAngle) {
-
+        setAnimation(0, "walling", true, this);
     }
 
     @Override
@@ -93,17 +99,23 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventJump(float delta) {
-
+        setAnimation(0, "jump", false, this);
+        addAnimation(0, "jumping", true, 0, this);
     }
 
     @Override
     public void eventJumpReleased(float delta) {
-
+        setAnimation(0, "falling", true, this);
     }
 
     @Override
     public void eventJumpApex(float delta) {
+        setAnimation(0, "falling", true, this);
+    }
 
+    @Override
+    public void eventFallMoving(float delta, float lateralSpeed) {
+        updateFacingDirection(lateralSpeed);
     }
 
     @Override
@@ -133,7 +145,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventLand(float delta, float groundAngle) {
-
+        setAnimation(0, "land", false, this);
+        addAnimation(0, "standing", true, 0, this);
     }
 
     @Override
