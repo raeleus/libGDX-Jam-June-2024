@@ -13,7 +13,7 @@ import static com.ray3k.badforce2.screens.GameScreen.*;
 
 public class PlayerBehaviour extends SlopeCharacterBehaviour {
     public PlayerBehaviour(GameObject gameObject) {
-        super(.1f, .25f, .3f, 1.45f, gameObject);
+        super(0, .25f, .3f, 1.45f, gameObject);
         showDebug = true;
         setRenderOrder(DEBUG_RENDER_ORDER);
     }

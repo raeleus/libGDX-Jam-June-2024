@@ -13,7 +13,6 @@ import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 
-import static com.ray3k.badforce2.Core.PPM;
 import static com.ray3k.badforce2.screens.GameScreen.p2m;
 import static com.ray3k.badforce2.screens.GameScreen.unBox;
 
@@ -37,8 +36,12 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.animationState.getData().setMix("jumping", "falling", .25f);
                 spine.animationState.getData().setMix("running", "standing", .1f);
                 spine.animationState.getData().setMix("land", "running", .25f);
+                spine.animationState.getData().setMix("land", "walling", .25f);
                 spine.animationState.getData().setMix("standing", "running", .25f);
                 spine.animationState.getData().setMix("running", "walling", .25f);
+                spine.animationState.getData().setMix("walling", "running", .25f);
+                spine.animationState.getData().setMix("standing", "walling", .25f);
+                spine.animationState.getData().setMix("walling", "standing", .25f);
                 spine.skeleton.setScale(p2m(1), p2m(1));
                 spine.skeleton.setSkin("assault");
                 spine.animationState.setAnimation(0, "standing", true);

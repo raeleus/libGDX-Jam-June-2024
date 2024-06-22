@@ -905,6 +905,13 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             "\ndeltaY: " + deltaY;
 
         justLanded = false;
+        touchingWall = false;
+        hitHead = false;
+        clearLastTouchedGroundFixtures = true;
+        rayCastedGroundFixture = null;
+        ceilingClingFixture = null;
+        lastMagnetFixture = magnetFixture;
+        magnetFixture = null;
     }
 
     @Override
@@ -914,13 +921,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
     @Override
     public void update(float delta) {
-        touchingWall = false;
-        hitHead = false;
-        clearLastTouchedGroundFixtures = true;
-        rayCastedGroundFixture = null;
-        ceilingClingFixture = null;
-        lastMagnetFixture = magnetFixture;
-        magnetFixture = null;
+
     }
 
     /**
@@ -2375,6 +2376,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                     wallContactAngle = normalAngle;
                     wallFixtureAngle = otherFixtureData.angle;
                 }
+                System.out.println("touchingWall = " + touchingWall);
             }
         }
         return false;
