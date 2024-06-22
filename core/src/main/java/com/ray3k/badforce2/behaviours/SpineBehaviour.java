@@ -1,7 +1,9 @@
 package com.ray3k.badforce2.behaviours;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.esotericsoftware.spine.*;
 import com.esotericsoftware.spine.Skeleton.Physics;
@@ -10,6 +12,7 @@ import com.ray3k.badforce2.Utils;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 
+import static com.ray3k.badforce2.Core.skeletonJson;
 import static com.ray3k.badforce2.Core.skeletonRenderer;
 import static com.ray3k.badforce2.Utils.getBody;
 
@@ -17,6 +20,16 @@ public class SpineBehaviour extends BehaviourAdapter {
     public Skeleton skeleton;
     public AnimationState animationState;
     public SkeletonBounds skeletonBounds;
+
+    public SpineBehaviour(GameObject gameObject, String skeletonDataPath) {
+        super(gameObject);
+        var skeletonData = skeletonJson.readSkeletonData(Gdx.files.internal(skeletonDataPath));
+        var animationData = new AnimationStateData(skeletonData);
+
+        skeleton = new Skeleton(skeletonData);
+        animationState = new AnimationState(animationData);
+        skeletonBounds = new SkeletonBounds();
+    }
 
     public SpineBehaviour(GameObject gameObject, SkeletonData skeletonData, AnimationStateData animationStateData) {
         super(gameObject);
@@ -28,7 +41,8 @@ public class SpineBehaviour extends BehaviourAdapter {
 
     @Override
     public void awake() {
-        skeleton.setPosition(getBody(getGameObject()).getPosition().x, getBody(getGameObject()).getPosition().y);
+        Vector2 position = getBody(getGameObject()).getPosition();
+        skeleton.setPosition(position.x, position.y);
         animationState.update(0);
         animationState.apply(skeleton);
         skeleton.updateWorldTransform(Physics.update);

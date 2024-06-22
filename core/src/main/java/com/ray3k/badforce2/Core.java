@@ -23,6 +23,7 @@ public class Core extends Game {
     public static TwoColorPolygonBatch batch;
     public static SkeletonRenderer skeletonRenderer;
     public static SkeletonJson skeletonJson;
+    public static final float PPM = 100f;
 
     @Override
     public void create() {
