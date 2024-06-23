@@ -28,6 +28,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 bodyDef.type = BodyType.DynamicBody;
                 bodyDef.fixedRotation = true;
                 bodyDef.position.set(p2m(x), p2m(y));
+                bodyDef.allowSleep = false;
                 new Box2dBehaviour(bodyDef, player);
                 new PlayerBehaviour(player);
 
@@ -48,6 +49,9 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.animationState.getData().setMix("running", "sliding", .25f);
                 spine.animationState.getData().setMix("jumping", "jump-hit-head", .1f);
                 spine.animationState.getData().setMix("jump", "jump-hit-head", .1f);
+                spine.animationState.getData().setMix("grabbing-ledge", "falling", .1f);
+                spine.animationState.getData().setMix("falling", "grabbing-ledge", .1f);
+                spine.animationState.getData().setMix("jumping", "grabbing-ledge", .1f);
                 spine.skeleton.setScale(p2m(1), p2m(1));
                 spine.skeleton.setSkin("assault");
                 spine.animationState.setAnimation(0, "standing", true);

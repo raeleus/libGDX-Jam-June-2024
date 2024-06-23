@@ -264,7 +264,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The length of the ray used to check if the character is connected to a wall on the left or right.
      */
-    public float wallRayDistance = .2f;
+    public float wallRayDistance = .4f;
     /**
      * The length of the ray used to check for the ceiling above the character when clinging to the ceiling.
      */
@@ -326,6 +326,15 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
      * The speed of the wall jump.
      */
     public float wallJumpSpeed = 20f;
+    /**
+     * The angle of the ledge jump if jumping while grabbing a ledge. This angle is mirrored over the
+     * vertical axis if the wall is on the right side.
+     */
+    public float ledgeJumpAngle = 90;
+    /**
+     * The speed of the wall jump.
+     */
+    public float ledgeJumpSpeed = 20f;
     /**
      * The length of time when the character's acceleration is penalized from the wall jump. Acceleration returns to
      * normal afterwards.
@@ -2135,7 +2144,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             coyoteTimer = 0;
             inputJumpJustPressed = 0;
             movingPlatformFixtures.clear();
-            setMotion(wallJumpSpeed, wallToRight ? 180 - wallJumpAngle : wallJumpAngle);
+            setMotion(ledgeJumpSpeed, wallToRight ? 180 - ledgeJumpAngle : ledgeJumpAngle);
             eventLedgeJump(delta, wallContactAngle);
         }
 

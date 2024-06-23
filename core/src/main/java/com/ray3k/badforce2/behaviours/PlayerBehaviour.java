@@ -18,6 +18,10 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         setRenderOrder(DEBUG_RENDER_ORDER);
         allowClingToWalls = true;
         allowWallJump = true;
+        allowGrabLedges = true;
+        allowLedgeJump = true;
+        grabLedgeThreshold = .3f;
+        ledgeGrabMaxDistance = .25f;
         midairJumps = 1;
     }
 
@@ -208,17 +212,19 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventGrabLedge(float delta, float wallAngle) {
-
+        setAnimation(0, "grabbing-ledge", true, this);
     }
 
     @Override
     public void eventReleaseGrabLedge(float delta) {
-
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("midair-jump")) return;
+        setAnimation(0, "falling", true, this);
     }
 
     @Override
     public void eventLedgeJump(float delta, float wallAngle) {
-
+        setAnimation(0, "midair-jump", false, this);
+        addAnimation(0, "falling", true, 0, this);
     }
 
     @Override

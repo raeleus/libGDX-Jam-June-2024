@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "nA6KzZQnvzo",
+	"hash": "3fNVj/BI4Ek",
 	"spine": "4.2.31",
 	"x": -47.53,
 	"y": 4.37,
@@ -828,6 +828,83 @@
 					{ "value": -5.29 },
 					{ "time": 0.6, "value": -14.99 },
 					{ "time": 1.1667, "value": -5.29 }
+				]
+			}
+		}
+	},
+	"grabbing-ledge": {
+		"bones": {
+			"arm-front": {
+				"rotate": [
+					{ "value": 174.63 },
+					{ "time": 1, "value": 176.93 },
+					{ "time": 2, "value": 174.63 }
+				]
+			},
+			"forearm-front": {
+				"rotate": [
+					{ "value": -90.41 },
+					{ "time": 1, "value": -90.23 },
+					{ "time": 2, "value": -90.41 }
+				]
+			},
+			"arm-back": {
+				"rotate": [
+					{ "value": 170.4 },
+					{ "time": 1, "value": 176.97 },
+					{ "time": 2, "value": 170.4 }
+				]
+			},
+			"forearm-back": {
+				"rotate": [
+					{ "value": -83.2 },
+					{ "time": 1, "value": -89.92 },
+					{ "time": 2, "value": -83.2 }
+				]
+			},
+			"hip": {
+				"rotate": [
+					{},
+					{ "time": 1, "value": 4.49 },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "x": 28.78, "y": -52.05 }
+				]
+			},
+			"body": {
+				"rotate": [
+					{},
+					{ "time": 1, "value": -5.94 },
+					{ "time": 2 }
+				]
+			},
+			"leg-back": {
+				"rotate": [
+					{},
+					{ "time": 1, "value": -4.71 },
+					{ "time": 2 }
+				]
+			},
+			"foreleg-back": {
+				"rotate": [
+					{},
+					{ "time": 1, "value": -4.71 },
+					{ "time": 2 }
+				]
+			},
+			"leg-front": {
+				"rotate": [
+					{},
+					{ "time": 1, "value": -5.55 },
+					{ "time": 2 }
+				]
+			},
+			"foreleg-front": {
+				"rotate": [
+					{},
+					{ "time": 1, "value": -5.55 },
+					{ "time": 2 }
 				]
 			}
 		}
