@@ -166,7 +166,11 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventFalling(float delta) {
-
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("midair-jump")) return;
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("jump")) return;
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("jumping")) return;
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("jump-hit-head")) return;
+        setAnimation(0, "falling", true, this);
     }
 
     @Override
