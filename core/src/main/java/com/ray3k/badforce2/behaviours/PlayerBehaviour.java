@@ -7,7 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.esotericsoftware.spine.Skeleton.Physics;
+import com.esotericsoftware.spine.attachments.PointAttachment;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
@@ -20,6 +22,7 @@ import static com.ray3k.badforce2.screens.GameScreen.*;
 public class PlayerBehaviour extends SlopeCharacterBehaviour {
     private float queueRoll;
     private static Vector2 temp1 = new Vector2();
+    private static Vector2 temp2 = new Vector2();
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
@@ -125,6 +128,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     }
 
     private void updateFacingDirection(float lateralSpeed) {
+        if (animationNameEquals(0, "hit", this)) return;
         getSkeleton(this).getRootBone().setScale((lateralSpeed < 0 ? -1f : 1f), 1f);
         updateTargetBone();
     }
@@ -148,6 +152,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         updateFacingDirection(lateralSpeed);
         approachRotationRootBone(0, 360f * delta);
 
+        if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "land", this)) return;
         if (animationNameEquals(0, "roll", this)) return;
         if (animationNameEquals(0, "land-roll", this)) return;
@@ -164,6 +169,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     @Override
     public void eventWalkStop(float delta) {
         approachRotationRootBone(0, 360f * delta);
+        if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "land", this)) return;
         if (animationNameEquals(0, "roll", this)) return;
         if (animationNameEquals(0, "land-roll", this)) return;
@@ -183,6 +189,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventWalkPushingWall(float delta, float wallAngle) {
+        if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
         setAnimation(0, "walling", true, this);
     }
@@ -206,6 +213,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         if (animationNameEquals(0, "roll", this)) return;
         if (animationNameEquals(0, "land-roll", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "sliding", true, this);
     }
 
@@ -217,6 +225,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     @Override
     public void eventJump(float delta) {
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "hit", this)) return;
         rotateRootBone(0);
         setAnimation(0, "jump", false, this);
         addAnimation(0, "jumping", true, 0, this);
@@ -226,6 +235,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     public void eventJumpReleased(float delta) {
         if (animationNameEquals(0, "midair-jump", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "falling", true, this);
     }
 
@@ -233,6 +243,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     public void eventJumpApex(float delta) {
         if (animationNameEquals(0, "midair-jump", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "falling", true, this);
     }
 
@@ -249,6 +260,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     @Override
     public void eventJumpMidair(float delta) {
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "midair-jump", false, this);
         addAnimation(0, "falling", true, 0, this);
     }
@@ -257,6 +269,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     public void eventHitHead(float delta, float ceilingAngle) {
         if (animationNameEquals(0, "air-roll", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "jump-hit-head", false, this);
         addAnimation(0, "falling", true, 0, this);
     }
@@ -271,6 +284,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         if (animationNameEquals(0, "land-roll", this)) return;
         if (animationNameEquals(0, "air-roll", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "falling", true, this);
     }
 
@@ -282,6 +296,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     @Override
     public void eventLand(float delta, float groundAngle) {
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "air-roll", this)) {
             setAnimation(0, "land-roll", false, this);
             addAnimation(0, "standing", true, 0, this);
@@ -300,6 +315,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
     public void eventReleaseWallCling(float delta) {
         if (animationNameEquals(0, "disappear", this)) return;
         if (animationNameEquals(0, "midair-jump", this)) return;
+        if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "falling", true, this);
     }
 
@@ -320,17 +336,20 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventWallJump(float delta, float wallAngle) {
+        if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "midair-jump", false, this);
         addAnimation(0, "falling", true, 0, this);
     }
 
     @Override
     public void eventGrabLedge(float delta, float wallAngle) {
+        if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "grabbing-ledge", true, this);
     }
 
     @Override
     public void eventReleaseGrabLedge(float delta) {
+        if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
         if (animationNameEquals(0, "midair-jump", this)) return;
         setAnimation(0, "falling", true, this);
@@ -338,6 +357,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventLedgeJump(float delta, float wallAngle) {
+        if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
         setAnimation(0, "midair-jump", false, this);
         addAnimation(0, "falling", true, 0, this);
@@ -434,6 +454,9 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         var returnValue = super.onCollisionPreSolve(other, contact, oldManifold);
 
         if (other.getGameObject().hasBehaviour(DoorBehaviour.class)) contact.setEnabled(false);
+        if (other.getGameObject().hasBehaviour(AlienBehaviour.class)) {
+            contact.setEnabled(true);
+        }
 
         return returnValue;
     }
@@ -446,5 +469,59 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
             lateralSpeed = 0;
             getBody(this).setLinearVelocity(0, 0);
         }
+        if (other.getGameObject().hasBehaviour(AlienBehaviour.class)) {
+            var alienBody = getBody(other);
+            var body = getBody(this);
+            body.setLinearVelocity(0, 0);
+            lateralSpeed = 0;
+            applyAirForce(30f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
+            setAnimation(0, "hit", false, this);
+            addAnimation(0, "standing", true, 0, this);
+            setAnimation(3, "hurt", false, this);
+            getAnimationState(this).addEmptyAnimation(3, 0, 0);
+        }
     }
+
+    public void shoot() {
+        var slot = findSlot("muzzle", this);
+        var point = (PointAttachment) slot.getAttachment();
+        temp1.set(point.getX(), point.getY());
+        slot.getBone().localToWorld(temp1);
+
+        temp2.set(Gdx.input.getX(), Gdx.input.getY());
+        gameViewport.unproject(temp2);
+
+        var angle = pointDirection(temp1.x, temp1.y, temp2.x, temp2.y);
+        temp2.set(6, 0);
+        temp2.rotateDeg(angle);
+        temp2.add(temp1);
+
+        targetAlienBehaviour = null;
+        hitDistance = Float.MAX_VALUE;
+
+        for (var alienBehaviour : unBox.findBehaviours(AlienBehaviour.class)) {
+            var alienBody = getBody(alienBehaviour);
+            unBox.getWorld().rayCast(new RayCastCallback() {
+
+
+                @Override
+                public float reportRayFixture(Fixture fixture, Vector2 point1, Vector2 normal, float fraction) {
+                    if (alienBody.getFixtureList().contains(fixture, true)) {
+                        if (fraction < hitDistance) {
+                            hitDistance = fraction;
+                            targetAlienBehaviour = alienBehaviour;
+                        }
+                        return fraction;
+                    }
+                    return -1;
+                }
+            }, temp1, temp2);
+        }
+
+        if (targetAlienBehaviour != null) {
+            targetAlienBehaviour.getGameObject().destroy();
+        }
+    }
+    private Behaviour targetAlienBehaviour;
+    private float hitDistance;
 }

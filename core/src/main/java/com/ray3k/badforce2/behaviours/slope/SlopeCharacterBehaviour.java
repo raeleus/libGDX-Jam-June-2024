@@ -845,7 +845,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
         torsoFixture = setCollisionBox(-footRadius + footOffsetX, footOffsetY, footRadius * 2, torsoHeight);
         torsoFixture.getFilterData().categoryBits = CATEGORY_ENTITY;
-        torsoFixture.getFilterData().maskBits = CATEGORY_BOUNDS;
+        torsoFixture.getFilterData().maskBits = CATEGORY_BOUNDS + CATEGORY_ENEMY;
 
         gravityY = gravity;
     }

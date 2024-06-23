@@ -8,10 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.esotericsoftware.spine.AnimationState;
-import com.esotericsoftware.spine.Bone;
-import com.esotericsoftware.spine.Skeleton;
-import com.esotericsoftware.spine.SkeletonBounds;
+import com.esotericsoftware.spine.*;
 import com.ray3k.badforce2.behaviours.SpineBehaviour;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
@@ -132,6 +129,14 @@ public class Utils {
 
     public static Bone findBone(String name, GameObject gameObject) {
         return getSkeleton(gameObject).findBone(name);
+    }
+
+    public static Slot findSlot(String name, Behaviour behaviour) {
+        return findSlot(name, behaviour.getGameObject());
+    }
+
+    public static Slot findSlot(String name, GameObject gameObject) {
+        return getSkeleton(gameObject).findSlot(name);
     }
 
     public static SkeletonBounds getSkeletonBounds(GameObject gameObject) {

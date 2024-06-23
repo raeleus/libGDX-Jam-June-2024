@@ -1,22 +1,24 @@
 package com.ray3k.badforce2;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.esotericsoftware.spine.AnimationState.AnimationStateAdapter;
 import com.esotericsoftware.spine.AnimationState.TrackEntry;
+import com.esotericsoftware.spine.Skin;
 import com.ray3k.badforce2.OgmoReader.EntityNode;
 import com.ray3k.badforce2.OgmoReader.OgmoValue;
-import com.ray3k.badforce2.behaviours.DoorBehaviour;
-import com.ray3k.badforce2.behaviours.ImageBehaviour;
-import com.ray3k.badforce2.behaviours.PlayerBehaviour;
-import com.ray3k.badforce2.behaviours.SpineBehaviour;
+import com.ray3k.badforce2.behaviours.*;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
+import com.ray3k.badforce2.behaviours.slope.SlopeValues;
 import com.ray3k.badforce2.screens.GameScreen;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
+import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
 
 import static com.ray3k.badforce2.Core.skeletonJson;
 import static com.ray3k.badforce2.screens.GameScreen.*;
@@ -88,11 +90,17 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.animationState.getData().setMix("not-aiming", "aiming", .25f);
                 spine.animationState.getData().setMix("aiming", "not-aiming", .25f);
 
-                spine.skeleton.setSkin("assault");
+                spine.skeleton.setSkin((new Array<>(new String[] {"assault", "heavy", "sniper"})).random());
                 spine.useBodyRotation = false;
                 spine.animationState.addListener(new AnimationStateAdapter() {
                     @Override
+                    public void start(TrackEntry entry) {
+                        if (entry.getAnimation().getName().equals("shooting")) player.getBehaviour(PlayerBehaviour.class).shoot();
+                    }
+
+                    @Override
                     public void complete(TrackEntry entry) {
+                        if (entry.getAnimation().getName().equals("shooting")) player.getBehaviour(PlayerBehaviour.class).shoot();
                         if (entry.getAnimation().getName().equals("disappear")) Core.core.setScreen(new GameScreen(nextLevelName));
                     }
                 });
@@ -141,6 +149,22 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 }
                 new DoorBehaviour(points.toArray(), ground);
                 break;
+            case "alien":
+                var alien = new GameObject(unBox);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.DynamicBody;
+                bodyDef.fixedRotation = true;
+                bodyDef.position.set(p2m(x), p2m(y));
+                bodyDef.allowSleep = false;
+
+                new Box2dBehaviour(bodyDef, alien);
+
+                spine = new SpineBehaviour(alien, "spine/alien.json");
+                spine.useBodyRotation = false;
+                var fixtureDef = new FixtureDef();
+                fixtureDef.filter.categoryBits = SlopeValues.CATEGORY_ENEMY;
+                new CreateCircleFixtureBehaviour(new Vector2(0, 1), 1.3f, fixtureDef, alien);
+                new AlienBehaviour(alien);
         }
     }
 }
