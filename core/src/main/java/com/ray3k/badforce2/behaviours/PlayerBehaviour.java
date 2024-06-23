@@ -33,6 +33,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         if (Gdx.input.isKeyPressed(Keys.A)) moveWallClingLeft();
         else if (Gdx.input.isKeyPressed(Keys.D)) moveWallClingRight();
 
+        if (Gdx.input.isKeyPressed(Keys.S)) moveClimbDown();
+
         if (Gdx.input.isKeyPressed(Keys.W)) moveJump();
     }
 
@@ -206,6 +208,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventWallJump(float delta, float wallAngle) {
+        System.out.println("wall jump");
         setAnimation(0, "midair-jump", false, this);
         addAnimation(0, "falling", true, 0, this);
     }
@@ -223,6 +226,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventLedgeJump(float delta, float wallAngle) {
+        System.out.println("ledge jump");
         setAnimation(0, "midair-jump", false, this);
         addAnimation(0, "falling", true, 0, this);
     }

@@ -1560,7 +1560,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         else if (lastGrabbingLedge && clingingInput) {
             grabbingLedge = true;
             ledgeGrabYadjustment = 0;
-        } else if (lastClingingToWall) grabbingLedge = false;
+        } /*else if (lastClingingToWall) grabbingLedge = false;*/
         else {
             var climbingInput = inputWallClimbDown || inputWallClimbUp;
             if (!inputWallClingRight && wallToRight || !inputWallClingLeft && !wallToRight || automaticallyGrabLedges) grabbingLedge = false;
@@ -2119,7 +2119,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
         }
 
         //if initiating a wall jump
-        if (allowWallJump && canWallJump && MathUtils.isEqual(inputJumpJustPressed, jumpTriggerDelay)) {
+        if (allowWallJump && canWallJump && !grabbingLedge && MathUtils.isEqual(inputJumpJustPressed, jumpTriggerDelay)) {
             jumping = true;
             hitJumpApex = false;
             wallJumping = true;
