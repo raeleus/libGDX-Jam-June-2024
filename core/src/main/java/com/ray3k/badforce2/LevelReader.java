@@ -70,12 +70,27 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 bodyDef.position.set(0, 0);
                 new Box2dBehaviour(bodyDef, ground);
 
-                FloatArray points = new FloatArray();
+                var points = new FloatArray();
                 points.add(p2m(x), p2m(y));
                 for (var node : nodes) {
                     points.add(p2m(node.x), p2m(node.y));
                 }
                 new BoundsBehaviour(points.toArray(), ground);
+                break;
+            case "platform-pass-through":
+                ground = new GameObject(unBox);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.StaticBody;
+                bodyDef.position.set(0, 0);
+                new Box2dBehaviour(bodyDef, ground);
+
+                points = new FloatArray();
+                points.add(p2m(x), p2m(y));
+                for (var node : nodes) {
+                    points.add(p2m(node.x), p2m(node.y));
+                }
+                var bounds = new BoundsBehaviour(points.toArray(), ground);
+                bounds.canPassThroughBottom = true;
                 break;
         }
     }
