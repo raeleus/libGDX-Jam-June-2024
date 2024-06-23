@@ -35,7 +35,6 @@ public class SpineBehaviour extends BehaviourAdapter {
 
     public SpineBehaviour(GameObject gameObject, SkeletonData skeletonData, AnimationStateData animationStateData) {
         super(gameObject);
-
         skeleton = new Skeleton(skeletonData);
         animationState = new AnimationState(animationStateData);
         skeletonBounds = new SkeletonBounds();

@@ -325,7 +325,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The speed of the wall jump.
      */
-    public float wallJumpSpeed = 20f;
+    public float wallJumpSpeed = 25f;
     /**
      * The angle of the ledge jump if jumping while grabbing a ledge. This angle is mirrored over the
      * vertical axis if the wall is on the right side.

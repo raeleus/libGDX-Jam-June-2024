@@ -18,6 +18,7 @@ import com.ray3k.badforce2.screens.GameScreen;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 
+import static com.ray3k.badforce2.Core.skeletonJson;
 import static com.ray3k.badforce2.screens.GameScreen.*;
 
 public class LevelReader extends OgmoReader.OgmoAdapter {
@@ -27,6 +28,8 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
     public void level(String ogmoVersion, int width, int height, int offsetX, int offsetY,
                       ObjectMap<String, OgmoValue> valuesMap) {
         if (valuesMap.containsKey("next-level")) GameScreen.nextLevelName = valuesMap.get("next-level").asString();
+        levelWidth = p2m(width);
+        levelHeight = p2m(height);
     }
 
     @Override
@@ -56,6 +59,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 new Box2dBehaviour(bodyDef, player);
                 new PlayerBehaviour(player);
 
+                skeletonJson.setScale(p2m(1));
                 var spine = new SpineBehaviour(player, "spine/player.json");
                 spine.animationState.getData().setMix("jump", "falling", .25f);
                 spine.animationState.getData().setMix("jumping", "falling", .25f);
@@ -81,9 +85,10 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.animationState.getData().setMix("land", "falling", .25f);
                 spine.animationState.getData().setMix("air-roll", "grabbing-ledge", .1f);
                 spine.animationState.getData().setMix("air-roll", "clinging-to-wall", .1f);
-                spine.skeleton.setScale(p2m(1), p2m(1));
+                spine.animationState.getData().setMix("not-aiming", "aiming", .25f);
+                spine.animationState.getData().setMix("aiming", "not-aiming", .25f);
+
                 spine.skeleton.setSkin("assault");
-                spine.animationState.setAnimation(0, "standing", true);
                 spine.useBodyRotation = false;
                 spine.animationState.addListener(new AnimationStateAdapter() {
                     @Override

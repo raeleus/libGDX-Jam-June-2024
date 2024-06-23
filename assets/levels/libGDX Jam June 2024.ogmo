@@ -9,7 +9,7 @@
   "layerGridDefaultSize": {"x": 8, "y": 8},
   "levelDefaultSize": {"x": 320, "y": 240},
   "levelMinSize": {"x": 1024, "y": 576},
-  "levelMaxSize": {"x": 4096, "y": 4096},
+  "levelMaxSize": {"x": 8192, "y": 8192},
   "levelValues": [
     {"name": "next-level", "definition": "String", "display": 0, "defaults": "level.json", "maxLength": 0, "trimWhitespace": true}
   ],

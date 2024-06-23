@@ -1,0 +1,138 @@
+{
+  "ogmoVersion": "3.4.0",
+  "width": 4104,
+  "height": 576,
+  "offsetX": 0,
+  "offsetY": 0,
+  "values": {"next-level": "level3.json"},
+  "layers": [
+    {
+      "name": "foreground",
+      "_eid": "12447892",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 513,
+      "gridCellsY": 72,
+      "decals": [
+        {"x": 2048, "y": 288, "texture": "level2-over.png", "originX": 0.5, "originY": 0.5}
+      ],
+      "folder": ""
+    },
+    {
+      "name": "entities",
+      "_eid": "06589198",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 513,
+      "gridCellsY": 72,
+      "entities": [
+        {"name": "player", "id": 0, "_eid": "06650666", "x": 96, "y": 448, "originX": 50, "originY": 200}
+      ]
+    },
+    {
+      "name": "platforms",
+      "_eid": "06580089",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 1,
+      "gridCellHeight": 1,
+      "gridCellsX": 4104,
+      "gridCellsY": 576,
+      "entities": [
+        {
+          "name": "platform",
+          "id": 0,
+          "_eid": "06641331",
+          "x": 1,
+          "y": 519,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": 1, "y": 576},
+            {"x": 4102, "y": 576},
+            {"x": 4101, "y": 512},
+            {"x": 3423, "y": 509},
+            {"x": 811, "y": 494}
+          ]
+        },
+        {
+          "name": "platform",
+          "id": 1,
+          "_eid": "06641331",
+          "x": -1,
+          "y": 2,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": -1, "y": 59},
+            {"x": 488, "y": 81},
+            {"x": 1460, "y": 89},
+            {"x": 3684, "y": 74},
+            {"x": 4101, "y": 71},
+            {"x": 4100, "y": -15}
+          ]
+        },
+        {
+          "name": "platform",
+          "id": 2,
+          "_eid": "06641331",
+          "x": -70,
+          "y": 576,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": 4, "y": 581},
+            {"x": -3, "y": 1},
+            {"x": -71, "y": 1}
+          ]
+        },
+        {
+          "name": "platform",
+          "id": 3,
+          "_eid": "06641331",
+          "x": 4094,
+          "y": 583,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": 4168, "y": 588},
+            {"x": 4161, "y": 8},
+            {"x": 4093, "y": 8}
+          ]
+        },
+        {
+          "name": "door",
+          "id": 4,
+          "_eid": "14843138",
+          "x": 3834,
+          "y": 512,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": 3892, "y": 513},
+            {"x": 3889, "y": 472},
+            {"x": 3835, "y": 473}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "background",
+      "_eid": "12148269",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 513,
+      "gridCellsY": 72,
+      "decals": [
+        {"x": 2048, "y": 288, "texture": "level2.png", "originX": 0.5, "originY": 0.5}
+      ],
+      "folder": ""
+    }
+  ]
+}

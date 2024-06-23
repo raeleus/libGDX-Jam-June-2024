@@ -49,6 +49,8 @@ public class GameScreen extends ScreenAdapter {
     public static final float DEBUG_RENDER_ORDER = 300f;
     public static String levelName;
     public static String nextLevelName;
+    public static float levelWidth;
+    public static float levelHeight;
 
     public GameScreen(String levelName) {
         GameScreen.levelName = levelName;
@@ -57,7 +59,7 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         gameCamera = new OrthographicCamera();
-//        gameCamera.zoom = 5f;
+//        gameCamera.zoom = 100f;
         gameViewport = new ExtendViewport(15, 10, gameCamera);
         uiViewport = new FillViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
         stage = new Stage(uiViewport, batch);

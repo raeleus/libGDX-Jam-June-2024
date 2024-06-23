@@ -1,10 +1,10 @@
 {
 "skeleton": {
-	"hash": "nLzIgFs9NSk",
+	"hash": "Ua5HC8b3csk",
 	"spine": "4.2.31",
 	"x": -47.53,
 	"y": 4.37,
-	"width": 166.42,
+	"width": 197.18,
 	"height": 220.05,
 	"images": "",
 	"audio": ""
@@ -114,7 +114,7 @@
 	{ "name": "bandana8", "parent": "bandana7", "length": 6.25, "x": 6.25, "skin": true, "color": "abe323ff" },
 	{ "name": "bandana9", "parent": "bandana8", "length": 6.25, "x": 6.25, "skin": true, "color": "abe323ff" },
 	{ "name": "bandana10", "parent": "bandana9", "length": 6.25, "x": 6.25, "skin": true, "color": "abe323ff" },
-	{ "name": "target", "parent": "root", "x": 41.62, "y": 113.11, "color": "ff3f00ff", "icon": "ik" }
+	{ "name": "target", "parent": "root", "x": 135.65, "y": 211.42, "color": "ff3f00ff", "icon": "ik" }
 ],
 "slots": [
 	{ "name": "bandana", "bone": "bandana", "dark": "000000", "attachment": "bandana" },
@@ -135,7 +135,9 @@
 	{ "name": "forearm-front", "bone": "forearm-front", "dark": "000000", "attachment": "forearm-front" },
 	{ "name": "arm-front", "bone": "arm-front", "dark": "000000", "attachment": "arm-front" },
 	{ "name": "muzzle", "bone": "forearm-front", "dark": "000000", "attachment": "muzzle" },
-	{ "name": "bbox", "bone": "root", "dark": "000000", "attachment": "bbox" }
+	{ "name": "bbox", "bone": "root", "dark": "000000", "attachment": "bbox" },
+	{ "name": "gunflash", "bone": "forearm-front" },
+	{ "name": "blood-0", "bone": "target", "attachment": "game/blood-0" }
 ],
 "ik": [
 	{
@@ -143,7 +145,8 @@
 		"order": 10,
 		"bones": [ "arm-front", "forearm-front" ],
 		"target": "target",
-		"mix": 0
+		"mix": 0,
+		"softness": 300
 	}
 ],
 "physics": [
@@ -510,6 +513,9 @@
 					"vertexCount": 4,
 					"vertices": [ -22.69, 0.4, -24.52, 208.7, 31.45, 209.62, 30.53, 3.16 ]
 				}
+			},
+			"blood-0": {
+				"game/blood-0": { "width": 28, "height": 25 }
 			}
 		}
 	},
@@ -560,6 +566,9 @@
 			},
 			"gun": {
 				"gun": { "name": "game/player-assault-gun", "x": 23.93, "y": -1.67, "rotation": -37.48, "width": 130, "height": 43 }
+			},
+			"gunflash": {
+				"gunflash": { "name": "game/gunflash", "x": 174.53, "y": 18.27, "rotation": -1.45, "width": 98, "height": 47 }
 			},
 			"head": {
 				"head": { "name": "game/player-assault-head", "x": 1.2, "y": 27.48, "rotation": -1.09, "width": 45, "height": 57 }
@@ -612,6 +621,9 @@
 			},
 			"gun": {
 				"gun": { "name": "game/player-heavy-gun", "x": 47.97, "y": -26.7, "rotation": -38.56, "width": 130, "height": 36 }
+			},
+			"gunflash": {
+				"gunflash": { "name": "game/gunflash", "x": 209.52, "y": 17.38, "rotation": -1.45, "width": 98, "height": 47 }
 			},
 			"head": {
 				"head": { "name": "game/player-heavy-head", "x": 6.8, "y": 18.57, "rotation": -1.09, "width": 49, "height": 45 }
@@ -675,6 +687,9 @@
 			"gun": {
 				"gun": { "name": "game/player-sniper-gun", "x": 47.55, "y": -18.95, "rotation": -38.56, "width": 169, "height": 54 }
 			},
+			"gunflash": {
+				"gunflash": { "name": "game/gunflash", "x": 221.32, "y": 9.08, "rotation": -1.45, "width": 98, "height": 47 }
+			},
 			"head": {
 				"head": { "name": "game/player-sniper-head", "x": 6.8, "y": 18.57, "rotation": -1.09, "width": 54, "height": 48 }
 			},
@@ -694,7 +709,7 @@
 	"aiming": {
 		"ik": {
 			"target": [
-				{}
+				{ "softness": 100 }
 			]
 		}
 	},
@@ -866,13 +881,6 @@
 			"bandana": {
 				"rgba2": [
 					{ "light": "ffffffff", "dark": "000000" }
-				]
-			},
-			"bbox": {
-				"rgba2": [
-					{ "light": "ffffffff", "dark": "000000" },
-					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
-					{ "time": 2.3333, "light": "00000000", "dark": "000000" }
 				]
 			},
 			"body": {
@@ -1590,12 +1598,6 @@
 					{ "time": 0.1667, "light": "ffffffff", "dark": "000000" }
 				]
 			},
-			"bbox": {
-				"rgba2": [
-					{ "light": "ff0000ff", "dark": "ff0000" },
-					{ "time": 0.1667, "light": "ffffffff", "dark": "000000" }
-				]
-			},
 			"body": {
 				"rgba2": [
 					{ "light": "ff0000ff", "dark": "ff0000" },
@@ -2228,6 +2230,22 @@
 			}
 		}
 	},
+	"not-aiming": {
+		"ik": {
+			"target": [
+				{ "mix": 0 }
+			]
+		}
+	},
+	"not-shooting": {
+		"slots": {
+			"gunflash": {
+				"attachment": [
+					{}
+				]
+			}
+		}
+	},
 	"roll": {
 		"bones": {
 			"hip": {
@@ -2468,6 +2486,21 @@
 					{ "time": 0.6, "y": -28.49 },
 					{ "time": 0.7, "y": -8.41 },
 					{ "time": 0.8333, "y": 16.82 }
+				]
+			}
+		}
+	},
+	"shooting": {
+		"slots": {
+			"gunflash": {
+				"rgba": [
+					{ "time": 0.0333, "color": "ffffffff" },
+					{ "time": 0.1, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.0333, "name": "gunflash" },
+					{ "time": 0.1 },
+					{ "time": 0.1667 }
 				]
 			}
 		}

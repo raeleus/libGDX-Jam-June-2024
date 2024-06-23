@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.spine.AnimationState;
+import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonBounds;
 import com.ray3k.badforce2.behaviours.SpineBehaviour;
@@ -102,7 +103,7 @@ public class Utils {
         var animationState = getAnimationState(gameObject);
 
         var animation = skeleton.getData().findAnimation(name);
-        if (animationState.getCurrent(track).getAnimation() != animation) animationState.setAnimation(0, animation, looping);
+        if (animationState.getCurrent(track) == null || animationState.getCurrent(track).getAnimation() != animation) animationState.setAnimation(track, animation, looping);
     }
 
     public static void addAnimation(int track, String name, boolean looping, float delay, Behaviour behaviour) {
@@ -122,7 +123,15 @@ public class Utils {
     }
 
     public static boolean animationNameEquals(int track, String name, GameObject gameObject) {
-        return getAnimationState(gameObject).getCurrent(track).getAnimation().getName().equals(name);
+        return getAnimationState(gameObject).getCurrent(track) != null && getAnimationState(gameObject).getCurrent(track).getAnimation().getName().equals(name);
+    }
+
+    public static Bone findBone(String name, Behaviour behaviour) {
+        return findBone(name, behaviour.getGameObject());
+    }
+
+    public static Bone findBone(String name, GameObject gameObject) {
+        return getSkeleton(gameObject).findBone(name);
     }
 
     public static SkeletonBounds getSkeletonBounds(GameObject gameObject) {

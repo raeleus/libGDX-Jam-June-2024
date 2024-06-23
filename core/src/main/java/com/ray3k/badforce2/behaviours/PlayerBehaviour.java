@@ -1,19 +1,16 @@
 package com.ray3k.badforce2.behaviours;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.esotericsoftware.spine.AnimationState;
-import com.esotericsoftware.spine.AnimationState.AnimationStateAdapter;
-import com.esotericsoftware.spine.AnimationState.TrackEntry;
-import com.ray3k.badforce2.Core;
+import com.esotericsoftware.spine.Skeleton.Physics;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
-import com.ray3k.badforce2.screens.GameScreen;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 
@@ -22,6 +19,7 @@ import static com.ray3k.badforce2.screens.GameScreen.*;
 
 public class PlayerBehaviour extends SlopeCharacterBehaviour {
     private float queueRoll;
+    private static Vector2 temp1 = new Vector2();
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
@@ -70,18 +68,65 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
             setAnimation(0, "air-roll", false, this);
             midairJumpCounter = 1;
         }
+
+        if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+            setAnimation(1, "shooting", true, this);
+            setAnimation(2, "aiming", true, this);
+        } else {
+            setAnimation(1, "not-shooting", true, this);
+            setAnimation(2, "not-aiming", true, this);
+        }
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
         debugLabel.setText(debugText);
-        gameCamera.position.set(getBody(this).getPosition().x, getBody(this).getPosition().y, 1f);
+        updateCamera();
+
         queueRoll -= delta;
+    }
+
+    private void updateCamera() {
+        gameCamera.position.set(getBody(this).getPosition().x, getBody(this).getPosition().y, 1f);
+
+        if (gameCamera.viewportWidth > levelWidth) {
+            gameCamera.position.x = levelWidth / 2f;
+        } else {
+            if (gameCamera.position.x - gameCamera.viewportWidth / 2f < 0)
+                gameCamera.position.x = gameCamera.viewportWidth / 2f;
+            if (gameCamera.position.x + gameCamera.viewportWidth / 2f > levelWidth)
+                gameCamera.position.x = levelWidth - gameCamera.viewportWidth / 2f;
+        }
+
+        if (gameCamera.viewportHeight > levelHeight) {
+            gameCamera.position.y = levelHeight / 2f;
+        } else {
+            if (gameCamera.position.y - gameCamera.viewportHeight / 2f < 0)
+                gameCamera.position.y = gameCamera.viewportHeight / 2f;
+            if (gameCamera.position.y + gameCamera.viewportHeight / 2f > levelHeight)
+                gameCamera.position.y = levelHeight - gameCamera.viewportHeight / 2f;
+        }
+    }
+
+    @Override
+    public void lateUpdate(float delta) {
+        super.lateUpdate(delta);
+        updateTargetBone();
+    }
+
+    private void updateTargetBone() {
+        getSkeleton(this).updateWorldTransform(Physics.pose);
+        var bone = findBone("target", this);
+        temp1.set(Gdx.input.getX(), Gdx.input.getY());
+        gameViewport.unproject(temp1);
+        bone.getParent().worldToLocal(temp1);
+        bone.setPosition(temp1.x, temp1.y);
     }
 
     private void updateFacingDirection(float lateralSpeed) {
         getSkeleton(this).getRootBone().setScale((lateralSpeed < 0 ? -1f : 1f), 1f);
+        updateTargetBone();
     }
 
     private void rotateRootBone(float angle) {
@@ -398,6 +443,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         super.onCollisionEnter(other, contact);
         if (other.getGameObject().hasBehaviour(DoorBehaviour.class)) {
             setAnimation(0, "disappear", false, this);
+            lateralSpeed = 0;
+            getBody(this).setLinearVelocity(0, 0);
         }
     }
 }
