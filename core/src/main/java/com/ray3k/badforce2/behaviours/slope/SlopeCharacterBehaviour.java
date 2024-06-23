@@ -2128,6 +2128,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             canJump = false;
             coyoteTimer = 0;
             inputJumpJustPressed = 0;
+            midairJumpCounter++;
             movingPlatformFixtures.clear();
             setMotion(wallJumpSpeed, wallToRight ? 180 - wallJumpAngle : wallJumpAngle);
             eventWallJump(delta, wallContactAngle);
@@ -2143,6 +2144,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             canJump = false;
             coyoteTimer = 0;
             inputJumpJustPressed = 0;
+            midairJumpCounter++;
             movingPlatformFixtures.clear();
             setMotion(ledgeJumpSpeed, wallToRight ? 180 - ledgeJumpAngle : ledgeJumpAngle);
             eventLedgeJump(delta, wallContactAngle);
