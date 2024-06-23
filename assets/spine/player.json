@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "3fNVj/BI4Ek",
+	"hash": "W3fhQz4MLjo",
 	"spine": "4.2.31",
 	"x": -47.53,
 	"y": 4.37,
@@ -696,6 +696,94 @@
 			"target": [
 				{}
 			]
+		}
+	},
+	"air-roll": {
+		"bones": {
+			"hip": {
+				"rotate": [
+					{
+						"curve": [ 0.111, 0, 0.251, -64.37 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -90.07,
+						"curve": [ 0.485, -137.02, 0.707, -179.97 ]
+					},
+					{ "time": 1, "value": -179.92 }
+				],
+				"translate": [
+					{ "y": -20.36 },
+					{ "time": 0.1667, "y": 18.48 },
+					{ "time": 0.3333, "y": -85.54 }
+				]
+			},
+			"foreleg-front": {
+				"rotate": [
+					{ "value": -49.47 },
+					{ "time": 0.1667, "value": 3.59 }
+				]
+			},
+			"leg-front": {
+				"rotate": [
+					{ "value": 6.28 },
+					{ "time": 0.1667, "value": -5.47 }
+				]
+			},
+			"foreleg-back": {
+				"rotate": [
+					{ "value": -46.68 },
+					{ "time": 0.1667, "value": 2.81 }
+				]
+			},
+			"leg-back": {
+				"rotate": [
+					{ "value": 46.28 },
+					{ "time": 0.1667, "value": 1.47 }
+				]
+			},
+			"foot-front": {
+				"rotate": [
+					{ "value": 28.22 },
+					{ "time": 0.1667, "value": -49 }
+				]
+			},
+			"foot-back": {
+				"rotate": [
+					{ "value": 1 },
+					{ "time": 0.1667, "value": -60.51 }
+				]
+			},
+			"arm-back": {
+				"rotate": [
+					{ "value": -3.95 },
+					{ "time": 0.1667, "value": 173.45 }
+				]
+			},
+			"forearm-back": {
+				"rotate": [
+					{ "value": -20.21 },
+					{ "time": 0.1667, "value": -89.13 }
+				]
+			},
+			"forearm-front": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": -89.28 }
+				]
+			},
+			"arm-front": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 177.08 }
+				]
+			},
+			"head": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 51.82 }
+				]
+			}
 		}
 	},
 	"clinging-to-wall": {
@@ -1553,6 +1641,105 @@
 				"rotate": [
 					{ "value": -5.29 },
 					{ "time": 0.3333 }
+				]
+			}
+		}
+	},
+	"land-roll": {
+		"bones": {
+			"hip": {
+				"rotate": [
+					{ "value": -90.07 },
+					{ "time": 0.3333, "value": -374.65 },
+					{ "time": 0.5, "value": -360 }
+				],
+				"translate": [
+					{ "y": -85.54 },
+					{ "time": 0.0667, "y": -11.48 },
+					{ "time": 0.1, "y": -2.46 },
+					{ "time": 0.2, "y": -75.58 },
+					{ "time": 0.5, "y": -20.36 }
+				]
+			},
+			"foreleg-front": {
+				"rotate": [
+					{ "value": 3.59 },
+					{ "time": 0.1, "value": -143.04 },
+					{ "time": 0.2667, "value": -137.95 },
+					{ "time": 0.5, "value": -49.47 }
+				]
+			},
+			"leg-front": {
+				"rotate": [
+					{ "value": -5.47 },
+					{ "time": 0.1, "value": 52.79 },
+					{ "time": 0.2667, "value": 21.11 },
+					{ "time": 0.5, "value": 6.28 }
+				]
+			},
+			"foreleg-back": {
+				"rotate": [
+					{ "value": 2.81 },
+					{ "time": 0.1, "value": -129.91 },
+					{ "time": 0.3333, "value": -89.08 },
+					{ "time": 0.5, "value": -46.68 }
+				]
+			},
+			"leg-back": {
+				"rotate": [
+					{ "value": 1.47 },
+					{ "time": 0.1, "value": 130.28 },
+					{ "time": 0.3333, "value": 96.86 },
+					{ "time": 0.5, "value": 46.28 }
+				]
+			},
+			"foot-front": {
+				"rotate": [
+					{ "value": -49 },
+					{ "time": 0.4333, "value": 34.24 },
+					{ "time": 0.5, "value": 28.22 }
+				]
+			},
+			"foot-back": {
+				"rotate": [
+					{ "value": -60.51 },
+					{ "time": 0.3333, "value": 4.79 },
+					{ "time": 0.5, "value": 1 }
+				]
+			},
+			"arm-back": {
+				"rotate": [
+					{ "value": 173.45 },
+					{ "time": 0.1, "value": 4.49 },
+					{ "time": 0.5, "value": -3.95 }
+				]
+			},
+			"forearm-back": {
+				"rotate": [
+					{ "value": -89.13 },
+					{ "time": 0.1, "value": 24.69 },
+					{ "time": 0.5, "value": -20.21 }
+				]
+			},
+			"forearm-front": {
+				"rotate": [
+					{ "value": -89.28 },
+					{ "time": 0.1, "value": 24.04 },
+					{ "time": 0.5 }
+				]
+			},
+			"arm-front": {
+				"rotate": [
+					{ "value": 177.08 },
+					{ "time": 0.1, "value": 8.72 },
+					{ "time": 0.5 }
+				]
+			},
+			"head": {
+				"rotate": [
+					{ "value": 51.82 },
+					{ "time": 0.1, "value": -31.63 },
+					{ "time": 0.5 }
 				]
 			}
 		}

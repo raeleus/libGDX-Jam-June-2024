@@ -169,7 +169,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
      * The maximum deceleration that the character has while walking. This is implemented when the character presses
      * input in the opposite direction of which they are moving. This value is on a curve and actual acceleration may be higher.
      */
-    public float lateralDeceleration = 30f;
+    public float lateralDeceleration = 40f;
     /**
      * The minimum deceleration that the character has when they stop walking. This is implemented when there is no left
      * or right input. This is used when the character is close to lateralMaxSpeed.

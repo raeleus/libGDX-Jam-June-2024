@@ -42,7 +42,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         if (Gdx.input.isKeyPressed(Keys.S)) moveClimbDown();
         if (Gdx.input.isKeyPressed(Keys.S)) movePassThroughFloor();
 
-        if (Gdx.input.isKeyPressed(Keys.W)) moveJump();
+        if (!animationIsRoll && Gdx.input.isKeyPressed(Keys.W)) moveJump();
 
         if (queueRoll > 0 && !animationIsRoll || movementMode == MovementMode.WALKING && Gdx.input.isKeyJustPressed(Keys.SPACE) && !animationIsRoll) {
             boolean aimRight = Gdx.input.isKeyPressed(Keys.D) || !Gdx.input.isKeyPressed(Keys.A) && getSkeleton(this).getRootBone().getScaleX() > 0;
@@ -57,9 +57,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         if (movementMode == MovementMode.FALLING && Gdx.input.isKeyJustPressed(Keys.SPACE) && !animationIsRoll) {
             boolean aimRight = Gdx.input.isKeyPressed(Keys.D) || !Gdx.input.isKeyPressed(Keys.A) && getSkeleton(this).getRootBone().getScaleX() > 0;
             if (aimRight && lateralSpeed < 0 || !aimRight && lateralSpeed > 0) lateralSpeed = 0;
-            applyAirForce(5f, aimRight ? 45 : 135);
-            setAnimation(0, "roll", false, this);
-            addAnimation(0, "falling", true, 0, this);
+            applyAirForce(8f, aimRight ? 45 : 135);
+            setAnimation(0, "air-roll", false, this);
             midairJumpCounter = 1;
         }
     }
@@ -97,6 +96,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land")) return;
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("roll")) return;
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land-roll")) return;
         setAnimation(0, "running", true, this);
     }
 
@@ -111,6 +111,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         approachRotationRootBone(0, 360f * delta);
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land")) return;
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("roll")) return;
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land-roll")) return;
         setAnimation(0, "standing", true, this);
     }
 
@@ -146,6 +147,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         approachRotationRootBone(slidingAngle, 180f * delta);
 
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("roll")) return;
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land-roll")) return;
         setAnimation(0, "sliding", true, this);
     }
 
@@ -191,6 +193,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventHitHead(float delta, float ceilingAngle) {
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("air-roll")) return;
         setAnimation(0, "jump-hit-head", false, this);
         addAnimation(0, "falling", true, 0, this);
     }
@@ -202,6 +205,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("jumping")) return;
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("jump-hit-head")) return;
         if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("roll")) return;
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("land-roll")) return;
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("air-roll")) return;
         setAnimation(0, "falling", true, this);
     }
 
@@ -212,7 +217,11 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     @Override
     public void eventLand(float delta, float groundAngle) {
-        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("roll")) return;
+        if (getAnimationState(this).getCurrent(0).getAnimation().getName().equals("air-roll")) {
+            setAnimation(0, "land-roll", false, this);
+            addAnimation(0, "standing", true, 0, this);
+            return;
+        }
         setAnimation(0, "land", false, this);
         addAnimation(0, "standing", true, 0, this);
     }

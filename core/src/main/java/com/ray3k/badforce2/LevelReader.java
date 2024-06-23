@@ -55,6 +55,8 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.animationState.getData().setMix("clinging-to-wall", "grabbing-ledge", .25f);
                 spine.animationState.getData().setMix("running", "falling", .25f);
                 spine.animationState.getData().setMix("land", "falling", .25f);
+                spine.animationState.getData().setMix("air-roll", "grabbing-ledge", .1f);
+                spine.animationState.getData().setMix("air-roll", "clinging-to-wall", .1f);
                 spine.skeleton.setScale(p2m(1), p2m(1));
                 spine.skeleton.setSkin("assault");
                 spine.animationState.setAnimation(0, "standing", true);
