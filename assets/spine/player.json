@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "W3fhQz4MLjo",
+	"hash": "nLzIgFs9NSk",
 	"spine": "4.2.31",
 	"x": -47.53,
 	"y": 4.37,
@@ -831,6 +831,396 @@
 			"head": {
 				"scale": [
 					{ "x": -1 }
+				]
+			}
+		}
+	},
+	"disappear": {
+		"slots": {
+			"antenna": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" }
+				]
+			},
+			"arm-back": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"arm-front": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"backpack": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"bandana": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" }
+				]
+			},
+			"bbox": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.3333, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"body": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"cape": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"foot-back": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"foot-front": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"forearm-back": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"forearm-front": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"foreleg-back": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"foreleg-front": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"gun": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"head": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"leg-back": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"leg-front": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			},
+			"muzzle": {
+				"rgba2": [
+					{ "light": "ffffffff", "dark": "000000" },
+					{ "time": 1.6667, "light": "000000ff", "dark": "000000" },
+					{ "time": 2.5, "light": "00000000", "dark": "000000" }
+				]
+			}
+		},
+		"bones": {
+			"foreleg-front": {
+				"rotate": [
+					{ "value": -75.63 },
+					{ "time": 0.1333, "value": -27.53 },
+					{ "time": 0.2, "value": -22.65 },
+					{ "time": 0.3333, "value": -45.74 },
+					{ "time": 0.4333, "value": -88.15 },
+					{ "time": 0.5333, "value": -101.8 },
+					{ "time": 0.6333, "value": -114.6 },
+					{ "time": 0.7667, "value": -97.11 },
+					{ "time": 0.8333, "value": -75.63 },
+					{ "time": 0.9667, "value": -27.53 },
+					{ "time": 1.0333, "value": -22.65 },
+					{ "time": 1.1667, "value": -45.74 },
+					{ "time": 1.2667, "value": -88.15 },
+					{ "time": 1.3667, "value": -101.8 },
+					{ "time": 1.4667, "value": -114.6 },
+					{ "time": 1.6, "value": -97.11 },
+					{ "time": 1.6667, "value": -75.63 },
+					{ "time": 1.8, "value": -27.53 },
+					{ "time": 1.8667, "value": -22.65 },
+					{ "time": 2, "value": -45.74 },
+					{ "time": 2.1, "value": -88.15 },
+					{ "time": 2.2, "value": -101.8 },
+					{ "time": 2.3, "value": -114.6 },
+					{ "time": 2.4333, "value": -97.11 },
+					{ "time": 2.5, "value": -75.63 }
+				]
+			},
+			"leg-front": {
+				"rotate": [
+					{ "value": 91.17 },
+					{ "time": 0.1333, "value": 86.44 },
+					{ "time": 0.2, "value": 22.79 },
+					{ "time": 0.3333, "value": 5.38 },
+					{ "time": 0.4333, "value": -9 },
+					{ "time": 0.5333, "value": -22.14 },
+					{ "time": 0.6333, "value": 44.47 },
+					{ "time": 0.7667, "value": 71.78 },
+					{ "time": 0.8333, "value": 91.17 },
+					{ "time": 0.9667, "value": 86.44 },
+					{ "time": 1.0333, "value": 22.79 },
+					{ "time": 1.1667, "value": 5.38 },
+					{ "time": 1.2667, "value": -9 },
+					{ "time": 1.3667, "value": -22.14 },
+					{ "time": 1.4667, "value": 44.47 },
+					{ "time": 1.6, "value": 71.78 },
+					{ "time": 1.6667, "value": 91.17 },
+					{ "time": 1.8, "value": 86.44 },
+					{ "time": 1.8667, "value": 22.79 },
+					{ "time": 2, "value": 5.38 },
+					{ "time": 2.1, "value": -9 },
+					{ "time": 2.2, "value": -22.14 },
+					{ "time": 2.3, "value": 44.47 },
+					{ "time": 2.4333, "value": 71.78 },
+					{ "time": 2.5, "value": 91.17 }
+				]
+			},
+			"foreleg-back": {
+				"rotate": [
+					{ "value": -105.21 },
+					{ "time": 0.1333, "value": -98.31 },
+					{ "time": 0.2, "value": -116.49 },
+					{ "time": 0.3333, "value": -85.84 },
+					{ "time": 0.4333, "value": -53.37 },
+					{ "time": 0.5333, "value": -17.28 },
+					{ "time": 0.6333, "value": -38.74 },
+					{ "time": 0.7667, "value": -50.29 },
+					{ "time": 0.8333, "value": -105.21 },
+					{ "time": 0.9667, "value": -98.31 },
+					{ "time": 1.0333, "value": -116.49 },
+					{ "time": 1.1667, "value": -85.84 },
+					{ "time": 1.2667, "value": -53.37 },
+					{ "time": 1.3667, "value": -17.28 },
+					{ "time": 1.4667, "value": -38.74 },
+					{ "time": 1.6, "value": -50.29 },
+					{ "time": 1.6667, "value": -105.21 },
+					{ "time": 1.8, "value": -98.31 },
+					{ "time": 1.8667, "value": -116.49 },
+					{ "time": 2, "value": -85.84 },
+					{ "time": 2.1, "value": -53.37 },
+					{ "time": 2.2, "value": -17.28 },
+					{ "time": 2.3, "value": -38.74 },
+					{ "time": 2.4333, "value": -50.29 },
+					{ "time": 2.5, "value": -105.21 }
+				]
+			},
+			"leg-back": {
+				"rotate": [
+					{ "value": -8.51 },
+					{ "time": 0.1333, "value": -36.56 },
+					{ "time": 0.2, "value": 37.64 },
+					{ "time": 0.3333, "value": 83.27 },
+					{ "time": 0.4333, "value": 84.32 },
+					{ "time": 0.5333, "value": 73.18 },
+					{ "time": 0.6333, "value": 29.82 },
+					{ "time": 0.7667, "value": 9.42 },
+					{ "time": 0.8333, "value": -8.51 },
+					{ "time": 0.9667, "value": -36.56 },
+					{ "time": 1.0333, "value": 37.64 },
+					{ "time": 1.1667, "value": 83.27 },
+					{ "time": 1.2667, "value": 84.32 },
+					{ "time": 1.3667, "value": 73.18 },
+					{ "time": 1.4667, "value": 29.82 },
+					{ "time": 1.6, "value": 9.42 },
+					{ "time": 1.6667, "value": -8.51 },
+					{ "time": 1.8, "value": -36.56 },
+					{ "time": 1.8667, "value": 37.64 },
+					{ "time": 2, "value": 83.27 },
+					{ "time": 2.1, "value": 84.32 },
+					{ "time": 2.2, "value": 73.18 },
+					{ "time": 2.3, "value": 29.82 },
+					{ "time": 2.4333, "value": 9.42 },
+					{ "time": 2.5, "value": -8.51 }
+				]
+			},
+			"forearm-front": {
+				"rotate": [
+					{ "value": -37.62 },
+					{ "time": 0.1333, "value": -17.88 },
+					{ "time": 0.2, "value": -11.23 },
+					{ "time": 0.3333, "value": -8.09 },
+					{ "time": 0.4333, "value": 19.21 },
+					{ "time": 0.5333, "value": 6.85 },
+					{ "time": 0.6333, "value": -2.07 },
+					{ "time": 0.7667, "value": 18.37 },
+					{ "time": 0.8333, "value": -37.62 },
+					{ "time": 0.9667, "value": -17.88 },
+					{ "time": 1.0333, "value": -11.23 },
+					{ "time": 1.1667, "value": -8.09 },
+					{ "time": 1.2667, "value": 19.21 },
+					{ "time": 1.3667, "value": 6.85 },
+					{ "time": 1.4667, "value": -2.07 },
+					{ "time": 1.6, "value": 18.37 },
+					{ "time": 1.6667, "value": -37.62 },
+					{ "time": 1.8, "value": -17.88 },
+					{ "time": 1.8667, "value": -11.23 },
+					{ "time": 2, "value": -8.09 },
+					{ "time": 2.1, "value": 19.21 },
+					{ "time": 2.2, "value": 6.85 },
+					{ "time": 2.3, "value": -2.07 },
+					{ "time": 2.4333, "value": 18.37 },
+					{ "time": 2.5, "value": -37.62 }
+				]
+			},
+			"arm-front": {
+				"rotate": [
+					{ "value": -76.17 },
+					{ "time": 0.1333, "value": -25.52 },
+					{ "time": 0.2, "value": 18.13 },
+					{ "time": 0.3333, "value": 44.13 },
+					{ "time": 0.4333, "value": 97.34 },
+					{ "time": 0.5333, "value": 34.18 },
+					{ "time": 0.6333, "value": 9.23 },
+					{ "time": 0.7667, "value": -56.21 },
+					{ "time": 0.8333, "value": -76.17 },
+					{ "time": 0.9667, "value": -25.52 },
+					{ "time": 1.0333, "value": 18.13 },
+					{ "time": 1.1667, "value": 44.13 },
+					{ "time": 1.2667, "value": 97.34 },
+					{ "time": 1.3667, "value": 34.18 },
+					{ "time": 1.4667, "value": 9.23 },
+					{ "time": 1.6, "value": -56.21 },
+					{ "time": 1.6667, "value": -76.17 },
+					{ "time": 1.8, "value": -25.52 },
+					{ "time": 1.8667, "value": 18.13 },
+					{ "time": 2, "value": 44.13 },
+					{ "time": 2.1, "value": 97.34 },
+					{ "time": 2.2, "value": 34.18 },
+					{ "time": 2.3, "value": 9.23 },
+					{ "time": 2.4333, "value": -56.21 },
+					{ "time": 2.5, "value": -76.17 }
+				]
+			},
+			"arm-back": {
+				"rotate": [
+					{ "value": 98.25 },
+					{ "time": 0.1333, "value": 57.46 },
+					{ "time": 0.2, "value": 22.71 },
+					{ "time": 0.3333, "value": -44.2 },
+					{ "time": 0.4333, "value": -61.2 },
+					{ "time": 0.5333, "value": -40.57 },
+					{ "time": 0.6333, "value": -21.14 },
+					{ "time": 0.7667, "value": 23.79 },
+					{ "time": 0.8333, "value": 98.25 },
+					{ "time": 0.9667, "value": 57.46 },
+					{ "time": 1.0333, "value": 22.71 },
+					{ "time": 1.1667, "value": -44.2 },
+					{ "time": 1.2667, "value": -61.2 },
+					{ "time": 1.3667, "value": -40.57 },
+					{ "time": 1.4667, "value": -21.14 },
+					{ "time": 1.6, "value": 23.79 },
+					{ "time": 1.6667, "value": 98.25 },
+					{ "time": 1.8, "value": 57.46 },
+					{ "time": 1.8667, "value": 22.71 },
+					{ "time": 2, "value": -44.2 },
+					{ "time": 2.1, "value": -61.2 },
+					{ "time": 2.2, "value": -40.57 },
+					{ "time": 2.3, "value": -21.14 },
+					{ "time": 2.4333, "value": 23.79 },
+					{ "time": 2.5, "value": 98.25 }
+				]
+			},
+			"forearm-back": {
+				"rotate": [
+					{ "value": 2.73 },
+					{ "time": 0.1333, "value": -2.48 },
+					{ "time": 0.2, "value": -3.41 },
+					{ "time": 0.3333, "value": -18.85 },
+					{ "time": 0.4333, "value": -54.92 },
+					{ "time": 0.5333, "value": -36.53 },
+					{ "time": 0.6333, "value": -9.95 },
+					{ "time": 0.7667, "value": -6.45 },
+					{ "time": 0.8333, "value": 2.73 },
+					{ "time": 0.9667, "value": -2.48 },
+					{ "time": 1.0333, "value": -3.41 },
+					{ "time": 1.1667, "value": -18.85 },
+					{ "time": 1.2667, "value": -54.92 },
+					{ "time": 1.3667, "value": -36.53 },
+					{ "time": 1.4667, "value": -9.95 },
+					{ "time": 1.6, "value": -6.45 },
+					{ "time": 1.6667, "value": 2.73 },
+					{ "time": 1.8, "value": -2.48 },
+					{ "time": 1.8667, "value": -3.41 },
+					{ "time": 2, "value": -18.85 },
+					{ "time": 2.1, "value": -54.92 },
+					{ "time": 2.2, "value": -36.53 },
+					{ "time": 2.3, "value": -9.95 },
+					{ "time": 2.4333, "value": -6.45 },
+					{ "time": 2.5, "value": 2.73 }
+				]
+			},
+			"hip": {
+				"translate": [
+					{ "y": 16.82 },
+					{ "time": 0.1667, "y": -33.16 },
+					{ "time": 0.3, "y": -6.07 },
+					{ "time": 0.4667, "y": 8.61 },
+					{ "time": 0.6, "y": -28.49 },
+					{ "time": 0.7, "y": -8.41 },
+					{ "time": 0.8333, "y": 16.82 },
+					{ "time": 1, "y": -33.16 },
+					{ "time": 1.1333, "y": -6.07 },
+					{ "time": 1.3, "y": 8.61 },
+					{ "time": 1.4333, "y": -28.49 },
+					{ "time": 1.5333, "y": -8.41 },
+					{ "time": 1.6667, "y": 16.82 },
+					{ "time": 1.8333, "y": -33.16 },
+					{ "time": 1.9667, "y": -6.07 },
+					{ "time": 2.1333, "y": 8.61 },
+					{ "time": 2.2667, "y": -28.49 },
+					{ "time": 2.3667, "y": -8.41 },
+					{ "time": 2.5, "y": 16.82 }
 				]
 			}
 		}

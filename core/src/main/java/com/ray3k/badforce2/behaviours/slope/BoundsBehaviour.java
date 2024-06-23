@@ -1,11 +1,8 @@
 package com.ray3k.badforce2.behaviours.slope;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 
@@ -18,6 +15,7 @@ public class BoundsBehaviour extends BehaviourAdapter {
     public int edgeCount;
     public boolean canPassThroughBottom;
     public boolean ceilingClingable;
+    public short category = CATEGORY_BOUNDS;
 
     public float deltaX;
     public float deltaY;
@@ -67,7 +65,7 @@ public class BoundsBehaviour extends BehaviourAdapter {
             var fixture = body.createFixture(edgeShape, .5f);
             edgeCount ++;
             fixture.setFriction(0);
-            fixture.getFilterData().categoryBits = CATEGORY_BOUNDS;
+            fixture.getFilterData().categoryBits = category;
 
             var data = new BoundsData();
             data.fixture = fixture;

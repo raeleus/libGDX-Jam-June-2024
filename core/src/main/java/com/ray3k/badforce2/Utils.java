@@ -117,6 +117,14 @@ public class Utils {
         if (animationState.getCurrent(track).getAnimation() != animation) animationState.addAnimation(track, animation, looping, delay);
     }
 
+    public static boolean animationNameEquals(int track, String name, Behaviour behaviour) {
+        return animationNameEquals(track, name, behaviour.getGameObject());
+    }
+
+    public static boolean animationNameEquals(int track, String name, GameObject gameObject) {
+        return getAnimationState(gameObject).getCurrent(track).getAnimation().getName().equals(name);
+    }
+
     public static SkeletonBounds getSkeletonBounds(GameObject gameObject) {
         var behaviour = gameObject.getBehaviour(SpineBehaviour.class);
         if (behaviour == null) return null;

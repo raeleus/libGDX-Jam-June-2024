@@ -59,6 +59,6 @@ public class MenuScreen extends ScreenAdapter {
     }
 
     private void nextScreen() {
-        core.setScreen(new GameScreen());
+        core.setScreen(new GameScreen("level1.json"));
     }
 }

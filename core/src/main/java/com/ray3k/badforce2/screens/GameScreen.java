@@ -44,11 +44,20 @@ public class GameScreen extends ScreenAdapter {
     public static UnBox unBox;
     private Box2DDebugRenderer debugRenderer;
     public static Label debugLabel;
+    public static final float BACKGROUND_RENDER_ORDER = -50f;
+    public static final float FOREGROUND_RENDER_ORDER = 200f;
     public static final float DEBUG_RENDER_ORDER = 300f;
+    public static String levelName;
+    public static String nextLevelName;
+
+    public GameScreen(String levelName) {
+        GameScreen.levelName = levelName;
+    }
 
     @Override
     public void show() {
         gameCamera = new OrthographicCamera();
+//        gameCamera.zoom = 5f;
         gameViewport = new ExtendViewport(15, 10, gameCamera);
         uiViewport = new FillViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
         stage = new Stage(uiViewport, batch);
@@ -67,7 +76,7 @@ public class GameScreen extends ScreenAdapter {
 
         var ogmoReader = new OgmoReader();
         ogmoReader.addListener(new LevelReader());
-        ogmoReader.readFile(Gdx.files.internal("levels/test.json"));
+        ogmoReader.readFile(Gdx.files.internal("levels/" + levelName));
     }
 
     @Override
