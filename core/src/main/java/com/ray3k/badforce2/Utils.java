@@ -14,7 +14,8 @@ import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 
 public class Utils {
-    private static final Vector2 vector2 = new Vector2();
+    private static final Vector2 temp1 = new Vector2();
+    private static final Vector2 temp2 = new Vector2();
 
     public static void onChange(Actor actor, Runnable runnable) {
         actor.addListener(new ChangeListener() {
@@ -205,14 +206,24 @@ public class Utils {
     }
 
     public static float pointDistance(float x1, float y1, float x2, float y2) {
-        vector2.set(x1, y1);
-        return vector2.dst(x2, y2);
+        temp1.set(x1, y1);
+        return temp1.dst(x2, y2);
+    }
+
+    public static float pointDistance(Body body1, Body body2) {
+         temp1.set(body1.getPosition());
+         temp2.set(body2.getPosition());
+        return pointDistance(temp1.x, temp1.y, temp2.x, temp2.y);
+    }
+
+    public static float pointDistance(Behaviour behaviour1, Behaviour behaviour2) {
+        return pointDistance(getBody(behaviour1), getBody(behaviour2));
     }
 
     public static float pointDirection(float x1, float y1, float x2, float y2) {
-        vector2.set(x2, y2);
-        vector2.sub(x1, y1);
-        return vector2.angleDeg();
+        temp1.set(x2, y2);
+        temp1.sub(x1, y1);
+        return temp1.angleDeg();
     }
 
     public static boolean isEqual360(float a, float b, float tolerance) {

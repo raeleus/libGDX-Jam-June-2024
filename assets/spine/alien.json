@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "AoQbhHV9XqY",
+	"hash": "f+NkCJVnqiU",
 	"spine": "4.2.31",
 	"x": -202.94,
 	"y": -14.75,
@@ -114,7 +114,7 @@
 		"order": 4,
 		"bone": "antenna-front",
 		"rotate": 1,
-		"inertia": 0.1936,
+		"inertia": 0.0992,
 		"strength": 182.3,
 		"damping": 0.85
 	},
@@ -123,7 +123,7 @@
 		"order": 6,
 		"bone": "antenna-front3",
 		"rotate": 1,
-		"inertia": 0.1936,
+		"inertia": 0.0992,
 		"strength": 182.3,
 		"damping": 0.85
 	},
@@ -132,7 +132,7 @@
 		"order": 8,
 		"bone": "antenna-front4",
 		"rotate": 1,
-		"inertia": 0.1936,
+		"inertia": 0.0992,
 		"strength": 182.3,
 		"damping": 0.85
 	},
@@ -141,17 +141,17 @@
 		"order": 9,
 		"bone": "antenna-back4",
 		"rotate": 1,
-		"inertia": 0.1936,
+		"inertia": 0.0992,
 		"strength": 182.3,
 		"damping": 0.85
 	},
-	{ "name": "antenna-front3", "bone": "antenna-front1", "rotate": 1, "inertia": 0.1936, "strength": 182.3, "damping": 0.85 },
+	{ "name": "antenna-front3", "bone": "antenna-front1", "rotate": 1, "inertia": 0.0992, "strength": 182.3, "damping": 0.85 },
 	{
 		"name": "antenna-front4",
 		"order": 2,
 		"bone": "antenna-front2",
 		"rotate": 1,
-		"inertia": 0.1936,
+		"inertia": 0.0992,
 		"strength": 182.3,
 		"damping": 0.85
 	},
@@ -160,7 +160,7 @@
 		"order": 7,
 		"bone": "antenna-back3",
 		"rotate": 1,
-		"inertia": 0.1936,
+		"inertia": 0.0992,
 		"strength": 182.3,
 		"damping": 0.85
 	},
@@ -169,7 +169,7 @@
 		"order": 3,
 		"bone": "antenna-back2",
 		"rotate": 1,
-		"inertia": 0.1936,
+		"inertia": 0.0992,
 		"strength": 182.3,
 		"damping": 0.85
 	},
@@ -178,7 +178,7 @@
 		"order": 5,
 		"bone": "antenna-back",
 		"rotate": 1,
-		"inertia": 0.3388,
+		"inertia": 0.0992,
 		"strength": 182.3,
 		"damping": 0.85
 	},
@@ -187,7 +187,7 @@
 		"order": 1,
 		"bone": "antenna-back1",
 		"rotate": 1,
-		"inertia": 0.1936,
+		"inertia": 0.0992,
 		"strength": 182.3,
 		"damping": 0.85
 	},

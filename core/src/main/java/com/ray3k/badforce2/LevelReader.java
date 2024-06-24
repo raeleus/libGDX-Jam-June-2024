@@ -161,10 +161,8 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
 
                 spine = new SpineBehaviour(alien, "spine/alien.json");
                 spine.useBodyRotation = false;
-                var fixtureDef = new FixtureDef();
-                fixtureDef.filter.categoryBits = SlopeValues.CATEGORY_ENEMY;
-                new CreateCircleFixtureBehaviour(new Vector2(0, 1), 1.3f, fixtureDef, alien);
-                new AlienBehaviour(alien);
+                spine.animationState.setAnimation(0, "walk", true);
+                new AlienBehaviour(0, .5f, .5f, 1.8f, alien);
         }
     }
 }

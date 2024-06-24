@@ -72,7 +72,7 @@ public class GameScreen extends ScreenAdapter {
         stage.addActor(root);
 
         debugLabel = new Label("", skin);
-//        root.add(debugLabel).expand().top().left();
+        root.add(debugLabel).expand().top().left();
 
         unBox = new UnBox(new World(new Vector2(), true));
         debugRenderer = new Box2DDebugRenderer();
@@ -102,7 +102,7 @@ public class GameScreen extends ScreenAdapter {
         unBox.render(batch);
         batch.end();
 
-//        debugRenderer.render(unBox.getWorld(), gameCamera.combined);
+        debugRenderer.render(unBox.getWorld(), gameCamera.combined);
 
         unBox.postRender();
 

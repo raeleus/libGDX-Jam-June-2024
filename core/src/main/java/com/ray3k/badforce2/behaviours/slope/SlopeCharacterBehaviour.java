@@ -174,7 +174,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
      * The minimum deceleration that the character has when they stop walking. This is implemented when there is no left
      * or right input. This is used when the character is close to lateralMaxSpeed.
      */
-    public float lateralStopMinDeceleration = 9f;
+    public float lateralStopMinDeceleration = 15f;
     /**
      * The maximum deceleration that the character has when they stop walking. This is implemented when there is no left
      * or right input. The actual deceleration is on a curve where maximum deceleration is experienced when closer to 0.
@@ -845,7 +845,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
         torsoFixture = setCollisionBox(-footRadius + footOffsetX, footOffsetY, footRadius * 2, torsoHeight);
         torsoFixture.getFilterData().categoryBits = CATEGORY_ENTITY;
-        torsoFixture.getFilterData().maskBits = CATEGORY_BOUNDS + CATEGORY_ENEMY;
+        torsoFixture.getFilterData().maskBits = CATEGORY_BOUNDS + CATEGORY_ENTITY;
 
         gravityY = gravity;
     }

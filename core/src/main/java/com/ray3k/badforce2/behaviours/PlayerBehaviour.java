@@ -3,8 +3,6 @@ package com.ray3k.badforce2.behaviours;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -13,21 +11,22 @@ import com.esotericsoftware.spine.Skeleton.Physics;
 import com.esotericsoftware.spine.attachments.PointAttachment;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
-import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
+import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviourAdapter;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 
 import static com.ray3k.badforce2.Utils.*;
 import static com.ray3k.badforce2.screens.GameScreen.*;
 
-public class PlayerBehaviour extends SlopeCharacterBehaviour {
+public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     private float queueRoll;
     private static Vector2 temp1 = new Vector2();
     private static Vector2 temp2 = new Vector2();
+    public static PlayerBehaviour player;
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
-//        showDebug = true;
+        showDebug = true;
         setRenderOrder(DEBUG_RENDER_ORDER);
         allowClingToWalls = true;
         allowWallJump = true;
@@ -36,6 +35,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         grabLedgeThreshold = .3f;
         ledgeGrabMaxDistance = .25f;
         midairJumps = 1;
+        player = this;
     }
 
     @Override
@@ -82,7 +82,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
                 updateTargetBone();
             }
 
-            setAnimation(1, "shooting", true, this);
+
+            addAnimation(1, "shooting", true, .3f, this);
             setAnimation(2, "aiming", true, this);
         } else {
             setAnimation(1, "not-shooting", true, this);
@@ -484,7 +485,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
             var body = getBody(this);
             body.setLinearVelocity(0, 0);
             lateralSpeed = 0;
-            applyAirForce(30f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
+            applyAirForce(movementMode == MovementMode.WALKING ? 28f : 40f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
             setAnimation(0, "hit", false, this);
             addAnimation(0, "standing", true, 0, this);
             setAnimation(3, "hurt", false, this);
@@ -506,22 +507,21 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         temp2.rotateDeg(angle);
         temp2.add(temp1);
 
-        shotBehaviour = null;
-        hitDistance = Float.MAX_VALUE;
-        hitPosition.setZero();
+        shotTargetBehaviour = null;
+        shotTargetDistance = Float.MAX_VALUE;
+        shotTargetPosition.setZero();
 
         var aliens = unBox.findBehaviours(AlienBehaviour.class);
         var bounds = unBox.findBehaviours(BoundsBehaviour.class);
 
-        System.out.println("ray");
         unBox.getWorld().rayCast((fixture, point1, normal, fraction) -> {
             for (var alien : aliens) {
                 var body = getBody(alien);
                 if (body.getFixtureList().contains(fixture, true)) {
-                    if (fraction < hitDistance) {
-                        hitDistance = fraction;
-                        shotBehaviour = alien;
-                        hitPosition.set(point1);
+                    if (fraction < shotTargetDistance) {
+                        shotTargetDistance = fraction;
+                        shotTargetBehaviour = alien;
+                        shotTargetPosition.set(point1);
                         return fraction;
                     }
                     return 1;
@@ -530,12 +530,11 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
             for (var bound : bounds) {
                 var body = getBody(bound);
-                System.out.println("body = " + body);
                 if (body.getFixtureList().contains(fixture, true)) {
-                    if (fraction < hitDistance) {
-                        hitDistance = fraction;
-                        shotBehaviour = bound;
-                        hitPosition.set(point1);
+                    if (fraction < shotTargetDistance) {
+                        shotTargetDistance = fraction;
+                        shotTargetBehaviour = bound;
+                        shotTargetPosition.set(point1);
                         return fraction;
                     }
                     return 1;
@@ -545,20 +544,24 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
             return -1;
         }, temp1, temp2);
 
-        if (shotBehaviour == null) return;
+        if (shotTargetBehaviour == null) return;
 
-        if (shotBehaviour instanceof AlienBehaviour) {
+        if (shotTargetBehaviour instanceof AlienBehaviour) {
+            var alienBehaviour = (AlienBehaviour) shotTargetBehaviour;
             var blood = new GameObject(unBox);
-            new ParticleBehaviour("particles/blood.p", hitPosition.x, hitPosition.y, blood);
+            new ParticleBehaviour("particles/blood.p", shotTargetPosition.x, shotTargetPosition.y, blood);
+
+            alienBehaviour.health -= 10f;
+            if (alienBehaviour.health < 0) alienBehaviour.getGameObject().destroy();
         }
 
-        if (shotBehaviour instanceof BoundsBehaviour) {
+        if (shotTargetBehaviour instanceof BoundsBehaviour) {
             var spark = new GameObject(unBox);
-            new ParticleBehaviour("particles/spark.p", hitPosition.x, hitPosition.y, spark);
+            new ParticleBehaviour("particles/spark.p", shotTargetPosition.x, shotTargetPosition.y, spark);
         }
     }
 
-    private Behaviour shotBehaviour;
-    private float hitDistance;
-    private Vector2 hitPosition = new Vector2();
+    private Behaviour shotTargetBehaviour;
+    private float shotTargetDistance;
+    private Vector2 shotTargetPosition = new Vector2();
 }

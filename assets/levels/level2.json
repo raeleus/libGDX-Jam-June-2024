@@ -31,8 +31,7 @@
       "gridCellsY": 72,
       "entities": [
         {"name": "player", "id": 0, "_eid": "06650666", "x": 96, "y": 448, "originX": 50, "originY": 200},
-        {"name": "alien", "id": 1, "_eid": "16347693", "x": 3072, "y": 472, "originX": 110, "originY": 290},
-        {"name": "alien", "id": 3, "_eid": "16347693", "x": 3368, "y": 464, "originX": 110, "originY": 290}
+        {"name": "alien", "id": 1, "_eid": "16347693", "x": 3928, "y": 472, "originX": 110, "originY": 290}
       ]
     },
     {
