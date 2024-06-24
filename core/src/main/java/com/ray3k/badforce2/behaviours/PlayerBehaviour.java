@@ -3,11 +3,12 @@ package com.ray3k.badforce2.behaviours;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.esotericsoftware.spine.Skeleton.Physics;
 import com.esotericsoftware.spine.attachments.PointAttachment;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
@@ -26,7 +27,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
-        showDebug = true;
+//        showDebug = true;
         setRenderOrder(DEBUG_RENDER_ORDER);
         allowClingToWalls = true;
         allowWallJump = true;
@@ -73,6 +74,14 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         }
 
         if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+            if (movementMode == MovementMode.WALKING) {
+                temp1.set(Gdx.input.getX(), Gdx.input.getY());
+                gameViewport.unproject(temp1);
+
+                getSkeleton(this).getRootBone().setScale((temp1.x < getBody(this).getPosition().x ? -1f : 1f), 1f);
+                updateTargetBone();
+            }
+
             setAnimation(1, "shooting", true, this);
             setAnimation(2, "aiming", true, this);
         } else {
@@ -129,6 +138,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
 
     private void updateFacingDirection(float lateralSpeed) {
         if (animationNameEquals(0, "hit", this)) return;
+        if (animationNameEquals(2, "aiming", this)) return;
         getSkeleton(this).getRootBone().setScale((lateralSpeed < 0 ? -1f : 1f), 1f);
         updateTargetBone();
     }
@@ -491,37 +501,64 @@ public class PlayerBehaviour extends SlopeCharacterBehaviour {
         temp2.set(Gdx.input.getX(), Gdx.input.getY());
         gameViewport.unproject(temp2);
 
-        var angle = pointDirection(temp1.x, temp1.y, temp2.x, temp2.y);
-        temp2.set(6, 0);
+        var angle = point.computeWorldRotation(slot.getBone());
+        temp2.set(10, 0);
         temp2.rotateDeg(angle);
         temp2.add(temp1);
 
-        targetAlienBehaviour = null;
+        shotBehaviour = null;
         hitDistance = Float.MAX_VALUE;
+        hitPosition.setZero();
 
-        for (var alienBehaviour : unBox.findBehaviours(AlienBehaviour.class)) {
-            var alienBody = getBody(alienBehaviour);
-            unBox.getWorld().rayCast(new RayCastCallback() {
+        var aliens = unBox.findBehaviours(AlienBehaviour.class);
+        var bounds = unBox.findBehaviours(BoundsBehaviour.class);
 
-
-                @Override
-                public float reportRayFixture(Fixture fixture, Vector2 point1, Vector2 normal, float fraction) {
-                    if (alienBody.getFixtureList().contains(fixture, true)) {
-                        if (fraction < hitDistance) {
-                            hitDistance = fraction;
-                            targetAlienBehaviour = alienBehaviour;
-                        }
+        System.out.println("ray");
+        unBox.getWorld().rayCast((fixture, point1, normal, fraction) -> {
+            for (var alien : aliens) {
+                var body = getBody(alien);
+                if (body.getFixtureList().contains(fixture, true)) {
+                    if (fraction < hitDistance) {
+                        hitDistance = fraction;
+                        shotBehaviour = alien;
+                        hitPosition.set(point1);
                         return fraction;
                     }
-                    return -1;
+                    return 1;
                 }
-            }, temp1, temp2);
+            }
+
+            for (var bound : bounds) {
+                var body = getBody(bound);
+                System.out.println("body = " + body);
+                if (body.getFixtureList().contains(fixture, true)) {
+                    if (fraction < hitDistance) {
+                        hitDistance = fraction;
+                        shotBehaviour = bound;
+                        hitPosition.set(point1);
+                        return fraction;
+                    }
+                    return 1;
+                }
+            }
+
+            return -1;
+        }, temp1, temp2);
+
+        if (shotBehaviour == null) return;
+
+        if (shotBehaviour instanceof AlienBehaviour) {
+            var blood = new GameObject(unBox);
+            new ParticleBehaviour("particles/blood.p", hitPosition.x, hitPosition.y, blood);
         }
 
-        if (targetAlienBehaviour != null) {
-            targetAlienBehaviour.getGameObject().destroy();
+        if (shotBehaviour instanceof BoundsBehaviour) {
+            var spark = new GameObject(unBox);
+            new ParticleBehaviour("particles/spark.p", hitPosition.x, hitPosition.y, spark);
         }
     }
-    private Behaviour targetAlienBehaviour;
+
+    private Behaviour shotBehaviour;
     private float hitDistance;
+    private Vector2 hitPosition = new Vector2();
 }

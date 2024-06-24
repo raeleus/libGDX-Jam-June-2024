@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "uYiezQDkDII",
+	"hash": "5tao7HU6448",
 	"spine": "4.2.31",
-	"x": -47.53,
-	"y": 4.37,
-	"width": 166.42,
-	"height": 220.05,
+	"x": -80.11,
+	"y": -4.63,
+	"width": 247.36,
+	"height": 215.74,
 	"images": "",
 	"audio": ""
 },
@@ -114,7 +114,7 @@
 	{ "name": "bandana8", "parent": "bandana7", "length": 6.25, "x": 6.25, "skin": true, "color": "abe323ff" },
 	{ "name": "bandana9", "parent": "bandana8", "length": 6.25, "x": 6.25, "skin": true, "color": "abe323ff" },
 	{ "name": "bandana10", "parent": "bandana9", "length": 6.25, "x": 6.25, "skin": true, "color": "abe323ff" },
-	{ "name": "target", "parent": "root", "x": 135.65, "y": 211.42, "color": "ff3f00ff", "icon": "ik" }
+	{ "name": "target", "parent": "root", "x": 198.22, "y": 108.87, "color": "ff3f00ff", "icon": "ik" }
 ],
 "slots": [
 	{ "name": "bandana", "bone": "bandana", "dark": "000000", "attachment": "bandana" },
@@ -144,8 +144,7 @@
 		"order": 10,
 		"bones": [ "arm-front", "forearm-front" ],
 		"target": "target",
-		"mix": 0,
-		"softness": 300
+		"mix": 0
 	}
 ],
 "physics": [
@@ -576,7 +575,7 @@
 				"leg-front": { "name": "game/player-assault-leg", "x": 21.95, "y": 0.97, "rotation": 89.19, "width": 32, "height": 57 }
 			},
 			"muzzle": {
-				"muzzle": { "type": "point", "x": 127.55, "y": 19.29 }
+				"muzzle": { "type": "point", "x": 53.75, "y": 1.02 }
 			}
 		}
 	},
@@ -631,7 +630,7 @@
 				"leg-front": { "name": "game/player-heavy-leg", "x": 22.44, "y": 4.87, "rotation": 104.24, "width": 41, "height": 73 }
 			},
 			"muzzle": {
-				"muzzle": { "type": "point", "x": 160.3, "y": 19.51 }
+				"muzzle": { "type": "point", "x": 54.98, "y": 0.49 }
 			}
 		}
 	},
@@ -696,7 +695,7 @@
 				"leg-front": { "name": "game/player-sniper-leg", "x": 23.79, "y": -0.93, "rotation": 89.19, "width": 32, "height": 33 }
 			},
 			"muzzle": {
-				"muzzle": { "type": "point", "x": 175.27, "y": 10.75 }
+				"muzzle": { "type": "point", "x": 54.69, "y": 0.9 }
 			}
 		}
 	}
@@ -705,7 +704,7 @@
 	"aiming": {
 		"ik": {
 			"target": [
-				{ "softness": 100 }
+				{}
 			]
 		}
 	},
@@ -2516,6 +2515,128 @@
 					{ "time": 0.4667, "y": 8.61 },
 					{ "time": 0.6, "y": -28.49 },
 					{ "time": 0.7, "y": -8.41 },
+					{ "time": 0.8333, "y": 16.82 }
+				]
+			}
+		}
+	},
+	"running-backward": {
+		"bones": {
+			"foreleg-front": {
+				"rotate": [
+					{ "value": -75.63 },
+					{ "time": 0.0667, "value": -97.11 },
+					{ "time": 0.2, "value": -114.6 },
+					{ "time": 0.3, "value": -101.8 },
+					{ "time": 0.4, "value": -88.15 },
+					{ "time": 0.5, "value": -45.74 },
+					{ "time": 0.6333, "value": -22.65 },
+					{ "time": 0.7, "value": -27.53 },
+					{ "time": 0.8333, "value": -75.63 }
+				]
+			},
+			"leg-front": {
+				"rotate": [
+					{ "value": 91.17 },
+					{ "time": 0.0667, "value": 71.78 },
+					{ "time": 0.2, "value": 44.47 },
+					{ "time": 0.3, "value": -22.14 },
+					{ "time": 0.4, "value": -9 },
+					{ "time": 0.5, "value": 5.38 },
+					{ "time": 0.6333, "value": 22.79 },
+					{ "time": 0.7, "value": 86.44 },
+					{ "time": 0.8333, "value": 91.17 }
+				]
+			},
+			"foreleg-back": {
+				"rotate": [
+					{ "value": -105.21 },
+					{ "time": 0.0667, "value": -50.29 },
+					{ "time": 0.2, "value": -38.74 },
+					{ "time": 0.3, "value": -17.28 },
+					{ "time": 0.4, "value": -53.37 },
+					{ "time": 0.5, "value": -85.84 },
+					{ "time": 0.6333, "value": -116.49 },
+					{ "time": 0.7, "value": -98.31 },
+					{ "time": 0.8333, "value": -105.21 }
+				]
+			},
+			"leg-back": {
+				"rotate": [
+					{ "value": -8.51 },
+					{ "time": 0.0667, "value": 9.42 },
+					{ "time": 0.2, "value": 29.82 },
+					{ "time": 0.3, "value": 73.18 },
+					{ "time": 0.4, "value": 84.32 },
+					{ "time": 0.5, "value": 83.27 },
+					{ "time": 0.6333, "value": 37.64 },
+					{ "time": 0.7, "value": -36.56 },
+					{ "time": 0.8333, "value": -8.51 }
+				]
+			},
+			"forearm-front": {
+				"rotate": [
+					{ "value": -37.62 },
+					{ "time": 0.0667, "value": 18.37 },
+					{ "time": 0.2, "value": -2.07 },
+					{ "time": 0.3, "value": 6.85 },
+					{ "time": 0.4, "value": 19.21 },
+					{ "time": 0.5, "value": -8.09 },
+					{ "time": 0.6333, "value": -11.23 },
+					{ "time": 0.7, "value": -17.88 },
+					{ "time": 0.8333, "value": -37.62 }
+				]
+			},
+			"arm-front": {
+				"rotate": [
+					{ "value": -76.17 },
+					{ "time": 0.0667, "value": -56.21 },
+					{ "time": 0.2, "value": 9.23 },
+					{ "time": 0.3, "value": 34.18 },
+					{ "time": 0.4, "value": 97.34 },
+					{ "time": 0.5, "value": 44.13 },
+					{ "time": 0.6333, "value": 18.13 },
+					{ "time": 0.7, "value": -25.52 },
+					{ "time": 0.8333, "value": -76.17 }
+				]
+			},
+			"arm-back": {
+				"rotate": [
+					{ "value": 98.25 },
+					{ "time": 0.0667, "value": 23.79 },
+					{ "time": 0.2, "value": -21.14 },
+					{ "time": 0.3, "value": -40.57 },
+					{ "time": 0.4, "value": -61.2 },
+					{ "time": 0.5, "value": -44.2 },
+					{ "time": 0.6333, "value": 22.71 },
+					{ "time": 0.7, "value": 57.46 },
+					{ "time": 0.8333, "value": 98.25 }
+				]
+			},
+			"forearm-back": {
+				"rotate": [
+					{ "value": 2.73 },
+					{ "time": 0.0667, "value": -6.45 },
+					{ "time": 0.2, "value": -9.95 },
+					{ "time": 0.3, "value": -36.53 },
+					{ "time": 0.4, "value": -54.92 },
+					{ "time": 0.5, "value": -18.85 },
+					{ "time": 0.6333, "value": -3.41 },
+					{ "time": 0.7, "value": -2.48 },
+					{ "time": 0.8333, "value": 2.73 }
+				]
+			},
+			"hip": {
+				"rotate": [
+					{ "value": 7.97 }
+				],
+				"translate": [
+					{ "y": 16.82 },
+					{ "time": 0.1333, "y": -8.41 },
+					{ "time": 0.2333, "y": -28.49 },
+					{ "time": 0.3667, "y": 8.61 },
+					{ "time": 0.5333, "y": -6.07 },
+					{ "time": 0.6667, "y": -33.16 },
 					{ "time": 0.8333, "y": 16.82 }
 				]
 			}

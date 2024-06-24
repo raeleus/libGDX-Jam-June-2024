@@ -2,6 +2,7 @@ package com.ray3k.badforce2;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -26,6 +27,7 @@ public class Core extends Game {
     public static SkeletonJson skeletonJson;
     public static final float PPM = 100f;
     public static ShapeDrawer shapeDrawer;
+    public static Music bgm;
 
     @Override
     public void create() {
@@ -36,6 +38,8 @@ public class Core extends Game {
         skeletonRenderer = new SkeletonRenderer();
         skeletonJson = new SkeletonJson(textureAtlas);
         shapeDrawer = new ShapeDrawer(batch, textureAtlas.findRegion("white"));
+        bgm = Gdx.audio.newMusic(Gdx.files.internal("bgm/game.ogg"));
+        bgm.setLooping(true);
 
         setScreen(new SplashScreen());
     }

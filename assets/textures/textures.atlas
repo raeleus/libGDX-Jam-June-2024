@@ -135,6 +135,8 @@ game/player-sniper-head
 bounds:327,637,54,48
 game/player-sniper-leg
 bounds:30,52,32,33
+game/spark
+bounds:248,499,14,18
 
 textures_3.png
 size:1024,1024

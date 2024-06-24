@@ -45,6 +45,7 @@ public class GameScreen extends ScreenAdapter {
     private Box2DDebugRenderer debugRenderer;
     public static Label debugLabel;
     public static final float BACKGROUND_RENDER_ORDER = -50f;
+    public static final float PARTICLES_RENDER_ORDER = 100f;
     public static final float FOREGROUND_RENDER_ORDER = 200f;
     public static final float DEBUG_RENDER_ORDER = 300f;
     public static String levelName;
@@ -71,7 +72,7 @@ public class GameScreen extends ScreenAdapter {
         stage.addActor(root);
 
         debugLabel = new Label("", skin);
-        root.add(debugLabel).expand().top().left();
+//        root.add(debugLabel).expand().top().left();
 
         unBox = new UnBox(new World(new Vector2(), true));
         debugRenderer = new Box2DDebugRenderer();
@@ -79,6 +80,7 @@ public class GameScreen extends ScreenAdapter {
         var ogmoReader = new OgmoReader();
         ogmoReader.addListener(new LevelReader());
         ogmoReader.readFile(Gdx.files.internal("levels/" + levelName));
+        bgm.play();
     }
 
     @Override
@@ -100,7 +102,7 @@ public class GameScreen extends ScreenAdapter {
         unBox.render(batch);
         batch.end();
 
-        debugRenderer.render(unBox.getWorld(), gameCamera.combined);
+//        debugRenderer.render(unBox.getWorld(), gameCamera.combined);
 
         unBox.postRender();
 

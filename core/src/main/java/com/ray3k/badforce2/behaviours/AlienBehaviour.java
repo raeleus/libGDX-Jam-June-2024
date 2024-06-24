@@ -22,6 +22,6 @@ public class AlienBehaviour extends BehaviourAdapter {
 
     @Override
     public void onCollisionEnter(Behaviour other, Contact contact) {
-        System.out.println("other = " + other);
+
     }
 }
