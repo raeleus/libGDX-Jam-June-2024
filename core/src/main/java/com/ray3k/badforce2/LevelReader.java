@@ -20,11 +20,13 @@ import static com.ray3k.badforce2.screens.GameScreen.*;
 
 public class LevelReader extends OgmoReader.OgmoAdapter {
     private String layerName;
+    private boolean spawnAnimation;
 
     @Override
     public void level(String ogmoVersion, int width, int height, int offsetX, int offsetY,
                       ObjectMap<String, OgmoValue> valuesMap) {
         if (valuesMap.containsKey("next-level")) GameScreen.nextLevelName = valuesMap.get("next-level").asString();
+        if (valuesMap.containsKey("spawn-animation")) spawnAnimation = valuesMap.get("spawn-animation").asBoolean();
         levelWidth = p2m(width);
         levelHeight = p2m(height);
     }
@@ -87,6 +89,10 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
 
                 spine.skeleton.setSkin((new Array<>(new String[] {"assault", "heavy", "sniper"})).random());
                 spine.useBodyRotation = false;
+                if (spawnAnimation) {
+                    spine.animationState.setAnimation(4, "spawn", false);
+                    spine.animationState.addEmptyAnimation(4, 0, 0);
+                }
                 spine.animationState.addListener(new AnimationStateAdapter() {
                     @Override
                     public void start(TrackEntry entry) {

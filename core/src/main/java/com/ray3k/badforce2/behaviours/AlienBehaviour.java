@@ -1,11 +1,13 @@
 package com.ray3k.badforce2.behaviours;
 
 import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviourAdapter;
 import com.ray3k.badforce2.behaviours.slope.SlopeValues;
 import dev.lyze.gdxUnBox2d.Behaviour;
+import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 
@@ -46,9 +48,21 @@ public class AlienBehaviour extends SlopeCharacterBehaviourAdapter {
     }
 
     @Override
+    public boolean onCollisionPreSolve(Behaviour other, Contact contact, Manifold oldManifold) {
+        var otherAlien = other.getGameObject().getBehaviour(AlienBehaviour.class);
+        if (otherAlien != null && otherAlien.health > 0) {
+            contact.setEnabled(false);
+            return true;
+        }
+        return super.onCollisionPreSolve(other, contact, oldManifold);
+    }
+
+    @Override
     public void onCollisionEnter(Behaviour other, Contact contact) {
         super.onCollisionEnter(other, contact);
-        if (other.getGameObject().hasBehaviour(AlienBehaviour.class)) goingLeft = !goingLeft;
+
+        var otherAlien = other.getGameObject().getBehaviour(AlienBehaviour.class);
+        if (otherAlien != null && otherAlien.health > 0) goingLeft = !goingLeft;
     }
 
     public void kill() {

@@ -17,7 +17,7 @@ public class FlierBehaviour extends AlienBehaviour {
                           GameObject gameObject) {
         super(footOffsetX, footOffsetY, footRadius, torsoHeight, gameObject);
 
-        health = 30;
+        health = 20f;
         gravity = 0;
     }
 
@@ -36,8 +36,8 @@ public class FlierBehaviour extends AlienBehaviour {
         if (distance < 12 && moveTimer <= 0) {
             moveTimer = .7f;
             applyAirForce(MathUtils.random(4f, 7f), direction);
-
         }
+        if (getSpeed() > 11f) setSpeed(11f);
     }
 
     @Override

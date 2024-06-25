@@ -553,8 +553,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public void shoot() {
         var slot = findSlot("muzzle", this);
         var point = (PointAttachment) slot.getAttachment();
-        temp1.set(point.getX(), point.getY());
-        slot.getBone().localToWorld(temp1);
+        muzzlePosition.set(point.getX(), point.getY());
+        slot.getBone().localToWorld(muzzlePosition);
 
         temp2.set(Gdx.input.getX(), Gdx.input.getY());
         gameViewport.unproject(temp2);
@@ -562,7 +562,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         var angle = point.computeWorldRotation(slot.getBone());
         temp2.set(10, 0);
         temp2.rotateDeg(angle);
-        temp2.add(temp1);
+        temp2.add(muzzlePosition);
 
         shotTargetBehaviour = null;
         shotTargetDistance = Float.MAX_VALUE;
@@ -574,6 +574,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
 
         unBox.getWorld().rayCast((fixture, point1, normal, fraction) -> {
             for (var alien : aliens) {
+                if (alien.health <= 0) continue;
                 var body = getBody(alien);
                 if (body.getFixtureList().contains(fixture, true)) {
                     if (fraction < shotTargetDistance) {
@@ -587,6 +588,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             }
 
             for (var alien : fliers) {
+                if (alien.health <= 0) continue;
                 var body = getBody(alien);
                 if (body.getFixtureList().contains(fixture, true)) {
                     if (fraction < shotTargetDistance) {
@@ -613,7 +615,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             }
 
             return -1;
-        }, temp1, temp2);
+        }, muzzlePosition, temp2);
 
         if (shotTargetBehaviour == null) return;
 
@@ -622,6 +624,10 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             if (alienBehaviour.health > 0) {
                 var blood = new GameObject(unBox);
                 new ParticleBehaviour("particles/blood.p", shotTargetPosition.x, shotTargetPosition.y, blood);
+
+                var direction = pointDirection(muzzlePosition.x, muzzlePosition.y,shotTargetPosition.x, shotTargetPosition.y);
+                alienBehaviour.applyAirForce(2f, direction);
+                getAnimationState(alienBehaviour).setAnimation(1, "hurt", false);
 
                 alienBehaviour.health -= 10f;
                 if (alienBehaviour.health <= 0) {
@@ -638,5 +644,6 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
 
     private Behaviour shotTargetBehaviour;
     private float shotTargetDistance;
+    private Vector2 muzzlePosition = new Vector2();
     private Vector2 shotTargetPosition = new Vector2();
 }
