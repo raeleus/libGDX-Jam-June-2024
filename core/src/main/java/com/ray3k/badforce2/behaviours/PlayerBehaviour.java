@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.esotericsoftware.spine.Skeleton.Physics;
 import com.esotericsoftware.spine.attachments.PointAttachment;
+import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviourAdapter;
@@ -25,6 +26,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public static PlayerBehaviour player;
     public final static float NOT_SHOOTING_LATERAL_SPEED_MAX = 16;
     public final static float SHOOTING_LATERAL_SPEED_MAX = 8;
+    public float dodging;
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
@@ -60,6 +62,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (!animationIsRoll && Gdx.input.isKeyPressed(Keys.W)) moveJump();
 
         if (queueRoll > 0 && !animationIsRoll || movementMode == MovementMode.WALKING && Gdx.input.isKeyJustPressed(Keys.SPACE) && !animationIsRoll) {
+            dodging =.4f;
             boolean aimRight = Gdx.input.isKeyPressed(Keys.D) || !Gdx.input.isKeyPressed(Keys.A) && getSkeleton(this).getRootBone().getScaleX() > 0;
             if (aimRight && lateralSpeed < 0 || !aimRight && lateralSpeed > 0) lateralSpeed = 0;
             applyGroundForce(15f, aimRight ? 0 : 180);
@@ -70,6 +73,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         } else if (movementMode == MovementMode.WALKING && Gdx.input.isKeyJustPressed(Keys.SPACE)) queueRoll = .5f;
 
         if (movementMode == MovementMode.FALLING && Gdx.input.isKeyJustPressed(Keys.SPACE) && !animationIsRoll) {
+            dodging =.7f;
             boolean aimRight = Gdx.input.isKeyPressed(Keys.D) || !Gdx.input.isKeyPressed(Keys.A) && getSkeleton(this).getRootBone().getScaleX() > 0;
             if (aimRight && lateralSpeed < 0 || !aimRight && lateralSpeed > 0) lateralSpeed = 0;
             applyAirForce(8f, aimRight ? 45 : 135);
@@ -103,6 +107,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         updateCamera();
 
         queueRoll -= delta;
+        dodging -= delta;
     }
 
     private void updateCamera() {
@@ -324,6 +329,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (animationNameEquals(0, "disappear", this)) return;
         if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
+        if (animationNameEquals(0, "roll", this)) return;
         if (animationNameEquals(0, "air-roll", this)) {
             setAnimation(0, "land-roll", false, this);
             addAnimation(0, "standing", true, 0, this);
@@ -484,7 +490,12 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
 
         if (other.getGameObject().hasBehaviour(DoorBehaviour.class)) contact.setEnabled(false);
         if (other.getGameObject().hasBehaviour(AlienBehaviour.class) || other.getGameObject().hasBehaviour(FlierBehaviour.class)) {
-            contact.setEnabled(true);
+            boolean dodged = dodging > 0;
+            contact.setEnabled(!dodged);
+            if (dodged) {
+                setAnimation(3, "dodge", false, this);
+                getAnimationState(this).addEmptyAnimation(3, 0, 0);
+            }
         }
 
         return returnValue;
@@ -523,7 +534,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (alienBehaviour != null && alienBehaviour.health > 0) {
             var alienBody = getBody(other);
             var body = getBody(this);
-            hurt(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
+            if (dodging <= 0) hurt(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
         }
     }
 
