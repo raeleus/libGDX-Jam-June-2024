@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "HFPb0vub92Y",
+	"hash": "d0C0nGGu8pE",
 	"spine": "4.2.31",
 	"x": -80.11,
 	"y": -4.63,
@@ -955,7 +955,8 @@
 			},
 			"head": {
 				"rotate": [
-					{ "time": 0.6667, "value": 8.65 }
+					{ "time": 0.6667, "value": 8.65, "curve": "stepped" },
+					{ "time": 3, "value": 8.65 }
 				]
 			}
 		}
@@ -1604,8 +1605,7 @@
 					{},
 					{ "time": 0.1667, "value": 134.53 },
 					{ "time": 0.6667, "value": 27.62 },
-					{ "time": 0.9, "curve": "stepped" },
-					{ "time": 3 }
+					{ "time": 0.9 }
 				]
 			},
 			"forearm-front": {

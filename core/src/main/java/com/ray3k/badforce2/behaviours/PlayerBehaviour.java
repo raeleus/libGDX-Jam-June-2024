@@ -539,7 +539,6 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     }
 
     public void die(float speed, float direction) {
-        System.out.println("die");
         var body = getBody(this);
         body.setLinearVelocity(0, 0);
         lateralSpeed = 0;
