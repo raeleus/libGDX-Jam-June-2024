@@ -16,6 +16,7 @@ import com.ray3k.badforce2.behaviours.*;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.SlopeValues;
 import com.ray3k.badforce2.screens.GameScreen;
+import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
@@ -102,6 +103,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                     public void complete(TrackEntry entry) {
                         if (entry.getAnimation().getName().equals("shooting")) player.getBehaviour(PlayerBehaviour.class).shoot();
                         if (entry.getAnimation().getName().equals("disappear")) Core.core.setScreen(new GameScreen(nextLevelName));
+                        if (entry.getAnimation().getName().equals("die")) Core.core.setScreen(new GameScreen(levelName));
                     }
                 });
                 break;
@@ -163,6 +165,35 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.useBodyRotation = false;
                 spine.animationState.setAnimation(0, "walk", true);
                 new AlienBehaviour(0, .5f, .5f, 1.8f, alien);
+                break;
+            case "hurt":
+                ground = new GameObject(unBox);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.StaticBody;
+                bodyDef.position.set(0, 0);
+                new Box2dBehaviour(bodyDef, ground);
+
+                points = new FloatArray();
+                points.add(p2m(x), p2m(y));
+                for (var node : nodes) {
+                    points.add(p2m(node.x), p2m(node.y));
+                }
+                new HurtAreaBehaviour(points.toArray(), ground);
+                break;
+            case "pit":
+                ground = new GameObject(unBox);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.StaticBody;
+                bodyDef.position.set(0, 0);
+                new Box2dBehaviour(bodyDef, ground);
+
+                points = new FloatArray();
+                points.add(p2m(x), p2m(y));
+                for (var node : nodes) {
+                    points.add(p2m(node.x), p2m(node.y));
+                }
+                new PitBehaviour(points.toArray(), ground);
+                break;
         }
     }
 }

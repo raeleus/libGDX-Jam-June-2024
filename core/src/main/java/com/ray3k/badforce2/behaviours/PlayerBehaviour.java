@@ -23,6 +23,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     private static Vector2 temp1 = new Vector2();
     private static Vector2 temp2 = new Vector2();
     public static PlayerBehaviour player;
+    public final static float NOT_SHOOTING_LATERAL_SPEED_MAX = 16;
+    public final static float SHOOTING_LATERAL_SPEED_MAX = 8;
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
@@ -36,11 +38,13 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         ledgeGrabMaxDistance = .25f;
         midairJumps = 1;
         player = this;
+        lateralMaxSpeed = NOT_SHOOTING_LATERAL_SPEED_MAX;
     }
 
     @Override
     public void handleControls() {
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         var animationIsRoll = animationNameEquals(0, "roll", this);
         if (!animationIsRoll || movementMode == MovementMode.FALLING) {
             if (Gdx.input.isKeyPressed(Keys.A)) moveLeft();
@@ -82,12 +86,13 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
                 updateTargetBone();
             }
 
-
             addAnimation(1, "shooting", true, .3f, this);
             setAnimation(2, "aiming", true, this);
+            lateralMaxSpeed = SHOOTING_LATERAL_SPEED_MAX;
         } else {
             setAnimation(1, "not-shooting", true, this);
             setAnimation(2, "not-aiming", true, this);
+            lateralMaxSpeed = NOT_SHOOTING_LATERAL_SPEED_MAX;
         }
     }
 
@@ -168,6 +173,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (animationNameEquals(0, "roll", this)) return;
         if (animationNameEquals(0, "land-roll", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         setAnimation(0, "running", true, this);
     }
 
@@ -185,6 +191,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (animationNameEquals(0, "roll", this)) return;
         if (animationNameEquals(0, "land-roll", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         setAnimation(0, "standing", true, this);
     }
 
@@ -202,6 +209,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public void eventWalkPushingWall(float delta, float wallAngle) {
         if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         setAnimation(0, "walling", true, this);
     }
 
@@ -224,6 +232,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (animationNameEquals(0, "roll", this)) return;
         if (animationNameEquals(0, "land-roll", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "sliding", true, this);
     }
@@ -236,6 +245,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     @Override
     public void eventJump(float delta) {
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
         rotateRootBone(0);
         setAnimation(0, "jump", false, this);
@@ -246,6 +256,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public void eventJumpReleased(float delta) {
         if (animationNameEquals(0, "midair-jump", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "falling", true, this);
     }
@@ -254,6 +265,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public void eventJumpApex(float delta) {
         if (animationNameEquals(0, "midair-jump", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "falling", true, this);
     }
@@ -271,6 +283,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     @Override
     public void eventJumpMidair(float delta) {
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "midair-jump", false, this);
         addAnimation(0, "falling", true, 0, this);
@@ -280,6 +293,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public void eventHitHead(float delta, float ceilingAngle) {
         if (animationNameEquals(0, "air-roll", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "jump-hit-head", false, this);
         addAnimation(0, "falling", true, 0, this);
@@ -295,6 +309,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (animationNameEquals(0, "land-roll", this)) return;
         if (animationNameEquals(0, "air-roll", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "falling", true, this);
     }
@@ -307,6 +322,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     @Override
     public void eventLand(float delta, float groundAngle) {
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "air-roll", this)) {
             setAnimation(0, "land-roll", false, this);
@@ -362,6 +378,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public void eventReleaseGrabLedge(float delta) {
         if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         if (animationNameEquals(0, "midair-jump", this)) return;
         setAnimation(0, "falling", true, this);
     }
@@ -370,6 +387,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public void eventLedgeJump(float delta, float wallAngle) {
         if (animationNameEquals(0, "hit", this)) return;
         if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
         setAnimation(0, "midair-jump", false, this);
         addAnimation(0, "falling", true, 0, this);
     }
@@ -475,22 +493,60 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     @Override
     public void onCollisionEnter(Behaviour other, Contact contact) {
         super.onCollisionEnter(other, contact);
+        if (animationNameEquals(0, "disappear", this)) return;
+        if (animationNameEquals(0, "die", this)) return;
+
         if (other.getGameObject().hasBehaviour(DoorBehaviour.class)) {
             setAnimation(0, "disappear", false, this);
             lateralSpeed = 0;
+            gravity = 0;
+            gravityY = 0;
+            deltaX = 0;
+            deltaY = 0;
             getBody(this).setLinearVelocity(0, 0);
         }
+
+        if (other.getGameObject().hasBehaviour(HurtAreaBehaviour.class)) {
+            var hurtAreaBody = getBody(other);
+            var body = getBody(this);
+            hurt(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(hurtAreaBody.getPosition().x, hurtAreaBody.getPosition().y, body.getPosition().x, body.getPosition().y));
+        }
+
+        if (other.getGameObject().hasBehaviour(PitBehaviour.class)) {
+            var hurtAreaBody = getBody(other);
+            var body = getBody(this);
+            die(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(hurtAreaBody.getPosition().x, hurtAreaBody.getPosition().y, body.getPosition().x, body.getPosition().y));
+        }
+
         if (other.getGameObject().hasBehaviour(AlienBehaviour.class)) {
             var alienBody = getBody(other);
             var body = getBody(this);
-            body.setLinearVelocity(0, 0);
-            lateralSpeed = 0;
-            applyAirForce(movementMode == MovementMode.WALKING ? 28f : 40f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
-            setAnimation(0, "hit", false, this);
-            addAnimation(0, "standing", true, 0, this);
-            setAnimation(3, "hurt", false, this);
-            getAnimationState(this).addEmptyAnimation(3, 0, 0);
+            hurt(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
         }
+    }
+
+    public void hurt(float speed, float direction) {
+        var body = getBody(this);
+        body.setLinearVelocity(0, 0);
+        lateralSpeed = 0;
+        deltaX = 0;
+        deltaY = 0;
+        applyAirForce(speed, direction);
+        setAnimation(0, "hit", false, this);
+        addAnimation(0, "standing", true, 0, this);
+        setAnimation(3, "hurt", false, this);
+        getAnimationState(this).addEmptyAnimation(3, 0, 0);
+    }
+
+    public void die(float speed, float direction) {
+        System.out.println("die");
+        var body = getBody(this);
+        body.setLinearVelocity(0, 0);
+        lateralSpeed = 0;
+        deltaX = 0;
+        deltaY = 0;
+        applyAirForce(speed, direction);
+        setAnimation(0, "die", false, this);
     }
 
     public void shoot() {

@@ -1729,6 +1729,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                 temp1.set(deltaX, deltaY);
                 temp1.rotateDeg(groundAngle + 90);
                 lateralSpeed = temp1.x;
+                clingingToWall = false;
             }
             if (touchedGroundFixtures.size == 0) {
                 setMotion(slopeStickForce, contactAngle + 180);

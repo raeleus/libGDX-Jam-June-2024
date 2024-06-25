@@ -12,7 +12,7 @@ import static com.ray3k.badforce2.Utils.*;
 import static com.ray3k.badforce2.behaviours.PlayerBehaviour.*;
 
 public class AlienBehaviour extends SlopeCharacterBehaviourAdapter {
-    public float health = 100;
+    public float health = 50;
     private boolean goingLeft = true;
 
     public AlienBehaviour(float footOffsetX, float footOffsetY, float footRadius, float torsoHeight,
@@ -27,6 +27,7 @@ public class AlienBehaviour extends SlopeCharacterBehaviourAdapter {
         if (goingLeft) moveLeft();
         else moveRight();
 
+        if (getBody(player) == null) return;
         float distanceToPlayer = pointDistance(this, player);
         if (distanceToPlayer < 7) goingLeft = getBody(player).getPosition().x < getBody(this).getPosition().x;
         updateFacingDirection();
