@@ -483,7 +483,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         var returnValue = super.onCollisionPreSolve(other, contact, oldManifold);
 
         if (other.getGameObject().hasBehaviour(DoorBehaviour.class)) contact.setEnabled(false);
-        if (other.getGameObject().hasBehaviour(AlienBehaviour.class)) {
+        if (other.getGameObject().hasBehaviour(AlienBehaviour.class) || other.getGameObject().hasBehaviour(FlierBehaviour.class)) {
             contact.setEnabled(true);
         }
 
@@ -518,7 +518,9 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             die(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(hurtAreaBody.getPosition().x, hurtAreaBody.getPosition().y, body.getPosition().x, body.getPosition().y));
         }
 
-        if (other.getGameObject().hasBehaviour(AlienBehaviour.class)) {
+        var alienBehaviour = other.getGameObject().getBehaviour(AlienBehaviour.class);
+        if (alienBehaviour == null) alienBehaviour = other.getGameObject().getBehaviour(FlierBehaviour.class);
+        if (alienBehaviour != null && alienBehaviour.health > 0) {
             var alienBody = getBody(other);
             var body = getBody(this);
             hurt(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
@@ -567,10 +569,24 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         shotTargetPosition.setZero();
 
         var aliens = unBox.findBehaviours(AlienBehaviour.class);
+        var fliers = unBox.findBehaviours(FlierBehaviour.class);
         var bounds = unBox.findBehaviours(BoundsBehaviour.class);
 
         unBox.getWorld().rayCast((fixture, point1, normal, fraction) -> {
             for (var alien : aliens) {
+                var body = getBody(alien);
+                if (body.getFixtureList().contains(fixture, true)) {
+                    if (fraction < shotTargetDistance) {
+                        shotTargetDistance = fraction;
+                        shotTargetBehaviour = alien;
+                        shotTargetPosition.set(point1);
+                        return fraction;
+                    }
+                    return 1;
+                }
+            }
+
+            for (var alien : fliers) {
                 var body = getBody(alien);
                 if (body.getFixtureList().contains(fixture, true)) {
                     if (fraction < shotTargetDistance) {
@@ -603,11 +619,15 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
 
         if (shotTargetBehaviour instanceof AlienBehaviour) {
             var alienBehaviour = (AlienBehaviour) shotTargetBehaviour;
-            var blood = new GameObject(unBox);
-            new ParticleBehaviour("particles/blood.p", shotTargetPosition.x, shotTargetPosition.y, blood);
+            if (alienBehaviour.health > 0) {
+                var blood = new GameObject(unBox);
+                new ParticleBehaviour("particles/blood.p", shotTargetPosition.x, shotTargetPosition.y, blood);
 
-            alienBehaviour.health -= 10f;
-            if (alienBehaviour.health < 0) alienBehaviour.getGameObject().destroy();
+                alienBehaviour.health -= 10f;
+                if (alienBehaviour.health <= 0) {
+                    alienBehaviour.kill();
+                }
+            }
         }
 
         if (shotTargetBehaviour instanceof BoundsBehaviour) {

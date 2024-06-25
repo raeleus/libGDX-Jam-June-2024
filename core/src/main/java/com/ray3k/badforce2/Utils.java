@@ -226,6 +226,16 @@ public class Utils {
         return temp1.angleDeg();
     }
 
+    public static float pointDirection(Body body1, Body body2) {
+        temp1.set(body1.getPosition());
+        temp2.set(body2.getPosition());
+        return pointDirection(temp1.x, temp1.y, temp2.x, temp2.y);
+    }
+
+    public static float pointDirection(Behaviour behaviour1, Behaviour behaviour2) {
+        return pointDirection(getBody(behaviour1), getBody(behaviour2));
+    }
+
     public static boolean isEqual360(float a, float b, float tolerance) {
         return MathUtils.isZero((a - b + 180 + 360) % 360 - 180, tolerance);
     }

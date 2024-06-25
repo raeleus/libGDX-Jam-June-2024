@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviourAdapter;
+import com.ray3k.badforce2.behaviours.slope.SlopeValues;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
@@ -24,6 +25,8 @@ public class AlienBehaviour extends SlopeCharacterBehaviourAdapter {
 
     @Override
     public void handleControls() {
+        if (health <= 0) return;
+
         if (goingLeft) moveLeft();
         else moveRight();
 
@@ -46,5 +49,18 @@ public class AlienBehaviour extends SlopeCharacterBehaviourAdapter {
     public void onCollisionEnter(Behaviour other, Contact contact) {
         super.onCollisionEnter(other, contact);
         if (other.getGameObject().hasBehaviour(AlienBehaviour.class)) goingLeft = !goingLeft;
+    }
+
+    public void kill() {
+        getAnimationState(this).setAnimation(0, "kill", false);
+        var body = getBody(this);
+        body.setLinearVelocity(0, 0);
+        for (var fixture : body.getFixtureList()) {
+            fixture.getFilterData().categoryBits = SlopeValues.CATEGORY_NO_CONTACT;
+        }
+        deltaX = 0;
+        deltaY = 0;
+        lateralSpeed = 0;
+        stickToGround = false;
     }
 }

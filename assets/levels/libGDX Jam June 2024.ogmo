@@ -310,6 +310,42 @@
       "nodeGhost": true,
       "tags": ["platform"],
       "values": []
+    },
+    {
+      "exportID": "29732545",
+      "name": "flier",
+      "limit": -1,
+      "size": {"x": 140, "y": 85},
+      "origin": {"x": 70, "y": 42},
+      "originAnchored": true,
+      "shape": {
+        "label": "Rectangle",
+        "points": [
+          {"x": -1, "y": -1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": 1}
+        ]
+      },
+      "color": "#0009ffff",
+      "tileX": false,
+      "tileY": false,
+      "tileSize": {"x": 16, "y": 16},
+      "resizeableX": false,
+      "resizeableY": false,
+      "rotatable": false,
+      "rotationDegrees": 360,
+      "canFlipX": false,
+      "canFlipY": false,
+      "canSetColor": false,
+      "hasNodes": false,
+      "nodeLimit": 0,
+      "nodeDisplay": 0,
+      "nodeGhost": true,
+      "tags": ["entity"],
+      "values": []
     }
   ],
   "tilesets": []

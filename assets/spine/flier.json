@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "AIdXGFjkA88",
+	"hash": "/dKmaFSd5z4",
 	"spine": "4.2.31",
 	"x": -54.84,
 	"y": -27.41,
@@ -65,59 +65,6 @@
 	}
 ],
 "animations": {
-	"die": {
-		"bones": {
-			"flier-wing": {
-				"rotate": [
-					{},
-					{ "time": 0.3333, "value": -33.36 }
-				]
-			},
-			"flier-body-2": {
-				"rotate": [
-					{},
-					{ "time": 0.3333, "value": 33.2 }
-				]
-			},
-			"flier-stinger": {
-				"rotate": [
-					{},
-					{ "time": 0.3333, "value": 29.86 }
-				]
-			},
-			"flier-body-4": {
-				"rotate": [
-					{},
-					{ "time": 0.3333, "value": 45.3 }
-				]
-			},
-			"flier-body-3": {
-				"rotate": [
-					{},
-					{ "time": 0.3333, "value": 53 }
-				]
-			},
-			"flier-body-1": {
-				"rotate": [
-					{},
-					{ "time": 0.3333, "value": 182.48 }
-				],
-				"translate": [
-					{},
-					{ "time": 0.1, "y": 40.19 },
-					{ "time": 0.3333, "y": -21.15 }
-				]
-			},
-			"flier-head": {
-				"rotate": [
-					{},
-					{ "time": 0.0667, "value": 49.13 },
-					{ "time": 0.1667, "value": -93.43 },
-					{ "time": 0.3333, "value": -25.79 }
-				]
-			}
-		}
-	},
 	"fly": {
 		"bones": {
 			"flier-wing": {
@@ -171,6 +118,59 @@
 				"rgba2": [
 					{ "light": "ff0000ff", "dark": "ff0000" },
 					{ "time": 0.2, "light": "ffffffff", "dark": "000000" }
+				]
+			}
+		}
+	},
+	"kill": {
+		"bones": {
+			"flier-wing": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": -33.36 }
+				]
+			},
+			"flier-body-2": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 33.2 }
+				]
+			},
+			"flier-stinger": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 29.86 }
+				]
+			},
+			"flier-body-4": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 45.3 }
+				]
+			},
+			"flier-body-3": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 53 }
+				]
+			},
+			"flier-body-1": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 182.48 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.1, "y": 40.19 },
+					{ "time": 0.3333, "y": -21.15 }
+				]
+			},
+			"flier-head": {
+				"rotate": [
+					{},
+					{ "time": 0.0667, "value": 49.13 },
+					{ "time": 0.1667, "value": -93.43 },
+					{ "time": 0.3333, "value": -25.79 }
 				]
 			}
 		}

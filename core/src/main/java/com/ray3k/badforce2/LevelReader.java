@@ -1,25 +1,19 @@
 package com.ray3k.badforce2;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.esotericsoftware.spine.AnimationState.AnimationStateAdapter;
 import com.esotericsoftware.spine.AnimationState.TrackEntry;
-import com.esotericsoftware.spine.Skin;
 import com.ray3k.badforce2.OgmoReader.EntityNode;
 import com.ray3k.badforce2.OgmoReader.OgmoValue;
 import com.ray3k.badforce2.behaviours.*;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
-import com.ray3k.badforce2.behaviours.slope.SlopeValues;
 import com.ray3k.badforce2.screens.GameScreen;
-import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
 
 import static com.ray3k.badforce2.Core.skeletonJson;
 import static com.ray3k.badforce2.screens.GameScreen.*;
@@ -165,6 +159,21 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.useBodyRotation = false;
                 spine.animationState.setAnimation(0, "walk", true);
                 new AlienBehaviour(0, .5f, .5f, 1.8f, alien);
+                break;
+            case "flier":
+                alien = new GameObject(unBox);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.DynamicBody;
+                bodyDef.fixedRotation = true;
+                bodyDef.position.set(p2m(x), p2m(y));
+                bodyDef.allowSleep = false;
+
+                new Box2dBehaviour(bodyDef, alien);
+
+                spine = new SpineBehaviour(alien, "spine/flier.json");
+                spine.useBodyRotation = false;
+                spine.animationState.setAnimation(0, "fly", true);
+                new FlierBehaviour(0, 0, .5f, .5f, alien);
                 break;
             case "hurt":
                 ground = new GameObject(unBox);
