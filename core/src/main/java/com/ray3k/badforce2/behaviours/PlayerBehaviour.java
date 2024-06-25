@@ -615,6 +615,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             for (var bound : bounds) {
                 var body = getBody(bound);
                 if (body.getFixtureList().contains(fixture, true)) {
+                    if (bound.canPassThroughBottom) return -1;
                     if (fraction < shotTargetDistance) {
                         shotTargetDistance = fraction;
                         shotTargetBehaviour = bound;

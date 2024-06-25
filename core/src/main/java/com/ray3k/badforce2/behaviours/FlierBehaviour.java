@@ -31,8 +31,11 @@ public class FlierBehaviour extends AlienBehaviour {
     public void handleControls() {
         if (health <= 0 || player == null || getBody(player) == null) return;
 
-        var distance = pointDistance(this, player);
-        var direction = pointDirection(this, player);
+        var thisPosition = getPosition(this);
+        var playerPosition = getPosition(player);
+        playerPosition.y += 1.5f;
+        var distance = pointDistance(thisPosition.x, thisPosition.y, playerPosition.x, playerPosition.y);
+        var direction = pointDirection(thisPosition.x, thisPosition.y, playerPosition.x, playerPosition.y);
         if (distance < 12 && moveTimer <= 0) {
             moveTimer = .7f;
             applyAirForce(MathUtils.random(4f, 7f), direction);
