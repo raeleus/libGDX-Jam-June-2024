@@ -4,7 +4,7 @@
   "height": 4096,
   "offsetX": 0,
   "offsetY": 0,
-  "values": {"next-level": "level6.json"},
+  "values": {"next-level": "level6.json", "spawn-animation": false},
   "layers": [
     {
       "name": "foreground",
@@ -412,6 +412,23 @@
             {"x": 3211, "y": 1638},
             {"x": 3144, "y": 1624}
           ]
+        },
+        {
+          "name": "sound",
+          "id": 19,
+          "_eid": "49778310",
+          "x": 1494,
+          "y": 3898,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": 1515, "y": 3930},
+            {"x": 1768, "y": 3957},
+            {"x": 2085, "y": 3968},
+            {"x": 2678, "y": 3894},
+            {"x": 2701, "y": 3862}
+          ],
+          "values": {"sound": "sfx/water.mp3", "destroy": false}
         }
       ]
     },

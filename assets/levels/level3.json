@@ -4,7 +4,7 @@
   "height": 4096,
   "offsetX": 0,
   "offsetY": 0,
-  "values": {"next-level": "level4.json"},
+  "values": {"next-level": "level4.json", "spawn-animation": false},
   "layers": [
     {
       "name": "foreground",
@@ -557,7 +557,8 @@
             {"x": 901, "y": 3351},
             {"x": 1469, "y": 3345},
             {"x": 1464, "y": 3278}
-          ]
+          ],
+          "values": {"sound": "sfx/spike-death.mp3"}
         },
         {
           "name": "platform-pass-through",

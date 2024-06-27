@@ -4,7 +4,7 @@
   "height": 4096,
   "offsetX": 0,
   "offsetY": 0,
-  "values": {"next-level": "level5.json"},
+  "values": {"next-level": "level5.json", "spawn-animation": false},
   "layers": [
     {
       "name": "foreground",
@@ -176,6 +176,21 @@
             {"x": 990, "y": -6},
             {"x": 845, "y": -355}
           ]
+        },
+        {
+          "name": "sound",
+          "id": 8,
+          "_eid": "49778310",
+          "x": 459,
+          "y": 2764,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": 1055, "y": 2663},
+            {"x": 1071, "y": 2912},
+            {"x": 498, "y": 2948}
+          ],
+          "values": {"sound": "sfx/fart.mp3", "destroy": true}
         }
       ]
     },

@@ -1,7 +1,9 @@
 package com.ray3k.badforce2.behaviours;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.ray3k.badforce2.Core;
 import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviourAdapter;
@@ -11,18 +13,21 @@ import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 
+import static com.ray3k.badforce2.Core.*;
 import static com.ray3k.badforce2.Utils.*;
 import static com.ray3k.badforce2.behaviours.PlayerBehaviour.*;
 
 public class AlienBehaviour extends SlopeCharacterBehaviourAdapter {
     public float health = 50;
     private boolean goingLeft = true;
+    public Sound deathSound;
 
     public AlienBehaviour(float footOffsetX, float footOffsetY, float footRadius, float torsoHeight,
                           GameObject gameObject) {
         super(footOffsetX, footOffsetY, footRadius, torsoHeight, gameObject);
         lateralMaxSpeed = 10f;
         lateralDeceleration = 10f;
+        deathSound = sfx_alien_death;
     }
 
     @Override
@@ -76,5 +81,6 @@ public class AlienBehaviour extends SlopeCharacterBehaviourAdapter {
         deltaY = 0;
         lateralSpeed = 0;
         stickToGround = false;
+        deathSound.play();
     }
 }

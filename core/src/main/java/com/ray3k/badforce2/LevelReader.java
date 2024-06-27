@@ -1,5 +1,6 @@
 package com.ray3k.badforce2;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
@@ -15,6 +16,7 @@ import com.ray3k.badforce2.screens.GameScreen;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 
+import static com.ray3k.badforce2.Core.sfx_beam;
 import static com.ray3k.badforce2.Core.skeletonJson;
 import static com.ray3k.badforce2.screens.GameScreen.*;
 
@@ -92,6 +94,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 if (spawnAnimation) {
                     spine.animationState.setAnimation(4, "spawn", false);
                     spine.animationState.addEmptyAnimation(4, 0, 0);
+                    sfx_beam.play();
                 }
                 spine.animationState.addListener(new AnimationStateAdapter() {
                     @Override
@@ -151,6 +154,20 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 }
                 new DoorBehaviour(points.toArray(), ground);
                 break;
+            case "sound":
+                ground = new GameObject(unBox);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.StaticBody;
+                bodyDef.position.set(0, 0);
+                new Box2dBehaviour(bodyDef, ground);
+
+                points = new FloatArray();
+                points.add(p2m(x), p2m(y));
+                for (var node : nodes) {
+                    points.add(p2m(node.x), p2m(node.y));
+                }
+                new SoundAreaBehaviour(points.toArray(), Gdx.audio.newSound(Gdx.files.internal(valuesMap.get("sound").asString())), valuesMap.get("destroy").asBoolean(), ground);
+                break;
             case "alien":
                 var alien = new GameObject(unBox);
                 bodyDef = new BodyDef();
@@ -181,6 +198,22 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.animationState.setAnimation(0, "fly", true);
                 new FlierBehaviour(0, 0, .5f, .5f, alien);
                 break;
+            case "crawler":
+                alien = new GameObject(unBox);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.DynamicBody;
+                bodyDef.fixedRotation = true;
+                bodyDef.position.set(p2m(x), p2m(y));
+                bodyDef.allowSleep = false;
+
+                new Box2dBehaviour(bodyDef, alien);
+
+                spine = new SpineBehaviour(alien, "spine/crawler.json");
+                spine.useBodyRotation = false;
+                spine.animationState.setAnimation(0, "walk", true);
+                var crawler = new CrawlerBehaviour(0, .5f, .5f, .5f, alien);
+                crawler.passive = valuesMap.get("passive").asBoolean();
+                break;
             case "hurt":
                 ground = new GameObject(unBox);
                 bodyDef = new BodyDef();
@@ -207,7 +240,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 for (var node : nodes) {
                     points.add(p2m(node.x), p2m(node.y));
                 }
-                new PitBehaviour(points.toArray(), ground);
+                new PitBehaviour(points.toArray(), Gdx.audio.newSound(Gdx.files.internal(valuesMap.get("sound").asString())), ground);
                 break;
         }
     }

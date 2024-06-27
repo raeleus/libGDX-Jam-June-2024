@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.esotericsoftware.spine.Skeleton.Physics;
 import com.esotericsoftware.spine.attachments.PointAttachment;
+import com.ray3k.badforce2.Core;
 import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
@@ -16,6 +17,7 @@ import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviourAdapter;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 
+import static com.ray3k.badforce2.Core.*;
 import static com.ray3k.badforce2.Utils.*;
 import static com.ray3k.badforce2.screens.GameScreen.*;
 
@@ -27,6 +29,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public final static float NOT_SHOOTING_LATERAL_SPEED_MAX = 16;
     public final static float SHOOTING_LATERAL_SPEED_MAX = 8;
     public float dodging;
+    public float health;
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
@@ -41,6 +44,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         midairJumps = 1;
         player = this;
         lateralMaxSpeed = NOT_SHOOTING_LATERAL_SPEED_MAX;
+        health = 100;
     }
 
     @Override
@@ -164,11 +168,6 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     }
 
     @Override
-    public void eventCeilingClingMoving(float delta, float lateralSpeed, float ceilingAngle) {
-
-    }
-
-    @Override
     public void eventWalking(float delta, float lateralSpeed, float groundAngle) {
         updateFacingDirection(lateralSpeed);
         approachRotationRootBone(0, 360f * delta);
@@ -255,6 +254,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         rotateRootBone(0);
         setAnimation(0, "jump", false, this);
         addAnimation(0, "jumping", true, 0, this);
+        sfx_jump.play();
     }
 
     @Override
@@ -292,6 +292,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "midair-jump", false, this);
         addAnimation(0, "falling", true, 0, this);
+        sfx_double_jump.play();
     }
 
     @Override
@@ -302,6 +303,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "jump-hit-head", false, this);
         addAnimation(0, "falling", true, 0, this);
+        if (!animationNameEquals(0, "jump-hit-head", this) || !animationNameEquals(0, "falling", this)) sfx_head_hit.play();
     }
 
     @Override
@@ -320,11 +322,6 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     }
 
     @Override
-    public void eventFallingTouchingWall(float delta, float wallAngle) {
-
-    }
-
-    @Override
     public void eventLand(float delta, float groundAngle) {
         if (animationNameEquals(0, "disappear", this)) return;
         if (animationNameEquals(0, "die", this)) return;
@@ -337,6 +334,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         }
         setAnimation(0, "land", false, this);
         addAnimation(0, "standing", true, 0, this);
+        sfx_land.play();
     }
 
     @Override
@@ -350,6 +348,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (animationNameEquals(0, "midair-jump", this)) return;
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "falling", true, this);
+        if (!animationNameEquals(0, "falling", this)) sfx_wall_slide.play();
     }
 
     @Override
@@ -372,12 +371,14 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "midair-jump", false, this);
         addAnimation(0, "falling", true, 0, this);
+        sfx_wall_jump.play();
     }
 
     @Override
     public void eventGrabLedge(float delta, float wallAngle) {
         if (animationNameEquals(0, "hit", this)) return;
         setAnimation(0, "grabbing-ledge", true, this);
+        sfx_grabbed_ledge.play();
     }
 
     @Override
@@ -489,12 +490,14 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         var returnValue = super.onCollisionPreSolve(other, contact, oldManifold);
 
         if (other.getGameObject().hasBehaviour(DoorBehaviour.class)) contact.setEnabled(false);
-        if (other.getGameObject().hasBehaviour(AlienBehaviour.class) || other.getGameObject().hasBehaviour(FlierBehaviour.class)) {
+        if (other.getGameObject().hasBehaviour(SoundAreaBehaviour.class)) contact.setEnabled(false);
+        if (other.getGameObject().hasBehaviour(AlienBehaviour.class) || other.getGameObject().hasBehaviour(FlierBehaviour.class) || other.getGameObject().hasBehaviour(CrawlerBehaviour.class)) {
             boolean dodged = dodging > 0;
             contact.setEnabled(!dodged);
             if (dodged) {
                 setAnimation(3, "dodge", false, this);
                 getAnimationState(this).addEmptyAnimation(3, 0, 0);
+                if (!animationNameEquals(3, "dodge", this)) sfx_dodge.play();
             }
         }
 
@@ -515,26 +518,41 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             deltaX = 0;
             deltaY = 0;
             getBody(this).setLinearVelocity(0, 0);
+            sfx_door.play();
+        }
+
+        var soundBehaviour = other.getGameObject().getBehaviour(SoundAreaBehaviour.class);
+        if (soundBehaviour != null) {
+            soundBehaviour.sound.play();
+            if (soundBehaviour.destroy) soundBehaviour.getGameObject().destroy();
         }
 
         if (other.getGameObject().hasBehaviour(HurtAreaBehaviour.class)) {
             var hurtAreaBody = getBody(other);
             var body = getBody(this);
             hurt(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(hurtAreaBody.getPosition().x, hurtAreaBody.getPosition().y, body.getPosition().x, body.getPosition().y));
+            sfx_spike.play();
         }
 
-        if (other.getGameObject().hasBehaviour(PitBehaviour.class)) {
+        var pitBehaviour = other.getGameObject().getBehaviour(PitBehaviour.class);
+        if (pitBehaviour != null) {
             var hurtAreaBody = getBody(other);
             var body = getBody(this);
             die(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(hurtAreaBody.getPosition().x, hurtAreaBody.getPosition().y, body.getPosition().x, body.getPosition().y));
+            pitBehaviour.sound.play();
         }
 
         var alienBehaviour = other.getGameObject().getBehaviour(AlienBehaviour.class);
         if (alienBehaviour == null) alienBehaviour = other.getGameObject().getBehaviour(FlierBehaviour.class);
+        if (alienBehaviour == null) alienBehaviour = other.getGameObject().getBehaviour(CrawlerBehaviour.class);
         if (alienBehaviour != null && alienBehaviour.health > 0) {
             var alienBody = getBody(other);
             var body = getBody(this);
-            if (dodging <= 0) hurt(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
+            if (dodging <= 0) {
+                hurt(movementMode == MovementMode.WALKING ? 28f : 32f, pointDirection(alienBody.getPosition().x, alienBody.getPosition().y, body.getPosition().x, body.getPosition().y));
+                if (health > 0) sfx_player_hurt.play();
+                else sfx_player_death.play();
+            }
         }
     }
 
@@ -581,6 +599,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
 
         var aliens = unBox.findBehaviours(AlienBehaviour.class);
         var fliers = unBox.findBehaviours(FlierBehaviour.class);
+        var crawlers = unBox.findBehaviours(CrawlerBehaviour.class);
         var bounds = unBox.findBehaviours(BoundsBehaviour.class);
 
         unBox.getWorld().rayCast((fixture, point1, normal, fraction) -> {
@@ -599,6 +618,20 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             }
 
             for (var alien : fliers) {
+                if (alien.health <= 0) continue;
+                var body = getBody(alien);
+                if (body.getFixtureList().contains(fixture, true)) {
+                    if (fraction < shotTargetDistance) {
+                        shotTargetDistance = fraction;
+                        shotTargetBehaviour = alien;
+                        shotTargetPosition.set(point1);
+                        return fraction;
+                    }
+                    return 1;
+                }
+            }
+
+            for (var alien : crawlers) {
                 if (alien.health <= 0) continue;
                 var body = getBody(alien);
                 if (body.getFixtureList().contains(fixture, true)) {
@@ -645,12 +678,14 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
                 if (alienBehaviour.health <= 0) {
                     alienBehaviour.kill();
                 }
+                sfx_alien_hit.play();
             }
         }
 
         if (shotTargetBehaviour instanceof BoundsBehaviour) {
             var spark = new GameObject(unBox);
             new ParticleBehaviour("particles/spark.p", shotTargetPosition.x, shotTargetPosition.y, spark);
+            sfx_ricochet.play();
         }
     }
 

@@ -3,11 +3,13 @@ package com.ray3k.badforce2.behaviours;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.ray3k.badforce2.Core;
 import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 
+import static com.ray3k.badforce2.Core.*;
 import static com.ray3k.badforce2.Utils.*;
 import static com.ray3k.badforce2.behaviours.PlayerBehaviour.*;
 
@@ -19,6 +21,7 @@ public class FlierBehaviour extends AlienBehaviour {
 
         health = 20f;
         gravity = 0;
+        deathSound = sfx_flier_death;
     }
 
     @Override
@@ -51,10 +54,6 @@ public class FlierBehaviour extends AlienBehaviour {
             return true;
         }
         return super.onCollisionPreSolve(other, contact, oldManifold);
-    }
-
-    private void updateFacingDirection() {
-//        getSkeleton(this).getRootBone().setScale((goingLeft ? -1f : 1f), 1f);
     }
 
     @Override
