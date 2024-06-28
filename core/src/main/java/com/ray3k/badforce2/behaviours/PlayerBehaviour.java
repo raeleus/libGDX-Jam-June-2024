@@ -3,6 +3,7 @@ package com.ray3k.badforce2.behaviours;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -30,6 +31,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public final static float SHOOTING_LATERAL_SPEED_MAX = 8;
     public float dodging;
     public float health;
+    public Sound gunSound;
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
@@ -73,6 +75,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             if (Math.abs(lateralSpeed) > 16f) lateralSpeed = Math.signum(lateralSpeed) * 16f;
             setAnimation(0, "roll", false, this);
             addAnimation(0, "running", true, 0, this);
+            sfx_dodge.play();
             queueRoll = 0f;
         } else if (movementMode == MovementMode.WALKING && Gdx.input.isKeyJustPressed(Keys.SPACE)) queueRoll = .5f;
 
@@ -83,6 +86,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             applyAirForce(8f, aimRight ? 45 : 135);
             setAnimation(0, "air-roll", false, this);
             midairJumpCounter = 1;
+            sfx_dodge.play();
         }
 
         if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
@@ -580,6 +584,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     }
 
     public void shoot() {
+        gunSound.play();
         var slot = findSlot("muzzle", this);
         var point = (PointAttachment) slot.getAttachment();
         muzzlePosition.set(point.getX(), point.getY());

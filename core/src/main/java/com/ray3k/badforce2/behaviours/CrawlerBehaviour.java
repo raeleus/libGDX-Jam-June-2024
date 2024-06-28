@@ -17,10 +17,13 @@ public class CrawlerBehaviour extends AlienBehaviour {
     private final static Vector2 temp2 = new Vector2();
     private static float tempFraction;
     private Behaviour targetedBehaviour;
+    private float jumpTimer;
+    private static final float JUMP_DELAY = 1.5f;
+
     public CrawlerBehaviour(float footOffsetX, float footOffsetY, float footRadius, float torsoHeight,
                             GameObject gameObject) {
         super(footOffsetX, footOffsetY, footRadius, torsoHeight, gameObject);
-        lateralMaxSpeed = 20f;
+        lateralMaxSpeed = 16f;
         lateralDeceleration = 20f;
         health = 10f;
         deathSound = sfx_crawler_death;
@@ -43,8 +46,8 @@ public class CrawlerBehaviour extends AlienBehaviour {
         if (health <= 0) return;
         if (getBody(player) == null) return;
 
+        float distanceToPlayer = pointDistance(this, player);
         if (passive) {
-            float distanceToPlayer = pointDistance(this, player);
 
             var playerBody = getBody(player);
             var bounds = unBox.findBehaviours(BoundsBehaviour.class);
@@ -78,11 +81,27 @@ public class CrawlerBehaviour extends AlienBehaviour {
             if (distanceToPlayer < 7f && targetedBehaviour == player) {
                 passive = false;
                 gravity = -3f;
+                jumpTimer = JUMP_DELAY;
                 setAnimation(0, "walk", true, this);
                 applyAirForce(25f, playerBody.getPosition().x > getPosition(this).x ? 45f : 135f);
             }
         } else {
             super.handleControls();
+
+            if (jumpTimer <= 0) {
+                if (distanceToPlayer < 5f) {
+                    temp1.set(getBody(this).getWorldCenter());
+                    temp2.set(getBody(player).getWorldCenter());
+                    applyAirForce(15f, pointDirection(temp1.x, temp1.y, temp2.x, temp2.y + 5f));
+                    jumpTimer = JUMP_DELAY;
+                }
+            }
         }
+    }
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+        jumpTimer -= delta;
     }
 }

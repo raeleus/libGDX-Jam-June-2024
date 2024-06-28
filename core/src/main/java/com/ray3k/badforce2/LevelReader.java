@@ -1,6 +1,7 @@
 package com.ray3k.badforce2;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
@@ -16,8 +17,7 @@ import com.ray3k.badforce2.screens.GameScreen;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 
-import static com.ray3k.badforce2.Core.sfx_beam;
-import static com.ray3k.badforce2.Core.skeletonJson;
+import static com.ray3k.badforce2.Core.*;
 import static com.ray3k.badforce2.screens.GameScreen.*;
 
 public class LevelReader extends OgmoReader.OgmoAdapter {
@@ -89,7 +89,20 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.animationState.getData().setMix("not-aiming", "aiming", .05f);
                 spine.animationState.getData().setMix("aiming", "not-aiming", .25f);
 
-                spine.skeleton.setSkin((new Array<>(new String[] {"assault", "heavy", "sniper"})).random());
+                switch (MathUtils.random(2)) {
+                    case 0:
+                        spine.skeleton.setSkin("assault");
+                        PlayerBehaviour.player.gunSound = sfx_gun_assault;
+                        break;
+                    case 1:
+                        spine.skeleton.setSkin("heavy");
+                        PlayerBehaviour.player.gunSound = sfx_gun_heavy;
+                        break;
+                    case 2:
+                        spine.skeleton.setSkin("sniper");
+                        PlayerBehaviour.player.gunSound = sfx_gun_sniper;
+                        break;
+                }
                 spine.useBodyRotation = false;
                 if (spawnAnimation) {
                     spine.animationState.setAnimation(4, "spawn", false);

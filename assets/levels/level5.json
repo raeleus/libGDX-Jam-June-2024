@@ -428,7 +428,7 @@
             {"x": 2678, "y": 3894},
             {"x": 2701, "y": 3862}
           ],
-          "values": {"sound": "sfx/water.mp3", "destroy": false}
+          "values": {"sound": "sfx/water.mp3", "destroy": true}
         }
       ]
     },

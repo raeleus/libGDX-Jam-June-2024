@@ -30,7 +30,17 @@
       "gridCellsX": 512,
       "gridCellsY": 512,
       "entities": [
-        {"name": "player", "id": 0, "_eid": "06650666", "x": 472, "y": 3872, "originX": 50, "originY": 200}
+        {"name": "player", "id": 0, "_eid": "06650666", "x": 472, "y": 3872, "originX": 50, "originY": 200},
+        {
+          "name": "crawler",
+          "id": 1,
+          "_eid": "46813709",
+          "x": 3216,
+          "y": 3888,
+          "originX": 60,
+          "originY": 110,
+          "values": {"passive": false}
+        }
       ]
     },
     {

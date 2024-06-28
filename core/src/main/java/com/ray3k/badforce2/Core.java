@@ -55,6 +55,9 @@ public class Core extends Game {
     public static Sound sfx_spike_death;
     public static Sound sfx_wall_jump;
     public static Sound sfx_water;
+    public static Sound sfx_gun_heavy;
+    public static Sound sfx_gun_sniper;
+    public static Sound sfx_gun_assault;
 
     @Override
     public void create() {
@@ -94,6 +97,9 @@ public class Core extends Game {
         sfx_spike_death = Gdx.audio.newSound(Gdx.files.internal("sfx/spike-death.mp3"));
         sfx_wall_jump = Gdx.audio.newSound(Gdx.files.internal("sfx/wall-jump.mp3"));
         sfx_water = Gdx.audio.newSound(Gdx.files.internal("sfx/water.mp3"));
+        sfx_gun_sniper = Gdx.audio.newSound(Gdx.files.internal("sfx/gun-sniper.mp3"));
+        sfx_gun_assault = Gdx.audio.newSound(Gdx.files.internal("sfx/gun-assault.mp3"));
+        sfx_gun_heavy = Gdx.audio.newSound(Gdx.files.internal("sfx/gun-heavy.mp3"));
         setScreen(new SplashScreen());
     }
 
