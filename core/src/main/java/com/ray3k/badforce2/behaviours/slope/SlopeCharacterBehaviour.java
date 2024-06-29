@@ -2346,6 +2346,11 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
                 return false;
             }
 
+            if (fixture == torsoFixture && bounds.canPassThroughBottom) {
+                contact.setEnabled(false);
+                return true;
+            }
+
             if (!checkContactEnabledPassThrough(bounds)) {
                 contact.setEnabled(false);
                 return false;

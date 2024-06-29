@@ -1,0 +1,72 @@
+{
+"skeleton": {
+	"hash": "bGXraGpeeV8",
+	"spine": "4.2.33",
+	"x": -100,
+	"y": -137.5,
+	"width": 200,
+	"height": 275,
+	"images": "",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "length": 62.47 }
+],
+"slots": [
+	{ "name": "bonus", "bone": "bone", "attachment": "bonus" }
+],
+"skins": [
+	{
+		"name": "cake",
+		"attachments": {
+			"bonus": {
+				"bonus": { "name": "game/bonus-cake", "x": -1.5, "y": 1.5, "width": 177, "height": 50 }
+			}
+		}
+	},
+	{
+		"name": "cat",
+		"attachments": {
+			"bonus": {
+				"bonus": { "name": "game/bonus-cat", "width": 111, "height": 146 }
+			}
+		}
+	},
+	{
+		"name": "rainbow",
+		"attachments": {
+			"bonus": {
+				"bonus": { "name": "game/bonus-rainbow", "width": 120, "height": 60 }
+			}
+		}
+	},
+	{
+		"name": "scythe",
+		"attachments": {
+			"bonus": {
+				"bonus": { "name": "game/bonus-scythe", "width": 200, "height": 275 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"bones": {
+			"bone": {
+				"translate": [
+					{
+						"curve": [ 0.333, 0, 0.667, 0, 0.333, 0, 0.667, 50 ]
+					},
+					{
+						"time": 1,
+						"y": 50,
+						"curve": [ 1.333, 0, 1.667, 0, 1.333, 50, 1.637, 0.27 ]
+					},
+					{ "time": 2 }
+				]
+			}
+		}
+	}
+}
+}

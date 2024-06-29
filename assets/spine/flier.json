@@ -1,7 +1,7 @@
 {
 "skeleton": {
-	"hash": "/dKmaFSd5z4",
-	"spine": "4.2.31",
+	"hash": "rPdVvGnD7zo",
+	"spine": "4.2.33",
 	"x": -54.84,
 	"y": -27.41,
 	"width": 144.15,
@@ -162,7 +162,7 @@
 				"translate": [
 					{},
 					{ "time": 0.1, "y": 40.19 },
-					{ "time": 0.3333, "y": -21.15 }
+					{ "time": 0.3333, "y": -49.15 }
 				]
 			},
 			"flier-head": {

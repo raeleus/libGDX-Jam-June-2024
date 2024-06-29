@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "TkckIvmKrfM", "spine": "4.2.31", "width": 1024, "height": 576, "images": "", "audio": "" },
+"skeleton": { "hash": "TkckIvmKrfM", "spine": "4.2.33", "width": 1024, "height": 576, "images": "", "audio": "" },
 "bones": [
 	{ "name": "root" },
 	{ "name": "ray3k-y-7", "parent": "root", "length": 49.89, "rotation": -5.19, "x": 533.37, "y": 212.84 },

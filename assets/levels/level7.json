@@ -4,7 +4,7 @@
   "height": 4096,
   "offsetX": 0,
   "offsetY": 0,
-  "values": {"next-level": "level1.json", "spawn-animation": false},
+  "values": {"next-level": "level8.json", "spawn-animation": false},
   "layers": [
     {
       "name": "foreground",
@@ -50,7 +50,8 @@
           "originX": 60,
           "originY": 110,
           "values": {"passive": true}
-        }
+        },
+        {"name": "bonus-cat", "id": 3, "_eid": "63008593", "x": 616, "y": 1960, "originX": 0, "originY": 0}
       ]
     },
     {

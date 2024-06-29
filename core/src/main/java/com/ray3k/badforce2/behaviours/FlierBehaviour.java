@@ -42,6 +42,7 @@ public class FlierBehaviour extends AlienBehaviour {
         if (distance < 12 && moveTimer <= 0) {
             moveTimer = .7f;
             applyAirForce(MathUtils.random(4f, 7f), direction);
+            gravity = 0;
         }
         if (getSpeed() > 11f) setSpeed(11f);
     }

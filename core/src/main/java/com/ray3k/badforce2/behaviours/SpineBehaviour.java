@@ -62,8 +62,11 @@ public class SpineBehaviour extends BehaviourAdapter {
 
     @Override
     public void update(float delta) {
-        skeleton.setPosition(getPosition(this).x, getPosition(this).y);
-        if (useBodyRotation) skeleton.getRootBone().setRotation(getBody(getGameObject()).getAngle() * MathUtils.radDeg);
+        if (getBody(this) != null) {
+            skeleton.setPosition(getPosition(this).x, getPosition(this).y);
+            if (useBodyRotation)
+                skeleton.getRootBone().setRotation(getBody(getGameObject()).getAngle() * MathUtils.radDeg);
+        }
         animationState.update(delta);
         animationState.apply(skeleton);
         skeleton.update(delta);

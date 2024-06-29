@@ -10,8 +10,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.esotericsoftware.spine.Skeleton.Physics;
 import com.esotericsoftware.spine.attachments.PointAttachment;
-import com.ray3k.badforce2.Core;
-import com.ray3k.badforce2.Utils;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour.BoundsData;
 import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviourAdapter;
@@ -32,6 +30,8 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public float dodging;
     public float health;
     public Sound gunSound;
+    private float shootTimer;
+    public float shootDelay;
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
@@ -47,6 +47,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         player = this;
         lateralMaxSpeed = NOT_SHOOTING_LATERAL_SPEED_MAX;
         health = 100;
+        shootDelay = .16f;
     }
 
     @Override
@@ -116,6 +117,14 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
 
         queueRoll -= delta;
         dodging -= delta;
+
+        if (Gdx.input.isButtonPressed(Buttons.LEFT) && animationNameEquals(1, "shooting", this)) {
+            shootTimer -= delta;
+            if (shootTimer <= 0) {
+                shootTimer = shootDelay;
+                shoot();
+            }
+        }
     }
 
     private void updateCamera() {
@@ -637,7 +646,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
             }
 
             for (var alien : crawlers) {
-                if (alien.health <= 0) continue;
+                if (alien.health <= 0 || alien.passive) continue;
                 var body = getBody(alien);
                 if (body.getFixtureList().contains(fixture, true)) {
                     if (fraction < shotTargetDistance) {

@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.ray3k.badforce2.Utils;
 
 import static com.ray3k.badforce2.Core.*;
+import static com.ray3k.badforce2.screens.GameScreen.*;
 
 public class MenuScreen extends ScreenAdapter {
     private Stage stage;
@@ -60,5 +61,9 @@ public class MenuScreen extends ScreenAdapter {
 
     private void nextScreen() {
         core.setScreen(new GameScreen("level1.json"));
+        foundCake = false;
+        foundCat = false;
+        foundRainbow = false;
+        foundScythe = false;
     }
 }

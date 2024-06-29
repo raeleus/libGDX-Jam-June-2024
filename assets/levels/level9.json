@@ -1,0 +1,216 @@
+{
+  "ogmoVersion": "3.4.0",
+  "width": 4096,
+  "height": 4096,
+  "offsetX": 0,
+  "offsetY": 0,
+  "values": {"next-level": "level.json", "spawn-animation": false},
+  "layers": [
+    {
+      "name": "foreground",
+      "_eid": "12447892",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 512,
+      "gridCellsY": 512,
+      "decals": [],
+      "folder": ""
+    },
+    {
+      "name": "entities",
+      "_eid": "06589198",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 512,
+      "gridCellsY": 512,
+      "entities": [
+        {"name": "player", "id": 0, "_eid": "06650666", "x": 3984, "y": 3464, "originX": 50, "originY": 200},
+        {
+          "name": "spawner",
+          "id": 1,
+          "_eid": "58266211",
+          "x": 4200,
+          "y": 3520,
+          "originX": 0,
+          "originY": 0,
+          "values": {"type": "alien", "angle": 135, "speed": 5, "delay": 26, "initial-delay": 5}
+        },
+        {
+          "name": "spawner",
+          "id": 2,
+          "_eid": "58266211",
+          "x": 4224,
+          "y": 3120,
+          "originX": 0,
+          "originY": 0,
+          "values": {"type": "crawler", "angle": 180, "speed": 1, "delay": 10, "initial-delay": 5}
+        },
+        {
+          "name": "spawner",
+          "id": 3,
+          "_eid": "58266211",
+          "x": -232,
+          "y": 3496,
+          "originX": 0,
+          "originY": 0,
+          "values": {"type": "alien", "angle": 135, "speed": 5, "delay": 26, "initial-delay": 10}
+        },
+        {
+          "name": "spawner",
+          "id": 4,
+          "_eid": "58266211",
+          "x": -208,
+          "y": 3104,
+          "originX": 0,
+          "originY": 0,
+          "values": {"type": "crawler", "angle": 180, "speed": 1, "delay": 10, "initial-delay": 5}
+        },
+        {
+          "name": "spawner",
+          "id": 5,
+          "_eid": "58266211",
+          "x": 3672,
+          "y": 1680,
+          "originX": 0,
+          "originY": 0,
+          "values": {"type": "flier", "angle": 270, "speed": 5, "delay": 20, "initial-delay": 10}
+        },
+        {
+          "name": "spawner",
+          "id": 6,
+          "_eid": "58266211",
+          "x": 2816,
+          "y": 1672,
+          "originX": 0,
+          "originY": 0,
+          "values": {"type": "flier", "angle": 270, "speed": 5, "delay": 20, "initial-delay": 11}
+        },
+        {
+          "name": "spawner",
+          "id": 7,
+          "_eid": "58266211",
+          "x": 1664,
+          "y": 1672,
+          "originX": 0,
+          "originY": 0,
+          "values": {"type": "flier", "angle": 270, "speed": 5, "delay": 20, "initial-delay": 12}
+        },
+        {
+          "name": "spawner",
+          "id": 8,
+          "_eid": "58266211",
+          "x": 648,
+          "y": 1672,
+          "originX": 0,
+          "originY": 0,
+          "values": {"type": "flier", "angle": 270, "speed": 5, "delay": 20, "initial-delay": 13}
+        },
+        {"name": "timer", "id": 9, "_eid": "63562636", "x": 2048, "y": 3184, "originX": 0, "originY": 0}
+      ]
+    },
+    {
+      "name": "platforms",
+      "_eid": "06580089",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 1,
+      "gridCellHeight": 1,
+      "gridCellsX": 4096,
+      "gridCellsY": 4096,
+      "entities": [
+        {
+          "name": "platform",
+          "id": 0,
+          "_eid": "06641331",
+          "x": -346,
+          "y": 3972,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": -349, "y": 4338},
+            {"x": 4429, "y": 4355},
+            {"x": 4402, "y": 3974},
+            {"x": 4086, "y": 3707},
+            {"x": 3876, "y": 3511},
+            {"x": 3624, "y": 3349},
+            {"x": 3343, "y": 3237},
+            {"x": 3193, "y": 3194},
+            {"x": 3012, "y": 3083},
+            {"x": 2541, "y": 3064},
+            {"x": 1869, "y": 3086},
+            {"x": 1341, "y": 3119},
+            {"x": 1198, "y": 3148},
+            {"x": 1090, "y": 3215},
+            {"x": 856, "y": 3273},
+            {"x": 576, "y": 3387},
+            {"x": 186, "y": 3618}
+          ]
+        },
+        {
+          "name": "platform-pass-through",
+          "id": 1,
+          "_eid": "12016638",
+          "x": 1901,
+          "y": 2918,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": 1901, "y": 2947},
+            {"x": 2182, "y": 2941},
+            {"x": 2180, "y": 2911}
+          ]
+        },
+        {
+          "name": "platform-pass-through",
+          "id": 4,
+          "_eid": "12016638",
+          "x": 1048,
+          "y": 2689,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": 1049, "y": 2726},
+            {"x": 1206, "y": 2722},
+            {"x": 1207, "y": 2683}
+          ]
+        },
+        {
+          "name": "platform",
+          "id": 6,
+          "_eid": "06641331",
+          "x": 4403,
+          "y": 3980,
+          "originX": 8,
+          "originY": 8,
+          "nodes": [
+            {"x": 4613, "y": 3987},
+            {"x": 4468, "y": -715},
+            {"x": -670, "y": -750},
+            {"x": -600, "y": 4336},
+            {"x": -344, "y": 4342},
+            {"x": -427, "y": -611},
+            {"x": 4334, "y": -570}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "background",
+      "_eid": "12148269",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 512,
+      "gridCellsY": 512,
+      "decals": [
+        {"x": 2048, "y": 2048, "texture": "level9.png", "originX": 0.5, "originY": 0.5}
+      ],
+      "folder": ""
+    }
+  ]
+}

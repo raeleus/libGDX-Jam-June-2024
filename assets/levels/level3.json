@@ -32,7 +32,8 @@
       "entities": [
         {"name": "player", "id": 0, "_eid": "06650666", "x": 296, "y": 384, "originX": 50, "originY": 200},
         {"name": "alien", "id": 1, "_eid": "16347693", "x": 3016, "y": 4008, "originX": 110, "originY": 290},
-        {"name": "alien", "id": 2, "_eid": "16347693", "x": 2424, "y": 2552, "originX": 110, "originY": 290}
+        {"name": "alien", "id": 2, "_eid": "16347693", "x": 2424, "y": 2552, "originX": 110, "originY": 290},
+        {"name": "bonus-scythe", "id": 3, "_eid": "63003923", "x": 3848, "y": 3888, "originX": 0, "originY": 0}
       ]
     },
     {

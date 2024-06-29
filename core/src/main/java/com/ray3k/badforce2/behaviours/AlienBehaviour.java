@@ -73,14 +73,18 @@ public class AlienBehaviour extends SlopeCharacterBehaviourAdapter {
     public void kill() {
         getAnimationState(this).setAnimation(0, "kill", false);
         var body = getBody(this);
-        body.setLinearVelocity(0, 0);
         for (var fixture : body.getFixtureList()) {
             fixture.getFilterData().categoryBits = SlopeValues.CATEGORY_NO_CONTACT;
         }
-        deltaX = 0;
-        deltaY = 0;
-        lateralSpeed = 0;
-        stickToGround = false;
+
+        if (movementMode == MovementMode.WALKING) {
+            body.setLinearVelocity(0, 0);
+            deltaX = 0;
+            deltaY = 0;
+            lateralSpeed = 0;
+        }
+
+        stickToGround = true;
         deathSound.play();
     }
 }

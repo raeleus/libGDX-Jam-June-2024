@@ -12,6 +12,7 @@ import com.esotericsoftware.spine.AnimationState.TrackEntry;
 import com.ray3k.badforce2.OgmoReader.EntityNode;
 import com.ray3k.badforce2.OgmoReader.OgmoValue;
 import com.ray3k.badforce2.behaviours.*;
+import com.ray3k.badforce2.behaviours.SpawnerBehaviour.Type;
 import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
 import com.ray3k.badforce2.screens.GameScreen;
 import dev.lyze.gdxUnBox2d.Box2dBehaviour;
@@ -112,12 +113,12 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.animationState.addListener(new AnimationStateAdapter() {
                     @Override
                     public void start(TrackEntry entry) {
-                        if (entry.getAnimation().getName().equals("shooting")) player.getBehaviour(PlayerBehaviour.class).shoot();
+//                        if (entry.getAnimation().getName().equals("shooting")) player.getBehaviour(PlayerBehaviour.class).shoot();
                     }
 
                     @Override
                     public void complete(TrackEntry entry) {
-                        if (entry.getAnimation().getName().equals("shooting")) player.getBehaviour(PlayerBehaviour.class).shoot();
+//                        if (entry.getAnimation().getName().equals("shooting")) player.getBehaviour(PlayerBehaviour.class).shoot();
                         if (entry.getAnimation().getName().equals("disappear")) Core.core.setScreen(new GameScreen(nextLevelName));
                         if (entry.getAnimation().getName().equals("die")) Core.core.setScreen(new GameScreen(levelName));
                     }
@@ -182,50 +183,13 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 new SoundAreaBehaviour(points.toArray(), Gdx.audio.newSound(Gdx.files.internal(valuesMap.get("sound").asString())), valuesMap.get("destroy").asBoolean(), ground);
                 break;
             case "alien":
-                var alien = new GameObject(unBox);
-                bodyDef = new BodyDef();
-                bodyDef.type = BodyType.DynamicBody;
-                bodyDef.fixedRotation = true;
-                bodyDef.position.set(p2m(x), p2m(y));
-                bodyDef.allowSleep = false;
-
-                new Box2dBehaviour(bodyDef, alien);
-
-                spine = new SpineBehaviour(alien, "spine/alien.json");
-                spine.useBodyRotation = false;
-                spine.animationState.setAnimation(0, "walk", true);
-                new AlienBehaviour(0, .5f, .5f, 1.8f, alien);
+                spawnAlien(p2m(x), p2m(y), 0, 0);
                 break;
             case "flier":
-                alien = new GameObject(unBox);
-                bodyDef = new BodyDef();
-                bodyDef.type = BodyType.DynamicBody;
-                bodyDef.fixedRotation = true;
-                bodyDef.position.set(p2m(x), p2m(y));
-                bodyDef.allowSleep = false;
-
-                new Box2dBehaviour(bodyDef, alien);
-
-                spine = new SpineBehaviour(alien, "spine/flier.json");
-                spine.useBodyRotation = false;
-                spine.animationState.setAnimation(0, "fly", true);
-                new FlierBehaviour(0, 0, .5f, .5f, alien);
+                spawnFlier(p2m(x), p2m(y), 0, 0);
                 break;
             case "crawler":
-                alien = new GameObject(unBox);
-                bodyDef = new BodyDef();
-                bodyDef.type = BodyType.DynamicBody;
-                bodyDef.fixedRotation = true;
-                bodyDef.position.set(p2m(x), p2m(y));
-                bodyDef.allowSleep = false;
-
-                new Box2dBehaviour(bodyDef, alien);
-
-                spine = new SpineBehaviour(alien, "spine/crawler.json");
-                spine.useBodyRotation = false;
-                spine.animationState.setAnimation(0, "walk", true);
-                var crawler = new CrawlerBehaviour(0, .5f, .5f, .5f, alien);
-                crawler.passive = valuesMap.get("passive").asBoolean();
+                spawnCrawler(p2m(x), p2m(y), 0, 0, valuesMap.get("passive").asBoolean());
                 break;
             case "hurt":
                 ground = new GameObject(unBox);
@@ -255,6 +219,140 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 }
                 new PitBehaviour(points.toArray(), Gdx.audio.newSound(Gdx.files.internal(valuesMap.get("sound").asString())), ground);
                 break;
+            case "spawner":
+                var spawner = new GameObject(unBox);
+                var spawnerBehaviour = new SpawnerBehaviour(spawner);
+                spawnerBehaviour.x = p2m(x);
+                spawnerBehaviour.y = p2m(y);
+                spawnerBehaviour.angle = valuesMap.get("angle").asFloat();
+                spawnerBehaviour.speed = valuesMap.get("speed").asFloat();
+                spawnerBehaviour.delay = valuesMap.get("delay").asFloat();
+                spawnerBehaviour.initialDelay = valuesMap.get("initial-delay").asFloat();
+                var typeString = valuesMap.get("type").asString();
+                spawnerBehaviour.type = typeString.equals("alien") ? Type.ALIEN : typeString.equals("flier") ?  Type.FLIER : Type.CRAWLER;
+                break;
+            case "bonus-cake":
+                var bonus = new GameObject(unBox);
+
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.DynamicBody;
+                bodyDef.fixedRotation = true;
+                bodyDef.position.set(p2m(x), p2m(y));
+                bodyDef.allowSleep = false;
+                new Box2dBehaviour(bodyDef, bonus);
+
+                spine = new SpineBehaviour(bonus, "spine/bonus.json");
+                spine.animationState.setAnimation(0, "animation", true);
+                spine.skeleton.setSkin("cake");
+
+                new BonusBehaviour(bonus, () -> foundCake = true);
+                break;
+            case "bonus-cat":
+                bonus = new GameObject(unBox);
+
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.DynamicBody;
+                bodyDef.fixedRotation = true;
+                bodyDef.position.set(p2m(x), p2m(y));
+                bodyDef.allowSleep = false;
+                new Box2dBehaviour(bodyDef, bonus);
+
+                spine = new SpineBehaviour(bonus, "spine/bonus.json");
+                spine.animationState.setAnimation(0, "animation", true);
+                spine.skeleton.setSkin("cat");
+
+                new BonusBehaviour(bonus, () -> foundCat = true);
+                break;
+            case "bonus-rainbow":
+                bonus = new GameObject(unBox);
+
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.DynamicBody;
+                bodyDef.fixedRotation = true;
+                bodyDef.position.set(p2m(x), p2m(y));
+                bodyDef.allowSleep = false;
+                new Box2dBehaviour(bodyDef, bonus);
+
+                spine = new SpineBehaviour(bonus, "spine/bonus.json");
+                spine.animationState.setAnimation(0, "animation", true);
+                spine.skeleton.setSkin("rainbow");
+
+                new BonusBehaviour(bonus, () -> foundRainbow = true);
+                break;
+            case "bonus-scythe":
+                bonus = new GameObject(unBox);
+
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyType.DynamicBody;
+                bodyDef.fixedRotation = true;
+                bodyDef.position.set(p2m(x), p2m(y));
+                bodyDef.allowSleep = false;
+                new Box2dBehaviour(bodyDef, bonus);
+
+                spine = new SpineBehaviour(bonus, "spine/bonus.json");
+                spine.animationState.setAnimation(0, "animation", true);
+                spine.skeleton.setSkin("scythe");
+
+                new BonusBehaviour(bonus, () -> foundScythe = true);
+                break;
+            case "timer":
+                var timer = new GameObject(unBox);
+                new TimerBehaviour(timer);
+                break;
+
         }
+    }
+
+    public static AlienBehaviour spawnAlien(float x, float y, float linearX, float linearY) {
+        var alien = new GameObject(unBox);
+        var bodyDef = new BodyDef();
+        bodyDef.type = BodyType.DynamicBody;
+        bodyDef.fixedRotation = true;
+        bodyDef.position.set(x, y);
+        bodyDef.allowSleep = false;
+        bodyDef.linearVelocity.set(linearX, linearY);
+
+        new Box2dBehaviour(bodyDef, alien);
+
+        var spine = new SpineBehaviour(alien, "spine/alien.json");
+        spine.useBodyRotation = false;
+        spine.animationState.setAnimation(0, "walk", true);
+        return new AlienBehaviour(0, .5f, .5f, 1.8f, alien);
+    }
+
+    public static AlienBehaviour spawnFlier(float x, float y, float linearX, float linearY) {
+        var alien = new GameObject(unBox);
+        var bodyDef = new BodyDef();
+        bodyDef.type = BodyType.DynamicBody;
+        bodyDef.fixedRotation = true;
+        bodyDef.position.set(x, y);
+        bodyDef.allowSleep = false;
+        bodyDef.linearVelocity.set(linearX, linearY);
+
+        new Box2dBehaviour(bodyDef, alien);
+
+        var spine = new SpineBehaviour(alien, "spine/flier.json");
+        spine.useBodyRotation = false;
+        spine.animationState.setAnimation(0, "fly", true);
+        return new FlierBehaviour(0, 0, .5f, .5f, alien);
+    }
+
+    public static AlienBehaviour spawnCrawler(float x, float y, float linearX, float linearY, boolean passive) {
+        var alien = new GameObject(unBox);
+        var bodyDef = new BodyDef();
+        bodyDef.type = BodyType.DynamicBody;
+        bodyDef.fixedRotation = true;
+        bodyDef.position.set(x, y);
+        bodyDef.allowSleep = false;
+        bodyDef.linearVelocity.set(linearX, linearY);
+
+        new Box2dBehaviour(bodyDef, alien);
+
+        var spine = new SpineBehaviour(alien, "spine/crawler.json");
+        spine.useBodyRotation = false;
+        spine.animationState.setAnimation(0, "walk", true);
+        var crawler = new CrawlerBehaviour(0, .5f, .5f, .5f, alien);
+        crawler.passive = passive;
+        return crawler;
     }
 }

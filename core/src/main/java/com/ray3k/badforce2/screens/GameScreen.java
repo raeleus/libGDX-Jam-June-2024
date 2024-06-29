@@ -52,6 +52,10 @@ public class GameScreen extends ScreenAdapter {
     public static String nextLevelName;
     public static float levelWidth;
     public static float levelHeight;
+    public static boolean foundRainbow;
+    public static boolean foundCat;
+    public static boolean foundCake;
+    public static boolean foundScythe;
 
     public GameScreen(String levelName) {
         GameScreen.levelName = levelName;
