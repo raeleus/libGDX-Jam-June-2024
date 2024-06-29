@@ -32,10 +32,11 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     public Sound gunSound;
     private float shootTimer;
     public float shootDelay;
+    public int lives;
 
     public PlayerBehaviour(GameObject gameObject) {
         super(0, .25f, .3f, 1.45f, gameObject);
-        showDebug = true;
+        showDebug = false;
         setRenderOrder(DEBUG_RENDER_ORDER);
         allowClingToWalls = true;
         allowWallJump = true;
@@ -48,10 +49,12 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         lateralMaxSpeed = NOT_SHOOTING_LATERAL_SPEED_MAX;
         health = 100;
         shootDelay = .16f;
+        lives = 3;
     }
 
     @Override
     public void handleControls() {
+        if (lives <= 0) return;
         if (animationNameEquals(0, "disappear", this)) return;
         if (animationNameEquals(0, "die", this)) return;
         var animationIsRoll = animationNameEquals(0, "roll", this);
@@ -99,6 +102,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
                 updateTargetBone();
             }
 
+            if (getAnimationState(this).getCurrent(1) == null) getAnimationState(this).setEmptyAnimation(1, 0);
             addAnimation(1, "shooting", true, .3f, this);
             setAnimation(2, "aiming", true, this);
             lateralMaxSpeed = SHOOTING_LATERAL_SPEED_MAX;
@@ -118,7 +122,7 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         queueRoll -= delta;
         dodging -= delta;
 
-        if (Gdx.input.isButtonPressed(Buttons.LEFT) && animationNameEquals(1, "shooting", this)) {
+        if (lives > 0 && Gdx.input.isButtonPressed(Buttons.LEFT) && animationNameEquals(1, "shooting", this)) {
             shootTimer -= delta;
             if (shootTimer <= 0) {
                 shootTimer = shootDelay;
@@ -570,6 +574,12 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
     }
 
     public void hurt(float speed, float direction) {
+        lives--;
+        if (lives <=0) {
+            die(0, 0);
+            sfx_player_death.play();
+            return;
+        }
         var body = getBody(this);
         body.setLinearVelocity(0, 0);
         lateralSpeed = 0;
@@ -590,6 +600,9 @@ public class PlayerBehaviour extends SlopeCharacterBehaviourAdapter {
         deltaY = 0;
         applyAirForce(speed, direction);
         setAnimation(0, "die", false, this);
+        getAnimationState(this).setEmptyAnimation(1, 0);
+        getAnimationState(this).setEmptyAnimation(2, 0);
+        getAnimationState(this).setEmptyAnimation(3, 0);
     }
 
     public void shoot() {

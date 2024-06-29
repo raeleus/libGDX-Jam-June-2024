@@ -39,7 +39,9 @@
 "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
 	"default": {
 		"font": "font",
-		"fontColor": "red"
+		"fontColor": "red",
+		"cursor": "cursor",
+		"selection": "selection"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {

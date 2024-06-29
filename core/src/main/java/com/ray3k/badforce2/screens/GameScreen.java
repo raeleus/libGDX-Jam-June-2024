@@ -5,34 +5,18 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.esotericsoftware.spine.AnimationStateData;
-import com.ray3k.badforce2.Core;
 import com.ray3k.badforce2.LevelReader;
 import com.ray3k.badforce2.OgmoReader;
-import com.ray3k.badforce2.behaviours.PlayerBehaviour;
-import com.ray3k.badforce2.behaviours.SpineBehaviour;
-import com.ray3k.badforce2.behaviours.slope.BoundsBehaviour;
-import com.ray3k.badforce2.behaviours.slope.SlopeCharacterBehaviour;
-import dev.lyze.gdxUnBox2d.Box2dBehaviour;
-import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.UnBox;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBoxFixtureBehaviour;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
 
 import static com.ray3k.badforce2.Core.*;
 
@@ -57,9 +41,12 @@ public class GameScreen extends ScreenAdapter {
     public static boolean foundCake;
     public static boolean foundScythe;
     public static long[] times;
+    public static int levelIndex;
+    public static float levelTime;
 
     public GameScreen(String levelName) {
         GameScreen.levelName = levelName;
+        levelTime = 0;
     }
 
     @Override
@@ -77,7 +64,7 @@ public class GameScreen extends ScreenAdapter {
         stage.addActor(root);
 
         debugLabel = new Label("", skin);
-        root.add(debugLabel).expand().top().left();
+//        root.add(debugLabel).expand().top().left();
 
         unBox = new UnBox(new World(new Vector2(), true));
         debugRenderer = new Box2DDebugRenderer();
@@ -96,6 +83,7 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+        levelTime += delta;
         ScreenUtils.clear(Color.BLACK);
 
         unBox.preRender(Gdx.graphics.getDeltaTime());
@@ -107,7 +95,7 @@ public class GameScreen extends ScreenAdapter {
         unBox.render(batch);
         batch.end();
 
-        debugRenderer.render(unBox.getWorld(), gameCamera.combined);
+//        debugRenderer.render(unBox.getWorld(), gameCamera.combined);
 
         unBox.postRender();
 

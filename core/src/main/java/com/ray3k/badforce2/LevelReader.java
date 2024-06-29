@@ -32,6 +32,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
         if (valuesMap.containsKey("spawn-animation")) spawnAnimation = valuesMap.get("spawn-animation").asBoolean();
         levelWidth = p2m(width);
         levelHeight = p2m(height);
+        levelIndex = valuesMap.get("index").asInt();
     }
 
     @Override
@@ -119,7 +120,10 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                     @Override
                     public void complete(TrackEntry entry) {
 //                        if (entry.getAnimation().getName().equals("shooting")) player.getBehaviour(PlayerBehaviour.class).shoot();
-                        if (entry.getAnimation().getName().equals("disappear")) Core.core.setScreen(new GameScreen(nextLevelName));
+                        if (entry.getAnimation().getName().equals("disappear")) {
+                            times[levelIndex - 1] = MathUtils.round(levelTime * 1000);
+                            Core.core.setScreen(new GameScreen(nextLevelName));
+                        }
                         if (entry.getAnimation().getName().equals("die")) Core.core.setScreen(new GameScreen(levelName));
                     }
                 });

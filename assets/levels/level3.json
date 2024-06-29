@@ -4,7 +4,7 @@
   "height": 4096,
   "offsetX": 0,
   "offsetY": 0,
-  "values": {"next-level": "level4.json", "spawn-animation": false},
+  "values": {"next-level": "level4.json", "spawn-animation": false, "index": 3},
   "layers": [
     {
       "name": "foreground",

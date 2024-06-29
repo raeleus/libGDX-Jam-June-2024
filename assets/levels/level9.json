@@ -4,7 +4,7 @@
   "height": 4096,
   "offsetX": 0,
   "offsetY": 0,
-  "values": {"next-level": "level.json", "spawn-animation": false},
+  "values": {"next-level": "level.json", "spawn-animation": false, "index": 9},
   "layers": [
     {
       "name": "foreground",
@@ -162,20 +162,6 @@
             {"x": 1901, "y": 2947},
             {"x": 2182, "y": 2941},
             {"x": 2180, "y": 2911}
-          ]
-        },
-        {
-          "name": "platform-pass-through",
-          "id": 4,
-          "_eid": "12016638",
-          "x": 1048,
-          "y": 2689,
-          "originX": 8,
-          "originY": 8,
-          "nodes": [
-            {"x": 1049, "y": 2726},
-            {"x": 1206, "y": 2722},
-            {"x": 1207, "y": 2683}
           ]
         },
         {
