@@ -56,6 +56,7 @@ public class GameScreen extends ScreenAdapter {
     public static boolean foundCat;
     public static boolean foundCake;
     public static boolean foundScythe;
+    public static long[] times;
 
     public GameScreen(String levelName) {
         GameScreen.levelName = levelName;

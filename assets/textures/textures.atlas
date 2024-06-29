@@ -236,8 +236,10 @@ textures_5.png
 size:1024,1024
 filter:Linear,Linear
 button-play
-bounds:569,639,133,63
+bounds:1,526,133,63
+button-submit
+bounds:569,676,173,66
 font
-bounds:1,551,506,81
+bounds:1,591,506,81
 title
-bounds:1,634,566,68
+bounds:1,674,566,68

@@ -29,7 +29,9 @@ public class SplashScreen extends ScreenAdapter {
         stage.addActor(root);
 
         Utils.onClick(root, () -> core.setScreen(new LibGDXScreen()));
-        Utils.onRightClick(root, () -> core.setScreen(new GameScreen("level9.json")));
+//        Utils.onRightClick(root, () -> core.setScreen(new GameScreen("level9.json")));
+        Utils.onRightClick(root, () -> core.setScreen(new WinScreen()));
+        GameScreen.times = new long[]{53,53,53,53,53,53,53,53,53};
 
         var label = new Label("CLICK TO PLAY", skin);
         root.add(label);

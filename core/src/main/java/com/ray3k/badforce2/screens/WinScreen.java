@@ -5,23 +5,25 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.ray3k.badforce2.Utils;
 
+import java.text.DecimalFormat;
+import java.util.logging.Level;
+
 import static com.ray3k.badforce2.Core.*;
 import static com.ray3k.badforce2.screens.GameScreen.*;
 
-public class MenuScreen extends ScreenAdapter {
+public class WinScreen extends ScreenAdapter {
     private Stage stage;
     private FillViewport viewport;
 
     @Override
     public void show() {
+        var df = new DecimalFormat("#.00");
         viewport = new FillViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
         stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(stage);
@@ -37,9 +39,30 @@ public class MenuScreen extends ScreenAdapter {
         root.add(image);
 
         root.row();
-        var button = new ImageButton(skin);
-        root.add(button);
-        Utils.onChange(button, this::nextScreen);
+        var label = new Label("Congrats! You survived to the end.\nYou may travel back in time to improve your times\nor submit your score", skin);
+        root.add(label);
+
+        root.row();
+        var verticalGroup = new VerticalGroup();
+        verticalGroup.wrap();
+        root.add(verticalGroup).grow();
+
+        for (int i = 0; i < 9; i++) {
+            var table = new Table();
+            verticalGroup.addActor(table);
+
+            int level = i + 1;
+            label = new Label("Level " + level + ":   " + df.format(times[i] / 1000f) + " seconds", skin);
+            table.add(label);
+
+            var button = new ImageButton(skin);
+            table.add(button);
+            Utils.onChange(button, () -> nextScreen(level));
+        }
+
+        root.row();
+        label = new Label("Or type your name: ", skin);
+        root.add(label);
     }
 
     @Override
@@ -59,12 +82,7 @@ public class MenuScreen extends ScreenAdapter {
         stage.dispose();
     }
 
-    private void nextScreen() {
-        core.setScreen(new GameScreen("level1.json"));
-        foundCake = false;
-        foundCat = false;
-        foundRainbow = false;
-        foundScythe = false;
-        times = new long[9];
+    private void nextScreen(int level) {
+        core.setScreen(new GameScreen("level" + level + ".json"));
     }
 }

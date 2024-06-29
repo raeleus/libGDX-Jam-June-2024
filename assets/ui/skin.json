@@ -8,6 +8,12 @@
 	}
 },
 "com.badlogic.gdx.graphics.Color": {
+	"red": {
+		"r": 1,
+		"g": 0.74509805,
+		"b": 0.74509805,
+		"a": 1
+	},
 	"white": {
 		"r": 1,
 		"g": 1,
@@ -19,11 +25,21 @@
 	"default": {
 		"imageUp": "button-play",
 		"pressedOffsetY": -4
+	},
+	"submit": {
+		"imageUp": "button-submit",
+		"pressedOffsetY": -4
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
 	"default": {
 		"font": "font"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+	"default": {
+		"font": "font",
+		"fontColor": "red"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {

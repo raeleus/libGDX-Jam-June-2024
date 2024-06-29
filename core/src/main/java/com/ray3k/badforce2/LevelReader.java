@@ -246,6 +246,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.skeleton.setSkin("cake");
 
                 new BonusBehaviour(bonus, () -> foundCake = true);
+                foundCake = false;
                 break;
             case "bonus-cat":
                 bonus = new GameObject(unBox);
@@ -262,6 +263,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.skeleton.setSkin("cat");
 
                 new BonusBehaviour(bonus, () -> foundCat = true);
+                foundCat = false;
                 break;
             case "bonus-rainbow":
                 bonus = new GameObject(unBox);
@@ -278,6 +280,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.skeleton.setSkin("rainbow");
 
                 new BonusBehaviour(bonus, () -> foundRainbow = true);
+                foundRainbow = false;
                 break;
             case "bonus-scythe":
                 bonus = new GameObject(unBox);
@@ -294,6 +297,7 @@ public class LevelReader extends OgmoReader.OgmoAdapter {
                 spine.skeleton.setSkin("scythe");
 
                 new BonusBehaviour(bonus, () -> foundScythe = true);
+                foundScythe = false;
                 break;
             case "timer":
                 var timer = new GameObject(unBox);

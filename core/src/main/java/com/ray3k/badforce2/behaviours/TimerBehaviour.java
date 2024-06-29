@@ -2,6 +2,7 @@ package com.ray3k.badforce2.behaviours;
 
 import com.ray3k.badforce2.Core;
 import com.ray3k.badforce2.screens.MenuScreen;
+import com.ray3k.badforce2.screens.WinScreen;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 
@@ -17,7 +18,7 @@ public class TimerBehaviour extends BehaviourAdapter {
         time -= delta;
         if (time <= 0) {
             getGameObject().destroy();
-            Core.core.setScreen(new MenuScreen());
+            Core.core.setScreen(new WinScreen());
         }
     }
 }
