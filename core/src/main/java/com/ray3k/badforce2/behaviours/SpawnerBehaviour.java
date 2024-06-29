@@ -47,7 +47,7 @@ public class SpawnerBehaviour extends BehaviourAdapter {
         switch (type) {
             case FLIER:
                 behaviour = LevelReader.spawnFlier(x, y, temp1.x, temp1.y);
-                behaviour.gravity = -1f;
+                behaviour.gravity = -25f;
                 break;
             case CRAWLER:
                 behaviour = LevelReader.spawnCrawler(x, y, temp1.x, temp1.y, false);

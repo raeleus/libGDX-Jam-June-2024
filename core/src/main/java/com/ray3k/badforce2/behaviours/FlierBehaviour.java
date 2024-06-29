@@ -60,6 +60,6 @@ public class FlierBehaviour extends AlienBehaviour {
     @Override
     public void kill() {
         super.kill();
-        gravity = -3f;
+        gravity = -75f;
     }
 }

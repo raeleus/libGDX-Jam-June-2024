@@ -80,7 +80,7 @@ public class CrawlerBehaviour extends AlienBehaviour {
 
             if (distanceToPlayer < 7f && targetedBehaviour == player) {
                 passive = false;
-                gravity = -3f;
+                gravity = -75f;
                 jumpTimer = JUMP_DELAY;
                 setAnimation(0, "walk", true, this);
                 applyAirForce(25f, playerBody.getPosition().x > getPosition(this).x ? 45f : 135f);

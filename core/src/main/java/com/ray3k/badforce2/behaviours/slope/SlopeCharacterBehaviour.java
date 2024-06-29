@@ -1,5 +1,6 @@
 package com.ray3k.badforce2.behaviours.slope;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
@@ -363,7 +364,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
     /**
      * The signed gravity applied to the character while the character is in the air.
      */
-    public float gravity = -3f;
+    public float gravity = -75f;
     /**
      * The initial velocity of upwards movement when the character presses the jump input.
      */
@@ -904,7 +905,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
 
         handleMovement(delta);
 
-        deltaY += gravityY * getUnBox().getOptions().getMaxFixedFrameTime();
+        deltaY += gravityY * delta;
         body.setLinearVelocity(deltaX, deltaY);
 
         debugText = "Movement Mode: " + movementMode +
@@ -918,7 +919,8 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             "\ntouchedTorsoMagnetFixtures: " + touchedTorsoMagnetFixtures.size +
             "\nCoyote Timer: " + coyoteTimer +
             "\ndeltaX: " + deltaX +
-            "\ndeltaY: " + deltaY;
+            "\ndeltaY: " + deltaY +
+            "\nfps: " + Gdx.graphics.getFramesPerSecond();
 
         justLanded = false;
         touchingWall = false;
@@ -1779,7 +1781,7 @@ public abstract class SlopeCharacterBehaviour extends BehaviourAdapter {
             movementMode = LEDGE_GRABBING;
             deltaX = 0;
             deltaY = 0;
-            temp1.set(0, ledgeGrabYadjustment / getUnBox().getOptions().getMaxFixedFrameTime());
+            temp1.set(0, ledgeGrabYadjustment / delta);
             body.setLinearVelocity(temp1);
             gravityY = 0;
             if (!lastGrabbingLedge) eventGrabLedge(delta, wallContactAngle);
